@@ -1,5 +1,5 @@
-name: parse_example
-description: Demonstrates how to use the parse plugin.
+name: flutter_parse_example
+description: Demonstrates how to use the flutter_parse plugin.
 publish_to: 'none'
 
 environment:
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  parse:
+  flutter_parse:
     path: ../
 
 # For information on the generic Dart part of this file, see the

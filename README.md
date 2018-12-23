@@ -1,6 +1,6 @@
-# parse
+# flutter_parse
 
-An hybrid Parse Platform Mobile SDK for Flutter plugin.
+A new flutter plugin project.
 
 ## Getting Started
 

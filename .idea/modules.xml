@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/parse.iml" filepath="$PROJECT_DIR$/parse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/parse_android.iml" filepath="$PROJECT_DIR$/android/parse_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/parse_example_android.iml" filepath="$PROJECT_DIR$/example/android/parse_example_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flutter_parse.iml" filepath="$PROJECT_DIR$/flutter_parse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/flutter_parse_android.iml" filepath="$PROJECT_DIR$/android/flutter_parse_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/flutter_parse_example_android.iml" filepath="$PROJECT_DIR$/example/android/flutter_parse_example_android.iml" />
     </modules>
   </component>
 </project>

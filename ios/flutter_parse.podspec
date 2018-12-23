@@ -2,11 +2,11 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'parse'
+  s.name             = 'flutter_parse'
   s.version          = '0.0.1'
-  s.summary          = 'An hybrid Parse Platform Mobile SDK for Flutter plugin.'
+  s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
-An hybrid Parse Platform Mobile SDK for Flutter plugin.
+A new flutter plugin project.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
@@ -15,6 +15,7 @@ An hybrid Parse Platform Mobile SDK for Flutter plugin.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
+  s.dependency 'Parse'
 
   s.ios.deployment_target = '8.0'
 end

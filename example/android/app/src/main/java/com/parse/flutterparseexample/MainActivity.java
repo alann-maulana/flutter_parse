@@ -1,4 +1,4 @@
-package com.parseexample;
+package com.parse.flutterparseexample;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
