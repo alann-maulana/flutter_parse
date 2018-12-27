@@ -17,6 +17,8 @@ part 'parse/parse_exception.dart';
 part 'parse/parse_file.dart';
 part 'parse/parse_geo_point.dart';
 part 'parse/parse_object.dart';
+part 'parse/parse_query.dart';
+part 'parse/parse_text_utils.dart';
 part 'parse/parse_user.dart';
 part 'parse/pointer_encoder.dart';
 
