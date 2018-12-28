@@ -4,13 +4,13 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_parse'
   s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'Flutter plugin for managing Parse SDK for both Android and iOS.'
   s.description      = <<-DESC
-A new flutter plugin project.
+Flutter plugin for managing Parse SDK for both Android and iOS.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Alann Maulana' => 'kangmas.alan@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'

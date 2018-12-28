@@ -7,30 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9913901-5ec9-4948-9232-4c2b5b89d83a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/IParse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/IParseInstallation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/IParseObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/IParseUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/flutterparse/FlutterParsePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/parse/flutterparse/FlutterParsePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/flutter_parse.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/flutter_parse.podspec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_parse.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_parse.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_date_format.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_date_format.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_decoder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_decoder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_encoder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_encoder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_exception.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_exception.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_file.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_file.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_geo_point.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_geo_point.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_object.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_object.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_query.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_query.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_text_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_text_utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/parse_user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/parse_user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse/pointer_encoder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse/pointer_encoder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -46,17 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="68" column="10" lean-forward="true" selection-start-line="68" selection-start-column="10" selection-end-line="68" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -94,10 +63,8 @@
         <option value="$PROJECT_DIR$/lib/parse/parse_decoder.dart" />
         <option value="$PROJECT_DIR$/lib/parse/parse_query.dart" />
         <option value="$PROJECT_DIR$/lib/parse/parse_text_utils.dart" />
-        <option value="$PROJECT_DIR$/lib/parse/parse_user.dart" />
         <option value="$PROJECT_DIR$/lib/parse/parse_encoder.dart" />
         <option value="$PROJECT_DIR$/lib/parse/pointer_encoder.dart" />
-        <option value="$PROJECT_DIR$/lib/flutter_parse.dart" />
         <option value="$PROJECT_DIR$/LICENSE" />
         <option value="$PROJECT_DIR$/CHANGELOG.md" />
         <option value="$PROJECT_DIR$/pubspec.yaml" />
@@ -105,6 +72,10 @@
         <option value="$PROJECT_DIR$/example/lib/main.dart" />
         <option value="$PROJECT_DIR$/example/README.md" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/lib/parse/parse_user.dart" />
+        <option value="$PROJECT_DIR$/lib/flutter_parse.dart" />
+        <option value="$PROJECT_DIR$/example/test/widget_test.dart" />
+        <option value="$PROJECT_DIR$/ios/flutter_parse.podspec" />
       </list>
     </option>
   </component>
@@ -142,13 +113,13 @@
             <path>
               <item name="flutter_parse" type="b2602c69:ProjectViewProjectNode" />
               <item name="flutter_parse" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="example" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="flutter_parse" type="b2602c69:ProjectViewProjectNode" />
               <item name="flutter_parse" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="parse" type="462c0819:PsiDirectoryNode" />
+              <item name="ios" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -246,7 +217,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="977" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
       <window_info id="Build Variants" order="2" side_tool="true" />
@@ -260,16 +230,16 @@
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39909297" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" visible="true" weight="0.32993197" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32993197" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32993197" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32539684" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32539684" />
       <window_info id="Captures" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2020757" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2020757" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Flutter Inspector" order="3" />
@@ -320,20 +290,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Development/flutter/bin/cache/pkg/sky_engine/lib/core/map.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="54" column="14" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Development/flutter/bin/cache/pkg/sky_engine/lib/core/list.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="128" column="24" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/parse/parse_object.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -580,13 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/parse/parse_user.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/parse/parse_encoder.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -599,18 +548,6 @@
         <state relative-caret-position="75">
           <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/flutter_parse.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="34" column="38" lean-forward="true" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flutter_parse.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/parse/parse_object.dart">
@@ -646,13 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="9" lean-forward="true" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -662,8 +592,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="68" column="10" lean-forward="true" selection-start-line="68" selection-start-column="10" selection-end-line="68" selection-end-column="10" />
+        <state relative-caret-position="396">
+          <caret line="65" column="59" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/parse/parse_user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="22" selection-start-column="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/test/widget_test.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/flutter_parse.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flutter_parse.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="76" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ios/flutter_parse.podspec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
         </state>
       </provider>
     </entry>

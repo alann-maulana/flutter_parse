@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the ParseObject class from the flutter_parse library, for the Dart programming language.">
+  <title>ParseObject class - flutter_parse library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">flutter_parse</a></li>
+    <li><a href="flutter_parse/flutter_parse-library.html">flutter_parse</a></li>
+    <li class="self-crumb">ParseObject class</li>
+  </ol>
+  <div class="self-name">ParseObject</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>flutter_parse library</h5>
+    <ol>
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#classes">Classes</a></li>
+      <li><a href="flutter_parse/FlutterParse-class.html">FlutterParse</a></li>
+      <li><a href="flutter_parse/ParseDateFormat-class.html">ParseDateFormat</a></li>
+      <li><a href="flutter_parse/ParseDecoder-class.html">ParseDecoder</a></li>
+      <li><a href="flutter_parse/ParseEncoder-class.html">ParseEncoder</a></li>
+      <li><a href="flutter_parse/ParseFile-class.html">ParseFile</a></li>
+      <li><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></li>
+      <li><a href="flutter_parse/ParseObject-class.html">ParseObject</a></li>
+      <li><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a></li>
+      <li><a href="flutter_parse/ParseTextUtils-class.html">ParseTextUtils</a></li>
+      <li><a href="flutter_parse/ParseUser-class.html">ParseUser</a></li>
+      <li><a href="flutter_parse/PointerOrLocalIdEncoder-class.html">PointerOrLocalIdEncoder</a></li>
+    
+    
+    
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#properties">Properties</a></li>
+      <li><a href="flutter_parse/parseDateFormat.html">parseDateFormat</a></li>
+      <li><a href="flutter_parse/parseDecoder.html">parseDecoder</a></li>
+      <li><a href="flutter_parse/parseEncoder.html">parseEncoder</a></li>
+      <li><a href="flutter_parse/pointerOrLocalIdEncoder.html">pointerOrLocalIdEncoder</a></li>
+    
+    
+    
+    
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#exceptions">Exceptions</a></li>
+      <li><a href="flutter_parse/ParseException-class.html">ParseException</a></li>
+    </ol>
+  </div>
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <h1>ParseObject class </h1>
+
+    <section class="desc markdown">
+      <p>The <a href="flutter_parse/ParseObject-class.html">ParseObject</a> is a local representation of data that can be saved and retrieved from
+the Parse cloud.</p>
+<p>The basic workflow for creating new data is to construct a new <a href="flutter_parse/ParseObject-class.html">ParseObject</a>, use
+<a href="flutter_parse/ParseObject/set.html">set</a> to fill it with data, and then use <a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a> to
+persist to the cloud.</p>
+<p>The basic workflow for accessing existing data is to use a <a href="flutter_parse/ParseQuery-class.html">ParseQuery</a> to specify which
+existing data to retrieve.</p>
+    </section>
+    
+    <section>
+      <dl class="dl-horizontal">
+
+
+
+        <dt>Implementers</dt>
+        <dd><ul class="comma-separated clazz-relationships">
+          <li><a href="flutter_parse/ParseUser-class.html">ParseUser</a></li>
+        </ul></dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="ParseObject" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/ParseObject.html">ParseObject</a></span><span class="signature">(<span class="parameter" id="-param-className"><span class="type-annotation">String</span> <span class="parameter-name">className</span>, {</span> <span class="parameter" id="-param-objectId"><span class="type-annotation">String</span> <span class="parameter-name">objectId</span>, </span> <span class="parameter" id="-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span> })</span>
+        </dt>
+        <dd>
+          Creates a new <a href="flutter_parse/ParseObject-class.html">ParseObject</a> based upon a class name. If the class name is a special type
+(e.g. for <a href="flutter_parse/ParseUser-class.html">ParseUser</a>), then the appropriate type of <a href="flutter_parse/ParseObject-class.html">ParseObject</a> is returned.
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="className" class="property">
+          <span class="name"><a href="flutter_parse/ParseObject/className.html">className</a></span>
+          <span class="signature">&#8594; String</span> 
+        </dt>
+        <dd>
+          
+          <div class="features">final</div>
+</dd>
+        <dt id="createdAt" class="property">
+          <span class="name"><a href="flutter_parse/ParseObject/createdAt.html">createdAt</a></span>
+          <span class="signature">&#8594; DateTime</span> 
+        </dt>
+        <dd>
+          This reports time as the server sees it, so that if you create a <a href="flutter_parse/ParseObject-class.html">ParseObject</a>, then wait a
+while, and then call <a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a>, the creation time will be the time of the first
+<a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a> call rather than the time the object was created locally.
+          <div class="features">read-only</div>
+</dd>
+        <dt id="objectId" class="property">
+          <span class="name"><a href="flutter_parse/ParseObject/objectId.html">objectId</a></span>
+          <span class="signature">&#8594; String</span> 
+        </dt>
+        <dd>
+          Accessor to the object id. An object id is assigned as soon as an object is saved to the
+server. The combination of a className and an objectId uniquely identifies an object in your
+application.
+          <div class="features">read-only</div>
+</dd>
+        <dt id="selectedKeys" class="property">
+          <span class="name"><a href="flutter_parse/ParseObject/selectedKeys.html">selectedKeys</a></span>
+          <span class="signature">&#8594; List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="updatedAt" class="property">
+          <span class="name"><a href="flutter_parse/ParseObject/updatedAt.html">updatedAt</a></span>
+          <span class="signature">&#8594; DateTime</span> 
+        </dt>
+        <dd>
+          This reports time as the server sees it, so that if you make changes to a <a href="flutter_parse/ParseObject-class.html">ParseObject</a>, then
+wait a while, and then call <a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a>, the updated time will be the time of the
+<a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a> call rather than the time the object was changed locally.
+          <div class="features">read-only</div>
+</dd>
+        <dt id="hashCode" class="property inherited">
+          <span class="name"><a href="flutter_parse/ParseObject/hashCode.html">hashCode</a></span>
+          <span class="signature">&#8594; int</span> 
+        </dt>
+        <dd class="inherited">
+          The hash code for this object. <a href="flutter_parse/ParseObject/hashCode.html">[...]</a>
+          <div class="features">read-only, inherited</div>
+</dd>
+        <dt id="runtimeType" class="property inherited">
+          <span class="name"><a href="flutter_parse/ParseObject/runtimeType.html">runtimeType</a></span>
+          <span class="signature">&#8594; Type</span> 
+        </dt>
+        <dd class="inherited">
+          A representation of the runtime type of the object.
+          <div class="features">read-only, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="deleteEventually" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/deleteEventually.html">deleteEventually</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Deletes this object from the server at some unspecified time in the future, even if Parse is
+currently inaccessible. Use this when you may not have a solid network connection, and don't
+need to know when the delete completes. If there is some problem with the object such that it
+can't be deleted, the request will be silently discarded. Delete requests made with this method
+will be stored locally in an on-disk cache until they can be transmitted to Parse. They will be
+sent immediately if possible. Otherwise, they will be sent the next time a network connection
+is available. Delete instructions saved this way will persist even after the app is closed, in
+which case they will be sent the next time the app is opened. If more than 10MB of commands are
+waiting to be sent, subsequent calls to <a href="flutter_parse/ParseObject/deleteEventually.html">deleteEventually</a> or
+<a href="flutter_parse/ParseObject/saveEventually.html">saveEventually</a> will cause old instructions to be silently discarded until the
+connection can be re-established, and the queued objects can be saved.
+          
+</dd>
+        <dt id="deleteInBackground" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/deleteInBackground.html">deleteInBackground</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Deletes this object on the server in a background thread.
+          
+</dd>
+        <dt id="fetchInBackground" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/fetchInBackground.html">fetchInBackground</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Fetches this object with the data from the server in a background thread. <a href="flutter_parse/ParseObject/fetchInBackground.html">[...]</a>
+          
+</dd>
+        <dt id="get" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/get.html">get</a></span><span class="signature">(<wbr><span class="parameter" id="get-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+          </dt>
+        <dd>
+          Access a value. In most cases it is more convenient to use a helper function such as
+<a href="flutter_parse/ParseObject/getString.html">getString</a> or <a href="flutter_parse/ParseObject/getInteger.html">getInteger</a>. <a href="flutter_parse/ParseObject/get.html">[...]</a>
+          
+</dd>
+        <dt id="getBoolean" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getBoolean.html">getBoolean</a></span><span class="signature">(<wbr><span class="parameter" id="getBoolean-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>bool</code> value. <a href="flutter_parse/ParseObject/getBoolean.html">[...]</a>
+          
+</dd>
+        <dt id="getDateTime" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getDateTime.html">getDateTime</a></span><span class="signature">(<wbr><span class="parameter" id="getDateTime-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; DateTime</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>DateTime</code> value. <a href="flutter_parse/ParseObject/getDateTime.html">[...]</a>
+          
+</dd>
+        <dt id="getDouble" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getDouble.html">getDouble</a></span><span class="signature">(<wbr><span class="parameter" id="getDouble-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; double</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>double</code> value. <a href="flutter_parse/ParseObject/getDouble.html">[...]</a>
+          
+</dd>
+        <dt id="getInteger" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getInteger.html">getInteger</a></span><span class="signature">(<wbr><span class="parameter" id="getInteger-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; int</span>
+          </span>
+          </dt>
+        <dd>
+          Access an <code>int</code> value. <a href="flutter_parse/ParseObject/getInteger.html">[...]</a>
+          
+</dd>
+        <dt id="getList" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getList.html">getList</a></span><span class="signature">(<wbr><span class="parameter" id="getList-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; List</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>List</code> value. <a href="flutter_parse/ParseObject/getList.html">[...]</a>
+          
+</dd>
+        <dt id="getMap" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getMap.html">getMap</a></span><span class="signature">(<wbr><span class="parameter" id="getMap-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; Map<span class="signature">&lt;<wbr><span class="type-parameter">String</span>, <span class="type-parameter">dynamic</span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>Map</code> value. <a href="flutter_parse/ParseObject/getMap.html">[...]</a>
+          
+</dd>
+        <dt id="getNumber" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getNumber.html">getNumber</a></span><span class="signature">(<wbr><span class="parameter" id="getNumber-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; num</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>num</code> value. <a href="flutter_parse/ParseObject/getNumber.html">[...]</a>
+          
+</dd>
+        <dt id="getParseFile" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getParseFile.html">getParseFile</a></span><span class="signature">(<wbr><span class="parameter" id="getParseFile-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; <a href="flutter_parse/ParseFile-class.html">ParseFile</a></span>
+          </span>
+          </dt>
+        <dd>
+          Access a <a href="flutter_parse/ParseFile-class.html">ParseFile</a> value. <a href="flutter_parse/ParseObject/getParseFile.html">[...]</a>
+          
+</dd>
+        <dt id="getParseGeoPoint" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getParseGeoPoint.html">getParseGeoPoint</a></span><span class="signature">(<wbr><span class="parameter" id="getParseGeoPoint-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; <a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span>
+          </span>
+          </dt>
+        <dd>
+          Access a <a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a> value. <a href="flutter_parse/ParseObject/getParseGeoPoint.html">[...]</a>
+          
+</dd>
+        <dt id="getParseObject" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getParseObject.html">getParseObject</a></span><span class="signature">(<wbr><span class="parameter" id="getParseObject-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; <a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>
+          </span>
+          </dt>
+        <dd>
+          Access a <a href="flutter_parse/ParseObject-class.html">ParseObject</a> value. <a href="flutter_parse/ParseObject/getParseObject.html">[...]</a>
+          
+</dd>
+        <dt id="getString" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/getString.html">getString</a></span><span class="signature">(<wbr><span class="parameter" id="getString-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+          </dt>
+        <dd>
+          Access a <code>String</code> value. <a href="flutter_parse/ParseObject/getString.html">[...]</a>
+          
+</dd>
+        <dt id="saveEventually" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/saveEventually.html">saveEventually</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Saves this object to the server in a background thread. <a href="flutter_parse/ParseObject/saveEventually.html">[...]</a>
+          
+</dd>
+        <dt id="saveInBackground" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Saves this object to the server in a background thread. <a href="flutter_parse/ParseObject/saveInBackground.html">[...]</a>
+          
+</dd>
+        <dt id="set" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/set.html">set</a></span><span class="signature">(<wbr><span class="parameter" id="set-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="set-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a key-value pair to this object. It is recommended to name keys in
+<code>camelCaseLikeThis</code>.
+          
+</dd>
+        <dt id="toJson" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/toJson.html">toJson</a></span><span class="signature">(<wbr>{<span class="parameter" id="toJson-param-withData"><span class="type-annotation">bool</span> <span class="parameter-name">withData</span>: <span class="default-value">true</span></span> })
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+          </dt>
+        <dd>
+          Converts this <a href="flutter_parse/ParseObject-class.html">ParseObject</a> into Map
+          
+</dd>
+        <dt id="toString" class="callable">
+          <span class="name"><a href="flutter_parse/ParseObject/toString.html">toString</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+          </dt>
+        <dd>
+          Returns a string representation of this object.
+          <div class="features">override</div>
+</dd>
+        <dt id="noSuchMethod" class="callable inherited">
+          <span class="name"><a href="flutter_parse/ParseObject/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+          </dt>
+        <dd class="inherited">
+          Invoked when a non-existent method or property is accessed. <a href="flutter_parse/ParseObject/noSuchMethod.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+          <span class="name"><a href="flutter_parse/ParseObject/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation">dynamic</span> <span class="parameter-name">other</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+          </dt>
+        <dd class="inherited">
+          The equality operator. <a href="flutter_parse/ParseObject/operator_equals.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+        <dt id="keyClassName" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyClassName-constant.html">keyClassName</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;className&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyComplete" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyComplete-constant.html">keyComplete</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;__complete&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyCreatedAt" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyCreatedAt-constant.html">keyCreatedAt</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;createdAt&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyIsDeletingEventually" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyIsDeletingEventually-constant.html">keyIsDeletingEventually</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;__isDeletingEventually&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyIsDeletingEventuallyOld" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyIsDeletingEventuallyOld-constant.html">keyIsDeletingEventuallyOld</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;isDeletingEventually&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyObjectId" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyObjectId-constant.html">keyObjectId</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;objectId&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyOperations" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyOperations-constant.html">keyOperations</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;__operations&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keySelectedKeys" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keySelectedKeys-constant.html">keySelectedKeys</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;__selectedKeys&quot;</code></span>
+          </div>
+        </dd>
+        <dt id="keyUpdatedAt" class="constant">
+          <span class="name "><a href="flutter_parse/ParseObject/keyUpdatedAt-constant.html">keyUpdatedAt</a></span>
+          <span class="signature">&#8594; const String</span>
+          </dt>
+        <dd>
+          
+          
+  <div>
+            <span class="signature"><code>&quot;updatedAt&quot;</code></span>
+          </div>
+        </dd>
+      </dl>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+      <li class="section-title"><a href="flutter_parse/ParseObject-class.html#constructors">Constructors</a></li>
+      <li><a href="flutter_parse/ParseObject/ParseObject.html">ParseObject</a></li>
+    
+      <li class="section-title">
+        <a href="flutter_parse/ParseObject-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="flutter_parse/ParseObject/className.html">className</a></li>
+      <li><a href="flutter_parse/ParseObject/createdAt.html">createdAt</a></li>
+      <li><a href="flutter_parse/ParseObject/objectId.html">objectId</a></li>
+      <li><a href="flutter_parse/ParseObject/selectedKeys.html">selectedKeys</a></li>
+      <li><a href="flutter_parse/ParseObject/updatedAt.html">updatedAt</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseObject/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseObject/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="flutter_parse/ParseObject-class.html#instance-methods">Methods</a></li>
+      <li><a href="flutter_parse/ParseObject/deleteEventually.html">deleteEventually</a></li>
+      <li><a href="flutter_parse/ParseObject/deleteInBackground.html">deleteInBackground</a></li>
+      <li><a href="flutter_parse/ParseObject/fetchInBackground.html">fetchInBackground</a></li>
+      <li><a href="flutter_parse/ParseObject/get.html">get</a></li>
+      <li><a href="flutter_parse/ParseObject/getBoolean.html">getBoolean</a></li>
+      <li><a href="flutter_parse/ParseObject/getDateTime.html">getDateTime</a></li>
+      <li><a href="flutter_parse/ParseObject/getDouble.html">getDouble</a></li>
+      <li><a href="flutter_parse/ParseObject/getInteger.html">getInteger</a></li>
+      <li><a href="flutter_parse/ParseObject/getList.html">getList</a></li>
+      <li><a href="flutter_parse/ParseObject/getMap.html">getMap</a></li>
+      <li><a href="flutter_parse/ParseObject/getNumber.html">getNumber</a></li>
+      <li><a href="flutter_parse/ParseObject/getParseFile.html">getParseFile</a></li>
+      <li><a href="flutter_parse/ParseObject/getParseGeoPoint.html">getParseGeoPoint</a></li>
+      <li><a href="flutter_parse/ParseObject/getParseObject.html">getParseObject</a></li>
+      <li><a href="flutter_parse/ParseObject/getString.html">getString</a></li>
+      <li><a href="flutter_parse/ParseObject/saveEventually.html">saveEventually</a></li>
+      <li><a href="flutter_parse/ParseObject/saveInBackground.html">saveInBackground</a></li>
+      <li><a href="flutter_parse/ParseObject/set.html">set</a></li>
+      <li><a href="flutter_parse/ParseObject/toJson.html">toJson</a></li>
+      <li><a href="flutter_parse/ParseObject/toString.html">toString</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseObject/noSuchMethod.html">noSuchMethod</a></li>
+    
+      <li class="section-title inherited"><a href="flutter_parse/ParseObject-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseObject/operator_equals.html">operator ==</a></li>
+    
+    
+    
+      <li class="section-title"><a href="flutter_parse/ParseObject-class.html#constants">Constants</a></li>
+      <li><a href="flutter_parse/ParseObject/keyClassName-constant.html">keyClassName</a></li>
+      <li><a href="flutter_parse/ParseObject/keyComplete-constant.html">keyComplete</a></li>
+      <li><a href="flutter_parse/ParseObject/keyCreatedAt-constant.html">keyCreatedAt</a></li>
+      <li><a href="flutter_parse/ParseObject/keyIsDeletingEventually-constant.html">keyIsDeletingEventually</a></li>
+      <li><a href="flutter_parse/ParseObject/keyIsDeletingEventuallyOld-constant.html">keyIsDeletingEventuallyOld</a></li>
+      <li><a href="flutter_parse/ParseObject/keyObjectId-constant.html">keyObjectId</a></li>
+      <li><a href="flutter_parse/ParseObject/keyOperations-constant.html">keyOperations</a></li>
+      <li><a href="flutter_parse/ParseObject/keySelectedKeys-constant.html">keySelectedKeys</a></li>
+      <li><a href="flutter_parse/ParseObject/keyUpdatedAt-constant.html">keyUpdatedAt</a></li>
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    flutter_parse 0.0.1
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

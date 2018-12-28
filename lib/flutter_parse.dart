@@ -4,8 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 part 'parse/parse_date_format.dart';
 part 'parse/parse_decoder.dart';
