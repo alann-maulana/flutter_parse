@@ -1,38 +1,35 @@
 package com.parse;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class IParseObject {
-  private static final String TAG = IParseObject.class.getSimpleName();
+public class FlutterParseObject {
+  private static final String TAG = FlutterParseObject.class.getSimpleName();
   public static final String FETCH_IN_BACKGROUND = "fetchInBackground";
   public static final String DELETE_IN_BACKGROUND = "deleteInBackground";
   public static final String DELETE_EVENTUALLY = "deleteEventually";
   public static final String SAVE_IN_BACKGROUND = "saveInBackground";
   public static final String SAVE_EVENTUALLY = "saveEventually";
-  private static final String KEY_OBJECT_ID = "objectId";
-  private static final String KEY_CLASS_NAME = "className";
+  static final String KEY_OBJECT_ID = "objectId";
+  static final String KEY_CLASS_NAME = "className";
 
   private final ParseObject parseObject;
 
-  IParseObject(ParseObject parseObject) {
+  FlutterParseObject(ParseObject parseObject) {
     this.parseObject = parseObject;
   }
 
-  private static IParseObject createObject(String className, JSONObject map) {
+  private static FlutterParseObject createObject(String className, JSONObject map) {
     ParseObject parseObject = new ParseObject(className);
     if (map != null) {
       parseObject.mergeREST(parseObject.getState(), map, ParseDecoder.get());
     }
-    return new IParseObject(parseObject);
+    return new FlutterParseObject(parseObject);
   }
 
-  private static IParseObject createObject(JSONObject map) {
+  private static FlutterParseObject createObject(JSONObject map) {
     String className = map.optString(KEY_CLASS_NAME);
     if (className == null) {
       return null;
@@ -42,7 +39,7 @@ public class IParseObject {
     return createObject(className, map);
   }
 
-  private static IParseObject createWithoutData(JSONObject map) {
+  private static FlutterParseObject createWithoutData(JSONObject map) {
     String className = map.optString(KEY_CLASS_NAME);
     if (className == null) {
       return null;
@@ -53,33 +50,18 @@ public class IParseObject {
       return null;
     }
 
-    return new IParseObject(ParseObject.createWithoutData(className, objectId));
-  }
-
-  static JSONObject parsingParams(Object arguments) {
-    if (arguments instanceof String) {
-      try {
-        return new JSONObject(arguments.toString());
-      } catch (JSONException ignored) {
-      }
-    } else if (arguments instanceof Map) {
-      try {
-        return new JSONObject((Map) arguments);
-      } catch (NullPointerException ignored) {
-      }
-    }
-    return null;
+    return new FlutterParseObject(ParseObject.createWithoutData(className, objectId));
   }
 
   public static void saveAsync(MethodCall call, final MethodChannel.Result result, boolean isEventually) {
-    JSONObject objectMap = parsingParams(call.arguments);
+    JSONObject objectMap = FlutterParseUtils.parsingParams(call.arguments);
 
     if (objectMap == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "invalid parse object", null);
       return;
     }
 
-    final IParseObject object = IParseObject.createObject(objectMap);
+    final FlutterParseObject object = FlutterParseObject.createObject(objectMap);
     if (object == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "no className found", null);
       return;
@@ -105,13 +87,13 @@ public class IParseObject {
   }
 
   public static void deleteAsync(MethodCall call, final MethodChannel.Result result, boolean isEventually) {
-    JSONObject map = parsingParams(call.arguments);
+    JSONObject map = FlutterParseUtils.parsingParams(call.arguments);
     if (map == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "invalid parse object", null);
       return;
     }
 
-    final IParseObject object = IParseObject.createWithoutData(map);
+    final FlutterParseObject object = FlutterParseObject.createWithoutData(map);
     if (object == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "no className or objectId found", null);
       return;
@@ -137,13 +119,13 @@ public class IParseObject {
   }
 
   public static void fetchAsync(MethodCall call, final MethodChannel.Result result) {
-    JSONObject map = parsingParams(call.arguments);
+    JSONObject map = FlutterParseUtils.parsingParams(call.arguments);
     if (map == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "invalid parse object", null);
       return;
     }
 
-    final IParseObject object = IParseObject.createWithoutData(map);
+    final FlutterParseObject object = FlutterParseObject.createWithoutData(map);
     if (object == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "no className or objectId found", null);
       return;
@@ -157,7 +139,7 @@ public class IParseObject {
           return;
         }
 
-        result.success(new IParseObject(parseObject).toJsonObject().toString());
+        result.success(new FlutterParseObject(parseObject).toJsonObject().toString());
       }
     };
     object.getParseObject().fetchInBackground(callback);

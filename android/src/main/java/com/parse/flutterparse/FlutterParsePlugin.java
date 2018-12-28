@@ -1,9 +1,10 @@
 package com.parse.flutterparse;
 
-import com.parse.IParse;
-import com.parse.IParseInstallation;
-import com.parse.IParseObject;
-import com.parse.IParseUser;
+import com.parse.FlutterParse;
+import com.parse.FlutterParseInstallation;
+import com.parse.FlutterParseObject;
+import com.parse.FlutterParseQuery;
+import com.parse.FlutterParseUser;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -26,41 +27,41 @@ public class FlutterParsePlugin implements MethodCallHandler {
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     switch (call.method) {
-      case IParse.INITIALIZE:
-        IParse.initialize(registrar.activeContext().getApplicationContext(), call, result);
+      case FlutterParse.INITIALIZE:
+        FlutterParse.initialize(registrar.activeContext().getApplicationContext(), call, result);
         break;
-      case IParseInstallation.INSTALLATION:
-        IParseInstallation.init(result);
+      case FlutterParseInstallation.INSTALLATION:
+        FlutterParseInstallation.init(result);
         break;
-      case IParseUser.GET_CURRENT_USER:
-        IParseUser.getCurrentUser(result);
+      case FlutterParseUser.GET_CURRENT_USER:
+        FlutterParseUser.getCurrentUser(result);
         break;
-      case IParseUser.LOGIN:
-        IParseUser.login(call, result);
+      case FlutterParseUser.LOGIN:
+        FlutterParseUser.login(call, result);
         break;
-      case IParseUser.REGISTER:
-        IParseUser.register(call, result);
+      case FlutterParseUser.REGISTER:
+        FlutterParseUser.register(call, result);
         break;
-      case IParseUser.LOGOUT:
-        IParseUser.logout(result);
+      case FlutterParseUser.LOGOUT:
+        FlutterParseUser.logout(result);
         break;
-      case IParseObject.DELETE_IN_BACKGROUND:
-        IParseObject.deleteAsync(call, result, false);
+      case FlutterParseObject.DELETE_IN_BACKGROUND:
+        FlutterParseObject.deleteAsync(call, result, false);
         break;
-      case IParseObject.DELETE_EVENTUALLY:
-        IParseObject.deleteAsync(call, result, true);
+      case FlutterParseObject.DELETE_EVENTUALLY:
+        FlutterParseObject.deleteAsync(call, result, true);
         break;
-      case IParseObject.FETCH_IN_BACKGROUND:
-        IParseObject.fetchAsync(call, result);
+      case FlutterParseObject.FETCH_IN_BACKGROUND:
+        FlutterParseObject.fetchAsync(call, result);
         break;
-      case IParseObject.SAVE_IN_BACKGROUND:
-        IParseObject.saveAsync(call, result, false);
+      case FlutterParseObject.SAVE_IN_BACKGROUND:
+        FlutterParseObject.saveAsync(call, result, false);
         break;
-      case IParseObject.SAVE_EVENTUALLY:
-        IParseObject.saveAsync(call, result, true);
+      case FlutterParseObject.SAVE_EVENTUALLY:
+        FlutterParseObject.saveAsync(call, result, true);
         break;
-      case "getPlatformVersion":
-        result.success("Android " + android.os.Build.VERSION.RELEASE);
+      case FlutterParseQuery.QUERY_IN_BACKGROUND:
+        FlutterParseQuery.executeAsync(call, result);
         break;
       default:
         result.notImplemented();

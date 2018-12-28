@@ -2,6 +2,8 @@ part of flutter_parse;
 
 final ParseEncoder parseEncoder = new ParseEncoder._internal();
 
+/// A [ParseEncoder] can be used to transform objects such as [ParseObject] into Map
+/// data structures.
 class ParseEncoder {
   ParseEncoder._internal();
 
@@ -18,6 +20,7 @@ class ParseEncoder {
         value is ParseGeoPoint;
   }
 
+  /// Encode any type value into Map
   dynamic encode(dynamic value) {
     if (value is DateTime) {
       return _encodeDate(value);
@@ -34,9 +37,9 @@ class ParseEncoder {
       return pointerOrLocalIdEncoder.encodeRelatedObject(value);
     }
 
-    // if (value is ParseQuery) {
-    //   return value.toJson();
-    // }
+    if (value is ParseQuery) {
+      return value.toJson();
+    }
 
     if (value is ParseFile) {
       return value.toJson;

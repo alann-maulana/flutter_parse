@@ -2,7 +2,7 @@ package com.parse;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public class IParseInstallation {
+public class FlutterParseInstallation {
   public static final String INSTALLATION = "installation";
 
   public static void init(final MethodChannel.Result result) {

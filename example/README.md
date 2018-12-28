@@ -1,16 +1,42 @@
-# flutter_parse_example
+## Initializing Library
 
-Demonstrates how to use the flutter_parse plugin.
+```dart
+void main() async {
+  await FlutterParse.initialize(
+      server: 'YOUR_PARSE_SERVER_URL',
+      applicationId: 'YOUR_PARSE_APPLICATION_ID',
+      clientKey: 'YOUR_PARSE_CLIENT_KEY');
+  
+  // initialize parse libraru before running your app
+  runApp(MyApp());
+}
+```
 
-## Getting Started
+### Create Object
 
-This project is a starting point for a Flutter application.
+```dart
+final object = ParseObject('Beacon')
+      ..set('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
+      ..set('major', 1)
+      ..set('enabled', true)
+      ..set('timestamp', DateTime.now());
+await object.saveInBackground();
+```
 
-A few resources to get you started if this is your first Flutter project:
+### Register User
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+```dart
+final user = ParseUser()
+  ..username = 'alan'
+  ..password = 'maulana';
+await user.register();
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Query Object
+
+```dart
+final query = ParseQuery('Beacon')
+  ..whereEqualTo('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
+  ..whereLessThanOrEqualTo('major', 10);
+final listObjects = await query.findAsync();
+```

@@ -3,6 +3,7 @@ part of flutter_parse;
 final PointerOrLocalIdEncoder pointerOrLocalIdEncoder =
     new PointerOrLocalIdEncoder._internal();
 
+/// Encoder for pointer or [ParseObject].
 class PointerOrLocalIdEncoder {
   PointerOrLocalIdEncoder._internal();
 

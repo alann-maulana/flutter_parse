@@ -2,6 +2,7 @@ part of flutter_parse;
 
 final ParseDecoder parseDecoder = new ParseDecoder._internal();
 
+/// A [ParseDecoder] can be used to transform JSON data structures into actual objects, such as [ParseObject]
 class ParseDecoder {
   ParseDecoder._internal();
 
@@ -21,6 +22,8 @@ class ParseDecoder {
     return map;
   }
 
+
+  /// Decode any type value
   dynamic decode(dynamic value) {
     if (value is List) {
       return _convertJSONArrayToList(value);

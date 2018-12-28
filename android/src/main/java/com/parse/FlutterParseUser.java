@@ -1,32 +1,48 @@
 package com.parse;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class IParseUser {
-  private static final String TAG = IParseObject.class.getSimpleName();
+public class FlutterParseUser {
+  private static final String TAG = FlutterParseObject.class.getSimpleName();
   public static final String GET_CURRENT_USER = "getCurrentUser";
   public static final String LOGIN = "login";
   public static final String LOGOUT = "logout";
   public static final String REGISTER = "register";
 
   public static void getCurrentUser(final MethodChannel.Result result) {
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Dummy")
+        .whereEqualTo("string", "hello world")
+        .whereNotEqualTo("integer", 123)
+        .whereGreaterThan("integer", 123)
+        .whereGreaterThanOrEqualTo("integer", 123)
+        .whereLessThan("integer", 123)
+        .whereLessThanOrEqualTo("integer", 123)
+        .whereContainedIn("array", new ArrayList<Integer>(){{add(123);add(456);}})
+        .whereContains("string", "hello")
+        ;
+    JSONObject json = query.getBuilder().build().toJSON(PointerEncoder.get());
+    Log.d(TAG, "QUERY=" + json);
+
     ParseUser user = ParseUser.getCurrentUser();
     if (user == null) {
       result.success(null);
       return;
     }
 
-    IParseObject object = new IParseObject(user);
+    FlutterParseObject object = new FlutterParseObject(user);
     result.success(object.toJsonObject().toString());
   }
 
   public static void login(MethodCall call, final MethodChannel.Result result) {
-    JSONObject json = IParseObject.parsingParams(call.arguments);
+    JSONObject json = FlutterParseUtils.parsingParams(call.arguments);
     if (json == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "invalid parameters", null);
       return;
@@ -53,14 +69,14 @@ public class IParseUser {
           return;
         }
 
-        IParseObject object = new IParseObject(user);
+        FlutterParseObject object = new FlutterParseObject(user);
         result.success(object.toJsonObject().toString());
       }
     });
   }
 
   public static void register(MethodCall call, final MethodChannel.Result result) {
-    JSONObject json = IParseObject.parsingParams(call.arguments);
+    JSONObject json = FlutterParseUtils.parsingParams(call.arguments);
     if (json == null) {
       result.error(String.valueOf(ParseException.INVALID_JSON), "invalid parameters", null);
       return;
@@ -104,7 +120,7 @@ public class IParseUser {
           return;
         }
 
-        IParseObject object = new IParseObject(user);
+        FlutterParseObject object = new FlutterParseObject(user);
         result.success(object.toJsonObject().toString());
       }
     });

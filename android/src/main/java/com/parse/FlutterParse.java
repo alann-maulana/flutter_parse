@@ -10,7 +10,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import okhttp3.OkHttpClient;
 
-public class IParse {
+public class FlutterParse {
   public static final String INITIALIZE = "initialize";
   private static final String SERVER = "server";
   private static final String APPLICATION_ID = "applicationId";
