@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the ParseQuery class from the flutter_parse library, for the Dart programming language.">
+  <title>ParseQuery class - flutter_parse library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">flutter_parse</a></li>
+    <li><a href="flutter_parse/flutter_parse-library.html">flutter_parse</a></li>
+    <li class="self-crumb">ParseQuery<span class="signature">&lt;<wbr><span class="type-parameter">T extends <a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span> class</li>
+  </ol>
+  <div class="self-name">ParseQuery</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>flutter_parse library</h5>
+    <ol>
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#classes">Classes</a></li>
+      <li><a href="flutter_parse/FlutterParse-class.html">FlutterParse</a></li>
+      <li><a href="flutter_parse/ParseDateFormat-class.html">ParseDateFormat</a></li>
+      <li><a href="flutter_parse/ParseDecoder-class.html">ParseDecoder</a></li>
+      <li><a href="flutter_parse/ParseEncoder-class.html">ParseEncoder</a></li>
+      <li><a href="flutter_parse/ParseFile-class.html">ParseFile</a></li>
+      <li><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></li>
+      <li><a href="flutter_parse/ParseObject-class.html">ParseObject</a></li>
+      <li><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a></li>
+      <li><a href="flutter_parse/ParseTextUtils-class.html">ParseTextUtils</a></li>
+      <li><a href="flutter_parse/ParseUser-class.html">ParseUser</a></li>
+      <li><a href="flutter_parse/PointerOrLocalIdEncoder-class.html">PointerOrLocalIdEncoder</a></li>
+    
+    
+    
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#properties">Properties</a></li>
+      <li><a href="flutter_parse/parseDateFormat.html">parseDateFormat</a></li>
+      <li><a href="flutter_parse/parseDecoder.html">parseDecoder</a></li>
+      <li><a href="flutter_parse/parseEncoder.html">parseEncoder</a></li>
+      <li><a href="flutter_parse/pointerOrLocalIdEncoder.html">pointerOrLocalIdEncoder</a></li>
+    
+    
+    
+    
+      <li class="section-title"><a href="flutter_parse/flutter_parse-library.html#exceptions">Exceptions</a></li>
+      <li><a href="flutter_parse/ParseException-class.html">ParseException</a></li>
+    </ol>
+  </div>
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <h1>ParseQuery&lt;<wbr><span class="type-parameter">T extends ParseObject</span>&gt; class </h1>
+
+    <section class="desc markdown">
+      <p>The <a href="flutter_parse/ParseQuery-class.html">ParseQuery</a> class defines a query that is used to fetch <a href="flutter_parse/ParseObject-class.html">ParseObject</a>. The most
+common use case is finding all objects that match a query through the <a href="flutter_parse/ParseQuery/findAsync.html">findAsync</a>
+method. For example, this sample code fetches all objects of class
+<code>MyClass</code>. It calls a different function depending on whether the fetch succeeded or not.</p>
+    </section>
+    
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="ParseQuery" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/ParseQuery.html">ParseQuery</a></span><span class="signature">(<span class="parameter" id="-param-className"><span class="type-annotation">String</span> <span class="parameter-name">className</span></span>)</span>
+        </dt>
+        <dd>
+          Constructs a query. A default query with no further parameters will retrieve all
+<a href="flutter_parse/ParseObject-class.html">ParseObject</a> of the provided class.
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="className" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/className.html">className</a></span>
+          <span class="signature">&#8594; String</span> 
+        </dt>
+        <dd>
+          The class name of <a href="flutter_parse/ParseObject-class.html">ParseObject</a>
+          <div class="features">final</div>
+</dd>
+        <dt id="includes" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/includes.html">includes</a></span>
+          <span class="signature">&#8594; List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="limit" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/limit.html">limit</a></span>
+          <span class="signature">&#8594; int</span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="order" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/order.html">order</a></span>
+          <span class="signature">&#8594; List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="selectedKeys" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/selectedKeys.html">selectedKeys</a></span>
+          <span class="signature">&#8594; List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="skip" class="property">
+          <span class="name"><a href="flutter_parse/ParseQuery/skip.html">skip</a></span>
+          <span class="signature">&#8594; int</span> 
+        </dt>
+        <dd>
+          
+          <div class="features">read-only</div>
+</dd>
+        <dt id="hashCode" class="property inherited">
+          <span class="name"><a href="flutter_parse/ParseQuery/hashCode.html">hashCode</a></span>
+          <span class="signature">&#8594; int</span> 
+        </dt>
+        <dd class="inherited">
+          The hash code for this object. <a href="flutter_parse/ParseQuery/hashCode.html">[...]</a>
+          <div class="features">read-only, inherited</div>
+</dd>
+        <dt id="runtimeType" class="property inherited">
+          <span class="name"><a href="flutter_parse/ParseQuery/runtimeType.html">runtimeType</a></span>
+          <span class="signature">&#8594; Type</span> 
+        </dt>
+        <dd class="inherited">
+          A representation of the runtime type of the object.
+          <div class="features">read-only, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="addAscendingOrder" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/addAscendingOrder.html">addAscendingOrder</a></span><span class="signature">(<wbr><span class="parameter" id="addAscendingOrder-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Also sorts the results in ascending order by the given key. <a href="flutter_parse/ParseQuery/addAscendingOrder.html">[...]</a>
+          
+</dd>
+        <dt id="addDescendingOrder" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/addDescendingOrder.html">addDescendingOrder</a></span><span class="signature">(<wbr><span class="parameter" id="addDescendingOrder-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Also sorts the results in descending order by the given key. <a href="flutter_parse/ParseQuery/addDescendingOrder.html">[...]</a>
+          
+</dd>
+        <dt id="countAsync" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/countAsync.html">countAsync</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">int</span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Counts the number of objects that match this query in a background thread. This does not use
+caching.
+          
+</dd>
+        <dt id="findAsync" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/findAsync.html">findAsync</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Retrieves a list of <a href="flutter_parse/ParseObject-class.html">ParseObject</a>s that satisfy this query from the source in a
+background thread.
+          
+</dd>
+        <dt id="include" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/include.html">include</a></span><span class="signature">(<wbr><span class="parameter" id="include-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Include nested {@link ParseObject}s for the provided key. <a href="flutter_parse/ParseQuery/include.html">[...]</a>
+          
+</dd>
+        <dt id="orderByAscending" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/orderByAscending.html">orderByAscending</a></span><span class="signature">(<wbr><span class="parameter" id="orderByAscending-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Sorts the results in ascending order by the given key.
+          
+</dd>
+        <dt id="orderByDescending" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/orderByDescending.html">orderByDescending</a></span><span class="signature">(<wbr><span class="parameter" id="orderByDescending-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Sorts the results in descending order by the given key.
+          
+</dd>
+        <dt id="selectKeys" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/selectKeys.html">selectKeys</a></span><span class="signature">(<wbr><span class="parameter" id="selectKeys-param-keys"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter">String</span>&gt;</span></span> <span class="parameter-name">keys</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Restrict the fields of returned {@link ParseObject}s to only include the provided keys. <a href="flutter_parse/ParseQuery/selectKeys.html">[...]</a>
+          
+</dd>
+        <dt id="setLimit" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/setLimit.html">setLimit</a></span><span class="signature">(<wbr><span class="parameter" id="setLimit-param-limit"><span class="type-annotation">int</span> <span class="parameter-name">limit</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Controls the maximum number of results that are returned. <a href="flutter_parse/ParseQuery/setLimit.html">[...]</a>
+          
+</dd>
+        <dt id="setSkip" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/setSkip.html">setSkip</a></span><span class="signature">(<wbr><span class="parameter" id="setSkip-param-skip"><span class="type-annotation">int</span> <span class="parameter-name">skip</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Controls the number of results to skip before returning any results. <a href="flutter_parse/ParseQuery/setSkip.html">[...]</a>
+          
+</dd>
+        <dt id="toJson" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/toJson.html">toJson</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Map<span class="signature">&lt;<wbr><span class="type-parameter">String</span>, <span class="type-parameter">dynamic</span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          
+          
+</dd>
+        <dt id="toString" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/toString.html">toString</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+          </dt>
+        <dd>
+          Returns a string representation of this object.
+          <div class="features">override</div>
+</dd>
+        <dt id="whereContainedIn" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereContainedIn.html">whereContainedIn</a></span><span class="signature">(<wbr><span class="parameter" id="whereContainedIn-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereContainedIn-param-values"><span class="type-annotation">List</span> <span class="parameter-name">values</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be contained in the
+provided list of values.
+          
+</dd>
+        <dt id="whereContains" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereContains.html">whereContains</a></span><span class="signature">(<wbr><span class="parameter" id="whereContains-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereContains-param-substring"><span class="type-annotation">String</span> <span class="parameter-name">substring</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint for finding string values that contain a provided string. <a href="flutter_parse/ParseQuery/whereContains.html">[...]</a>
+          
+</dd>
+        <dt id="whereContainsAll" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereContainsAll.html">whereContainsAll</a></span><span class="signature">(<wbr><span class="parameter" id="whereContainsAll-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereContainsAll-param-values"><span class="type-annotation">List</span> <span class="parameter-name">values</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value match another
+<a href="flutter_parse/ParseQuery-class.html">ParseQuery</a>. <a href="flutter_parse/ParseQuery/whereContainsAll.html">[...]</a>
+          
+</dd>
+        <dt id="whereDoesNotExist" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereDoesNotExist.html">whereDoesNotExist</a></span><span class="signature">(<wbr><span class="parameter" id="whereDoesNotExist-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint for finding objects that do not contain a given key.
+          
+</dd>
+        <dt id="whereDoesNotMatchKeyInQuery" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereDoesNotMatchKeyInQuery.html">whereDoesNotMatchKeyInQuery</a></span><span class="signature">(<wbr><span class="parameter" id="whereDoesNotMatchKeyInQuery-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereDoesNotMatchKeyInQuery-param-keyInQuery"><span class="type-annotation">String</span> <span class="parameter-name">keyInQuery</span>, </span> <span class="parameter" id="whereDoesNotMatchKeyInQuery-param-query"><span class="type-annotation"><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span> <span class="parameter-name">query</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value does not match any value
+for a key in the results of another <a href="flutter_parse/ParseQuery-class.html">ParseQuery</a>.
+          
+</dd>
+        <dt id="whereDoesNotMatchQuery" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereDoesNotMatchQuery.html">whereDoesNotMatchQuery</a></span><span class="signature">(<wbr><span class="parameter" id="whereDoesNotMatchQuery-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereDoesNotMatchQuery-param-query"><span class="type-annotation"><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span> <span class="parameter-name">query</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value does not match another
+<a href="flutter_parse/ParseQuery-class.html">ParseQuery</a>. <a href="flutter_parse/ParseQuery/whereDoesNotMatchQuery.html">[...]</a>
+          
+</dd>
+        <dt id="whereEndsWith" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereEndsWith.html">whereEndsWith</a></span><span class="signature">(<wbr><span class="parameter" id="whereEndsWith-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereEndsWith-param-suffix"><span class="type-annotation">String</span> <span class="parameter-name">suffix</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint for finding string values that end with a provided string. <a href="flutter_parse/ParseQuery/whereEndsWith.html">[...]</a>
+          
+</dd>
+        <dt id="whereEqualTo" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereEqualTo.html">whereEqualTo</a></span><span class="signature">(<wbr><span class="parameter" id="whereEqualTo-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereEqualTo-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be equal to the
+provided value.
+          
+</dd>
+        <dt id="whereExists" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereExists.html">whereExists</a></span><span class="signature">(<wbr><span class="parameter" id="whereExists-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint for finding objects that contain the given key.
+          
+</dd>
+        <dt id="whereFullText" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereFullText.html">whereFullText</a></span><span class="signature">(<wbr><span class="parameter" id="whereFullText-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereFullText-param-text"><span class="type-annotation">String</span> <span class="parameter-name">text</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Adds a constraint for finding string values that contain a provided
+string using Full Text Search
+          
+</dd>
+        <dt id="whereGreaterThan" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereGreaterThan.html">whereGreaterThan</a></span><span class="signature">(<wbr><span class="parameter" id="whereGreaterThan-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereGreaterThan-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be greater than the
+provided value.
+          
+</dd>
+        <dt id="whereGreaterThanOrEqualTo" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereGreaterThanOrEqualTo.html">whereGreaterThanOrEqualTo</a></span><span class="signature">(<wbr><span class="parameter" id="whereGreaterThanOrEqualTo-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereGreaterThanOrEqualTo-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be greater than or
+equal to the provided value.
+          
+</dd>
+        <dt id="whereLessThan" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereLessThan.html">whereLessThan</a></span><span class="signature">(<wbr><span class="parameter" id="whereLessThan-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereLessThan-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be less than the
+provided value.
+          
+</dd>
+        <dt id="whereLessThanOrEqualTo" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereLessThanOrEqualTo.html">whereLessThanOrEqualTo</a></span><span class="signature">(<wbr><span class="parameter" id="whereLessThanOrEqualTo-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereLessThanOrEqualTo-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be less than or equal
+to the provided value.
+          
+</dd>
+        <dt id="whereMatches" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereMatches.html">whereMatches</a></span><span class="signature">(<wbr><span class="parameter" id="whereMatches-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereMatches-param-regex"><span class="type-annotation">String</span> <span class="parameter-name">regex</span>, {</span> <span class="parameter" id="whereMatches-param-modifiers"><span class="type-annotation">String</span> <span class="parameter-name">modifiers</span>: <span class="default-value">''</span></span> })
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a regular expression constraint for finding string values that match the provided regular
+expression. <a href="flutter_parse/ParseQuery/whereMatches.html">[...]</a>
+          
+</dd>
+        <dt id="whereMatchesKeyInQuery" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereMatchesKeyInQuery.html">whereMatchesKeyInQuery</a></span><span class="signature">(<wbr><span class="parameter" id="whereMatchesKeyInQuery-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereMatchesKeyInQuery-param-keyInQuery"><span class="type-annotation">String</span> <span class="parameter-name">keyInQuery</span>, </span> <span class="parameter" id="whereMatchesKeyInQuery-param-query"><span class="type-annotation"><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span> <span class="parameter-name">query</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value matches a value for a key
+in the results of another <a href="flutter_parse/ParseQuery-class.html">ParseQuery</a>.
+          
+</dd>
+        <dt id="whereMatchesQuery" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereMatchesQuery.html">whereMatchesQuery</a></span><span class="signature">(<wbr><span class="parameter" id="whereMatchesQuery-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereMatchesQuery-param-query"><span class="type-annotation"><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span> <span class="parameter-name">query</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value match another
+<a href="flutter_parse/ParseQuery-class.html">ParseQuery</a>. <a href="flutter_parse/ParseQuery/whereMatchesQuery.html">[...]</a>
+          
+</dd>
+        <dt id="whereNear" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereNear.html">whereNear</a></span><span class="signature">(<wbr><span class="parameter" id="whereNear-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereNear-param-point"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">point</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a proximity based constraint for finding objects with key point values near the point
+given.
+          
+</dd>
+        <dt id="whereNotContainedIn" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereNotContainedIn.html">whereNotContainedIn</a></span><span class="signature">(<wbr><span class="parameter" id="whereNotContainedIn-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereNotContainedIn-param-values"><span class="type-annotation">List</span> <span class="parameter-name">values</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value not be contained in the
+provided list of values.
+          
+</dd>
+        <dt id="whereNotEqualTo" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereNotEqualTo.html">whereNotEqualTo</a></span><span class="signature">(<wbr><span class="parameter" id="whereNotEqualTo-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereNotEqualTo-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's value to be not equal to the
+provided value.
+          
+</dd>
+        <dt id="wherePolygonContains" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/wherePolygonContains.html">wherePolygonContains</a></span><span class="signature">(<wbr><span class="parameter" id="wherePolygonContains-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="wherePolygonContains-param-point"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">point</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's
+coordinates that contains a <a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a> <a href="flutter_parse/ParseQuery/wherePolygonContains.html">[...]</a>
+          
+</dd>
+        <dt id="whereStartsWith" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereStartsWith.html">whereStartsWith</a></span><span class="signature">(<wbr><span class="parameter" id="whereStartsWith-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereStartsWith-param-prefix"><span class="type-annotation">String</span> <span class="parameter-name">prefix</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint for finding string values that start with a provided string. <a href="flutter_parse/ParseQuery/whereStartsWith.html">[...]</a>
+          
+</dd>
+        <dt id="whereWithinGeoBox" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereWithinGeoBox.html">whereWithinGeoBox</a></span><span class="signature">(<wbr><span class="parameter" id="whereWithinGeoBox-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereWithinGeoBox-param-southwest"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">southwest</span>, </span> <span class="parameter" id="whereWithinGeoBox-param-northeast"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">northeast</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a constraint to the query that requires a particular key's coordinates be contained within
+a given rectangular geographic bounding box.
+          
+</dd>
+        <dt id="whereWithinKilometers" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereWithinKilometers.html">whereWithinKilometers</a></span><span class="signature">(<wbr><span class="parameter" id="whereWithinKilometers-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereWithinKilometers-param-point"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">point</span>, </span> <span class="parameter" id="whereWithinKilometers-param-maxDistance"><span class="type-annotation">double</span> <span class="parameter-name">maxDistance</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a proximity based constraint for finding objects with key point values near the point given
+and within the maximum distance given. <a href="flutter_parse/ParseQuery/whereWithinKilometers.html">[...]</a>
+          
+</dd>
+        <dt id="whereWithinMiles" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereWithinMiles.html">whereWithinMiles</a></span><span class="signature">(<wbr><span class="parameter" id="whereWithinMiles-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereWithinMiles-param-point"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">point</span>, </span> <span class="parameter" id="whereWithinMiles-param-maxDistance"><span class="type-annotation">double</span> <span class="parameter-name">maxDistance</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a proximity based constraint for finding objects with key point values near the point given
+and within the maximum distance given. <a href="flutter_parse/ParseQuery/whereWithinMiles.html">[...]</a>
+          
+</dd>
+        <dt id="whereWithinPolygon" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereWithinPolygon.html">whereWithinPolygon</a></span><span class="signature">(<wbr><span class="parameter" id="whereWithinPolygon-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereWithinPolygon-param-points"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span>&gt;</span></span> <span class="parameter-name">points</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Adds a constraint to the query that requires a particular key's
+coordinates be contained within and on the bounds of a given polygon.
+Supports closed and open (last point is connected to first) paths <a href="flutter_parse/ParseQuery/whereWithinPolygon.html">[...]</a>
+          
+</dd>
+        <dt id="whereWithinRadians" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/whereWithinRadians.html">whereWithinRadians</a></span><span class="signature">(<wbr><span class="parameter" id="whereWithinRadians-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="whereWithinRadians-param-point"><span class="type-annotation"><a href="flutter_parse/ParseGeoPoint-class.html">ParseGeoPoint</a></span> <span class="parameter-name">point</span>, </span> <span class="parameter" id="whereWithinRadians-param-maxDistance"><span class="type-annotation">double</span> <span class="parameter-name">maxDistance</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+          </dt>
+        <dd>
+          Add a proximity based constraint for finding objects with key point values near the point given
+and within the maximum distance given.
+          
+</dd>
+        <dt id="noSuchMethod" class="callable inherited">
+          <span class="name"><a href="flutter_parse/ParseQuery/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+          </dt>
+        <dd class="inherited">
+          Invoked when a non-existent method or property is accessed. <a href="flutter_parse/ParseQuery/noSuchMethod.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+          <span class="name"><a href="flutter_parse/ParseQuery/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation">dynamic</span> <span class="parameter-name">other</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+          </dt>
+        <dd class="inherited">
+          The equality operator. <a href="flutter_parse/ParseQuery/operator_equals.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="static-methods">
+      <h2>Static Methods</h2>
+      <dl class="callables">
+        <dt id="or" class="callable">
+          <span class="name"><a href="flutter_parse/ParseQuery/or.html">or</a></span><span class="signature">(<wbr><span class="parameter" id="or-param-queries"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">queries</span></span>)
+            <span class="returntype parameter">&#8594; <a href="flutter_parse/ParseQuery-class.html">ParseQuery</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="flutter_parse/ParseObject-class.html">ParseObject</a></span>&gt;</span></span>
+          </span>
+          </dt>
+        <dd>
+          Constructs a query that is the <code>or</code> of the given queries.
+          
+</dd>
+      </dl>
+    </section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+      <li class="section-title"><a href="flutter_parse/ParseQuery-class.html#constructors">Constructors</a></li>
+      <li><a href="flutter_parse/ParseQuery/ParseQuery.html">ParseQuery</a></li>
+    
+      <li class="section-title">
+        <a href="flutter_parse/ParseQuery-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="flutter_parse/ParseQuery/className.html">className</a></li>
+      <li><a href="flutter_parse/ParseQuery/includes.html">includes</a></li>
+      <li><a href="flutter_parse/ParseQuery/limit.html">limit</a></li>
+      <li><a href="flutter_parse/ParseQuery/order.html">order</a></li>
+      <li><a href="flutter_parse/ParseQuery/selectedKeys.html">selectedKeys</a></li>
+      <li><a href="flutter_parse/ParseQuery/skip.html">skip</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseQuery/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseQuery/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="flutter_parse/ParseQuery-class.html#instance-methods">Methods</a></li>
+      <li><a href="flutter_parse/ParseQuery/addAscendingOrder.html">addAscendingOrder</a></li>
+      <li><a href="flutter_parse/ParseQuery/addDescendingOrder.html">addDescendingOrder</a></li>
+      <li><a href="flutter_parse/ParseQuery/countAsync.html">countAsync</a></li>
+      <li><a href="flutter_parse/ParseQuery/findAsync.html">findAsync</a></li>
+      <li><a href="flutter_parse/ParseQuery/include.html">include</a></li>
+      <li><a href="flutter_parse/ParseQuery/orderByAscending.html">orderByAscending</a></li>
+      <li><a href="flutter_parse/ParseQuery/orderByDescending.html">orderByDescending</a></li>
+      <li><a href="flutter_parse/ParseQuery/selectKeys.html">selectKeys</a></li>
+      <li><a href="flutter_parse/ParseQuery/setLimit.html">setLimit</a></li>
+      <li><a href="flutter_parse/ParseQuery/setSkip.html">setSkip</a></li>
+      <li><a href="flutter_parse/ParseQuery/toJson.html">toJson</a></li>
+      <li><a href="flutter_parse/ParseQuery/toString.html">toString</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereContainedIn.html">whereContainedIn</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereContains.html">whereContains</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereContainsAll.html">whereContainsAll</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereDoesNotExist.html">whereDoesNotExist</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereDoesNotMatchKeyInQuery.html">whereDoesNotMatchKeyInQuery</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereDoesNotMatchQuery.html">whereDoesNotMatchQuery</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereEndsWith.html">whereEndsWith</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereEqualTo.html">whereEqualTo</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereExists.html">whereExists</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereFullText.html">whereFullText</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereGreaterThan.html">whereGreaterThan</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereGreaterThanOrEqualTo.html">whereGreaterThanOrEqualTo</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereLessThan.html">whereLessThan</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereLessThanOrEqualTo.html">whereLessThanOrEqualTo</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereMatches.html">whereMatches</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereMatchesKeyInQuery.html">whereMatchesKeyInQuery</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereMatchesQuery.html">whereMatchesQuery</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereNear.html">whereNear</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereNotContainedIn.html">whereNotContainedIn</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereNotEqualTo.html">whereNotEqualTo</a></li>
+      <li><a href="flutter_parse/ParseQuery/wherePolygonContains.html">wherePolygonContains</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereStartsWith.html">whereStartsWith</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereWithinGeoBox.html">whereWithinGeoBox</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereWithinKilometers.html">whereWithinKilometers</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereWithinMiles.html">whereWithinMiles</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereWithinPolygon.html">whereWithinPolygon</a></li>
+      <li><a href="flutter_parse/ParseQuery/whereWithinRadians.html">whereWithinRadians</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseQuery/noSuchMethod.html">noSuchMethod</a></li>
+    
+      <li class="section-title inherited"><a href="flutter_parse/ParseQuery-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="flutter_parse/ParseQuery/operator_equals.html">operator ==</a></li>
+    
+    
+      <li class="section-title"><a href="flutter_parse/ParseQuery-class.html#static-methods">Static methods</a></li>
+      <li><a href="flutter_parse/ParseQuery/or.html">or</a></li>
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    flutter_parse 0.0.1
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

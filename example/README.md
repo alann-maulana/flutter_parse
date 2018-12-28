@@ -1,23 +1,3 @@
-# flutter_parse
-
-Flutter plugin for managing Parse SDK for both Android and iOS.
-
-Features:
-* Android :
-    - ParseObject
-    - ParseUser
-    - ParseQuery
-* iOS (coming soon)
-
-## Installation
-
-Add to pubspec.yaml:
-
-```yaml
-dependencies:
-  flutter_parse: ^0.0.1
-```
-
 ## Initializing Library
 
 ```dart
@@ -32,7 +12,7 @@ void main() async {
 }
 ```
 
-## Create Object
+### Create Object
 
 ```dart
 final object = ParseObject('Beacon')
@@ -43,7 +23,7 @@ final object = ParseObject('Beacon')
 await object.saveInBackground();
 ```
 
-## Register User
+### Register User
 
 ```dart
 final user = ParseUser()
@@ -52,7 +32,7 @@ final user = ParseUser()
 await user.register();
 ```
 
-## Query Object
+### Query Object
 
 ```dart
 final query = ParseQuery('Beacon')
@@ -60,14 +40,3 @@ final query = ParseQuery('Beacon')
   ..whereLessThanOrEqualTo('major', 10);
 final listObjects = await query.findAsync();
 ```
-
-# Author
-
-Flutter Parse plugin is developed by Alann Maulana. You can contact me at <kangmas.alan@gmail.com>.
-
-
-## License
-
-BSD License
-- [Parse SDK Android](https://github.com/parse-community/Parse-SDK-Android/blob/master/LICENSE)
-- [Parse SDK iOS](https://github.com/parse-community/Parse-SDK-iOS-OSX/blob/master/LICENSE)
