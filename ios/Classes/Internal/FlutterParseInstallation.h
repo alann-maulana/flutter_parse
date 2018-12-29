@@ -1,8 +1,8 @@
 //
-//  IParse.h
-//  Bolts
+//  FlutterParseInstallation.h
+//  flutter_parse
 //
-//  Created by Alann Maulana on 20/12/18.
+//  Created by Alann Maulana on 28/12/18.
 //
 
 #import <Foundation/Foundation.h>
@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const kParseInitialize = @"initialize";
+static NSString *const kParseInstallation = @"installation";
 
-@interface IParse : NSObject
+@interface FlutterParseInstallation : NSObject
 
 + (void)initialize:(FlutterMethodCall*)call result:(FlutterResult)result;
 

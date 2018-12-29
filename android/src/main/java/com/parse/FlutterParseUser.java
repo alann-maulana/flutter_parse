@@ -18,19 +18,6 @@ public class FlutterParseUser {
   public static final String REGISTER = "register";
 
   public static void getCurrentUser(final MethodChannel.Result result) {
-    ParseQuery<ParseObject> query = ParseQuery.getQuery("Dummy")
-        .whereEqualTo("string", "hello world")
-        .whereNotEqualTo("integer", 123)
-        .whereGreaterThan("integer", 123)
-        .whereGreaterThanOrEqualTo("integer", 123)
-        .whereLessThan("integer", 123)
-        .whereLessThanOrEqualTo("integer", 123)
-        .whereContainedIn("array", new ArrayList<Integer>(){{add(123);add(456);}})
-        .whereContains("string", "hello")
-        ;
-    JSONObject json = query.getBuilder().build().toJSON(PointerEncoder.get());
-    Log.d(TAG, "QUERY=" + json);
-
     ParseUser user = ParseUser.getCurrentUser();
     if (user == null) {
       result.success(null);

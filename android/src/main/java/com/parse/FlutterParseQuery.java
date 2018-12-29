@@ -1,11 +1,8 @@
 package com.parse;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -104,7 +101,7 @@ public class FlutterParseQuery {
     }
 
     String fields = json.optString("fields");
-    if (order.length() > 0) {
+    if (fields.length() > 0) {
       List<String> list = Arrays.asList(fields.split(","));
       query.selectKeys(list);
     }

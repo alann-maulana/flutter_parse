@@ -381,6 +381,7 @@ class ParseQuery<T extends ParseObject> {
   /// Counts the number of objects that match this query in a background thread. This does not use
   /// caching.
   Future<int> countAsync() async {
+    _countEnabled = true;
     final result = await FlutterParse._channel
         .invokeMethod('queryInBackground', toString());
     if (result is int) {

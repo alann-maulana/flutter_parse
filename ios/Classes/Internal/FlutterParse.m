@@ -5,14 +5,14 @@
 //  Created by Alann Maulana on 20/12/18.
 //
 
-#import "IParse.h"
+#import "FlutterParse.h"
 #import <Parse/Parse.h>
 
 static NSString *const kServer = @"server";
 static NSString *const kApplicationId = @"applicationId";
 static NSString *const kClientKey = @"clientKey";
 
-@implementation IParse
+@implementation FlutterParse
 
 + (void)initialize:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSString *server = call.arguments[kServer];
@@ -26,7 +26,7 @@ static NSString *const kClientKey = @"clientKey";
         configuration.localDatastoreEnabled = YES;
     }];
     [Parse initializeWithConfiguration:config];
-    result(nil);
+    result(@(YES));
 }
 
 @end

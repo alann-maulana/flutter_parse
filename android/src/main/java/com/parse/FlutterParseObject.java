@@ -24,7 +24,7 @@ public class FlutterParseObject {
   private static FlutterParseObject createObject(String className, JSONObject map) {
     ParseObject parseObject = new ParseObject(className);
     if (map != null) {
-      parseObject.mergeREST(parseObject.getState(), map, ParseDecoder.get());
+        parseObject.mergeREST(parseObject.getState(), map, ParseDecoder.get());
     }
     return new FlutterParseObject(parseObject);
   }
