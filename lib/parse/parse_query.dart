@@ -34,7 +34,7 @@ class ParseQuery<T extends ParseObject> {
       whereValue = new Map();
     }
 
-    whereValue[condition] = value;
+    whereValue[condition] = parseEncoder.encode(value);
 
     _where[key] = whereValue;
   }
@@ -42,7 +42,7 @@ class ParseQuery<T extends ParseObject> {
   /// Add a constraint to the query that requires a particular key's value to be equal to the
   /// provided value.
   void whereEqualTo(String key, dynamic value) {
-    _where[key] = value;
+    _where[key] = parseEncoder.encode(value);
   }
 
   /// Add a constraint to the query that requires a particular key's value to be less than the

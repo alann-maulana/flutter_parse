@@ -33,6 +33,12 @@ class ParseEncoder {
       };
     }
 
+    if (value is List) {
+      return value.map((v){
+        return encode(v);
+      }).toList();
+    }
+
     if (value is ParseObject) {
       return pointerOrLocalIdEncoder.encodeRelatedObject(value);
     }
