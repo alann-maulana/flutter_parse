@@ -10,6 +10,7 @@
 #import "FlutterParseObject.h"
 #import "FlutterParseUtils.h"
 #import "PFObjectPrivate.h"
+#import "FlutterParseEncoder.h"
 
 @implementation FlutterParseUser
 
@@ -17,7 +18,7 @@
     FlutterParseObject *object = [[FlutterParseObject alloc] initWithParseObject:user];
     NSArray *operationSetUUIDs = nil;
     NSError *error = nil;
-    NSDictionary *resultDict = [object.parseObject RESTDictionaryWithObjectEncoder:[PFEncoder objectEncoder] operationSetUUIDs:&operationSetUUIDs error:&error];
+    NSDictionary *resultDict = [object.parseObject RESTDictionaryWithObjectEncoder:[FlutterParseEncoder objectEncoder] operationSetUUIDs:&operationSetUUIDs error:&error];
     result([FlutterParseUtils stringFrom:resultDict]);
 }
 

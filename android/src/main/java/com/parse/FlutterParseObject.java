@@ -1,5 +1,7 @@
 package com.parse;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import io.flutter.plugin.common.MethodCall;
@@ -161,6 +163,6 @@ public class FlutterParseObject {
   }
 
   JSONObject toJsonObject() {
-    return parseObject.toRest(PointerEncoder.get());
+    return parseObject.toRest(FlutterParseEncoder.get());
   }
 }

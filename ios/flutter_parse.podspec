@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Flutter plugin for managing Parse SDK for both Android and iOS.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/alann-maulana/flutter_beacon'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Alann Maulana' => 'kangmas.alan@gmail.com' }
   s.source           = { :path => '.' }

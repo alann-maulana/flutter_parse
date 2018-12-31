@@ -68,6 +68,9 @@ class ParseDecoder {
       case "Object":
         String objectId = map["objectId"];
         String className = map["className"];
+        if (className == '_User') {
+          return new ParseUser(objectId: objectId, json: map);
+        }
         return new ParseObject(className, objectId: objectId, json: map);
       case "File":
         return new ParseFile(map);

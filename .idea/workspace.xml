@@ -7,14 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9913901-5ec9-4948-9232-4c2b5b89d83a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/parse/FlutterParseObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/parse/FlutterParseObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/FlutterParsePlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/FlutterParsePlugin.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Internal/IParse.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Internal/IParse.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Internal/IParseInstallation.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Internal/IParseInstallation.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -97,8 +90,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -134,6 +125,8 @@
         <option name="show-excluded-files" value="false" />
       </pane>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -234,7 +227,7 @@
       <window_info anchor="bottom" id="Dart Analysis" order="7" weight="0.32993197" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32993197" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32426304" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32199547" />
       <window_info anchor="right" id="Flutter Outline" order="3" />
       <window_info anchor="bottom" id="Logcat" order="7" />
       <window_info id="Captures" order="2" />

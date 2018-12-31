@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "FlutterParseUtils.h"
 #import "BFTask+Private.h"
+#import "FlutterParseEncoder.h"
 
 @implementation FlutterParseObject
 
@@ -40,7 +41,7 @@
         
         flutterObject = [[FlutterParseObject alloc] initWithParseObject:parseObject];
         NSError *error;
-        [flutterObject.parseObject mergeFromRESTDictionary:dict withDecoder:[PFDecoder objectDecoder] error:&error];
+        [flutterObject.parseObject mergeFromRESTDictionary:dict withDecoder:[PFKnownParseObjectDecoder objectDecoder] error:&error];
     }
     
     return flutterObject;
@@ -88,10 +89,7 @@
             return;
         }
         
-        NSArray *operationSetUUIDs = nil;
-        error = nil;
-        NSDictionary *resultDict = [object.parseObject RESTDictionaryWithObjectEncoder:[PFEncoder objectEncoder] operationSetUUIDs:&operationSetUUIDs error:&error];
-        result([FlutterParseUtils stringFrom:resultDict]);
+        result([FlutterParseUtils stringFrom:[object dictionary]]);
     };
     
     if (eventually) {
@@ -157,7 +155,7 @@
 - (NSDictionary*) dictionary {
     NSArray *operationSetUUIDs = nil;
     NSError *error = nil;
-    NSDictionary *resultDict = [self.parseObject RESTDictionaryWithObjectEncoder:[PFEncoder objectEncoder] operationSetUUIDs:&operationSetUUIDs error:&error];
+    NSDictionary *resultDict = [self.parseObject RESTDictionaryWithObjectEncoder:[FlutterParseEncoder objectEncoder] operationSetUUIDs:&operationSetUUIDs error:&error];
     if (error) return nil;
     
     return resultDict;

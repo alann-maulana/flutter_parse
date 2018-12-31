@@ -43,9 +43,14 @@
     [where enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *clause = obj;
-            [clause enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull keyClause, id  _Nonnull objClause, BOOL * _Nonnull stop) {
-                [self parseQuery:query withKey:key keyClause:keyClause andValue:[decoder decodeObject:objClause]];
-            }];
+            NSString *type = clause[@"__type"];
+            if (type) {
+                [query whereKey:key equalTo:[decoder decodeObject:obj]];
+            } else {
+                [clause enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull keyClause, id  _Nonnull objClause, BOOL * _Nonnull stop) {
+                    [self parseQuery:query withKey:key keyClause:keyClause andValue:[decoder decodeObject:objClause]];
+                }];
+            }
         } else {
             [query whereKey:key equalTo:obj];
         }
@@ -204,8 +209,8 @@
         return;
     }
     
-    NSError *e = nil;
-    NSLog(@"%@", [PFRESTQueryCommand findCommandParametersForQueryState:parseQuery.query.state error:&e]);
+//    NSError *e = nil;
+//    NSLog(@"QUERY2=%@", [PFRESTQueryCommand findCommandParametersForQueryState:parseQuery.query.state error:&e]);
     
     if (parseQuery.count) {
         [parseQuery.query countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {

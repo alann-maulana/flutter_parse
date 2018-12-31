@@ -295,6 +295,17 @@ class ParseObject {
 
     return get(key);
   }
+
+  /// Access a [ParseUser] value.
+  ///
+  /// Returns `null` if there is no such key or if it is not a [ParseUser].
+  ParseUser getParseUser(String key) {
+    if (get(key) is! ParseUser) {
+      return null;
+    }
+
+    return get(key);
+  }
   // endregion
 
   // region SAVE

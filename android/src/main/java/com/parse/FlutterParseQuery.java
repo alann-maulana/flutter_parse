@@ -1,5 +1,7 @@
 package com.parse;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,12 +42,17 @@ public class FlutterParseQuery {
 
       if (object instanceof JSONObject) {
         JSONObject clause = (JSONObject) object;
-        Iterator<String> keysClause = clause.keys();
-        while (keysClause.hasNext()) {
-          String keyClause = keysClause.next();
-          Object objectClause = clause.opt(keyClause);
+        String type = clause.optString("__type", null);
+        if (type != null) {
+          query.whereEqualTo(key, decoder.decode(object));
+        } else {
+          Iterator<String> keysClause = clause.keys();
+          while (keysClause.hasNext()) {
+            String keyClause = keysClause.next();
+            Object objectClause = clause.opt(keyClause);
 
-          parseQuery(query, key, keyClause, decoder.decode(objectClause));
+            parseQuery(query, key, keyClause, decoder.decode(objectClause));
+          }
         }
       } else {
         query.whereEqualTo(key, decoder.decode(object));
