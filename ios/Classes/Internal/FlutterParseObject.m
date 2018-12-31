@@ -27,7 +27,16 @@
     NSString *className = dictionary[@"className"];
     if (className) {
         [dictionary removeObjectForKey:@"className"];
-        PFObject *parseObject = [[PFObject alloc] initWithClassName:className];
+        PFObject *parseObject;
+        if ([className isEqualToString:@"_User"]) {
+            NSString *objectId = dict[@"objectId"];
+            PFUser *current = [PFUser currentUser];
+            if (current && [current.objectId isEqualToString:objectId]) {
+                parseObject = current;
+            }
+        } else {
+            parseObject = [[PFObject alloc] initWithClassName:className];
+        }
         
         flutterObject = [[FlutterParseObject alloc] initWithParseObject:parseObject];
         NSError *error;
@@ -43,7 +52,15 @@
     if (className) {
         NSString *objectId = dict[@"objectId"];
         if (objectId) {
-            PFObject *parseObject = [PFObject objectWithoutDataWithClassName:className objectId:objectId];
+            PFObject *parseObject;
+            if ([className isEqualToString:@"_User"]) {
+                PFUser *current = [PFUser currentUser];
+                if (current && [current.objectId isEqualToString:objectId]) {
+                    parseObject = current;
+                }
+            } else {
+                parseObject = [PFObject objectWithoutDataWithClassName:className objectId:objectId];
+            }
             flutterObject = [[FlutterParseObject alloc] initWithParseObject:parseObject];
         }
     }
