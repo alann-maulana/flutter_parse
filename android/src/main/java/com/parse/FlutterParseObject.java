@@ -22,8 +22,19 @@ public class FlutterParseObject {
   }
 
   private static FlutterParseObject createObject(String className, JSONObject map) {
-    ParseObject parseObject = new ParseObject(className);
-    if (map != null) {
+    ParseObject parseObject = null;
+    if (className.equals("_User")) {
+      String objectId = map.optString(KEY_OBJECT_ID);
+      if (objectId != null && ParseUser.getCurrentUser() != null) {
+        if (objectId.equals(ParseUser.getCurrentUser().getObjectId())) {
+          parseObject = ParseUser.getCurrentUser();
+        }
+      }
+    } else {
+      parseObject = new ParseObject(className);
+    }
+
+    if (map != null && parseObject != null) {
         parseObject.mergeREST(parseObject.getState(), map, ParseDecoder.get());
     }
     return new FlutterParseObject(parseObject);
