@@ -1,3 +1,8 @@
+## 0.1.1
+
+* Add internal query encoder
+* Fix create parse object with dictionary/map
+
 ## 0.1.0
 
 * Adding iOS function :

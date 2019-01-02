@@ -3,19 +3,17 @@
 Flutter plugin for managing Parse SDK for both Android and iOS.
 
 Features:
-* Android :
-    - ParseObject
-    - ParseUser
-    - ParseQuery
-* iOS (coming soon)
-
+* ParseObject
+* ParseUser
+* ParseQuery
+    
 ## Installation
 
 Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  flutter_parse: ^0.0.1
+  flutter_parse: ^0.1.1
 ```
 
 ## Initializing Library
