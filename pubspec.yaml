@@ -1,8 +1,8 @@
 name: flutter_parse
 description: Flutter plugin for managing Parse SDK for both Android and iOS.
-version: 0.1.1
+version: 0.1.2
 author: Alann Maulana <kangmas.alan@gmail.com>
-homepage: https://github.com/alann-maulana/flutter_beacon
+homepage: https://github.com/alann-maulana/flutter_parse
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"

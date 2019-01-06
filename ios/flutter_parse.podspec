@@ -3,12 +3,12 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_parse'
-  s.version          = '0.1.0'
+  s.version          = '0.1.2'
   s.summary          = 'Flutter plugin for managing Parse SDK for both Android and iOS.'
   s.description      = <<-DESC
 Flutter plugin for managing Parse SDK for both Android and iOS.
                        DESC
-  s.homepage         = 'https://github.com/alann-maulana/flutter_beacon'
+  s.homepage         = 'https://github.com/alann-maulana/flutter_parse'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Alann Maulana' => 'kangmas.alan@gmail.com' }
   s.source           = { :path => '.' }

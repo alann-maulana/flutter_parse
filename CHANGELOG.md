@@ -1,3 +1,7 @@
+## 0.1.2
+* Fix homepage url
+* Bug fix
+
 ## 0.1.1
 
 * Add internal query encoder
