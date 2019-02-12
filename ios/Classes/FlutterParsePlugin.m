@@ -3,6 +3,7 @@
 #import "FlutterParseObject.h"
 #import "FlutterParseUser.h"
 #import "FlutterParseQuery.h"
+#import "FlutterParseConfig.h"
 
 @implementation FlutterParsePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -29,6 +30,12 @@
         [FlutterParseObject deleteAsync:call result:result eventually:YES];
     } else if ([kParseObjectFetchInBackground isEqualToString:call.method]) {
         [FlutterParseObject fetchAsync:call result:result];
+    } else
+    // Parse Config
+    if ([kParseConfigGetCurrent isEqualToString:call.method]) {
+        [FlutterParseConfig currentConfigWithResult:result];
+    } else if ([kParseConfigGetInBackground isEqualToString:call.method]) {
+        [FlutterParseConfig fetchInBackgroundWithResult:result];
     } else
     // Parse User
     if ([kParseUserLogin isEqualToString:call.method]) {

@@ -1,11 +1,11 @@
 part of flutter_parse;
 
-final ParseEncoder parseEncoder = new ParseEncoder._internal();
+final _ParseEncoder _parseEncoder = new _ParseEncoder._internal();
 
-/// A [ParseEncoder] can be used to transform objects such as [ParseObject] into Map
+/// A [_ParseEncoder] can be used to transform objects such as [ParseObject] into Map
 /// data structures.
-class ParseEncoder {
-  ParseEncoder._internal();
+class _ParseEncoder {
+  _ParseEncoder._internal();
 
   bool isValidType(dynamic value) {
     return value == null ||
@@ -34,13 +34,13 @@ class ParseEncoder {
     }
 
     if (value is List) {
-      return value.map((v){
+      return value.map((v) {
         return encode(v);
       }).toList();
     }
 
     if (value is ParseObject) {
-      return pointerOrLocalIdEncoder.encodeRelatedObject(value);
+      return _pointerOrLocalIdEncoder.encodeRelatedObject(value);
     }
 
     if (value is ParseQuery) {
@@ -61,7 +61,7 @@ class ParseEncoder {
   Map<String, dynamic> _encodeDate(DateTime date) {
     return <String, dynamic>{
       "__type": "Date",
-      "iso": parseDateFormat.format(date)
+      "iso": _parseDateFormat.format(date)
     };
   }
 }

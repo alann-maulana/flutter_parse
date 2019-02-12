@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_parse'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'Flutter plugin for managing Parse SDK for both Android and iOS.'
   s.description      = <<-DESC
 Flutter plugin for managing Parse SDK for both Android and iOS.

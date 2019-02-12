@@ -1,11 +1,11 @@
 part of flutter_parse;
 
-final PointerOrLocalIdEncoder pointerOrLocalIdEncoder =
-    new PointerOrLocalIdEncoder._internal();
+final _PointerOrLocalIdEncoder _pointerOrLocalIdEncoder =
+    new _PointerOrLocalIdEncoder._internal();
 
 /// Encoder for pointer or [ParseObject].
-class PointerOrLocalIdEncoder {
-  PointerOrLocalIdEncoder._internal();
+class _PointerOrLocalIdEncoder {
+  _PointerOrLocalIdEncoder._internal();
 
   Map<String, dynamic> encodeRelatedObject(ParseObject object) {
     Map<String, dynamic> json = new Map();

@@ -38,10 +38,10 @@ class ParseGeoPoint {
   }
 
   dynamic get toJson => <String, dynamic>{
-    "__type": "GeoPoint",
-    "latitude": latitude,
-    "longitude": longitude
-  };
+        "__type": "GeoPoint",
+        "latitude": latitude,
+        "longitude": longitude
+      };
 
   @override
   String toString() {

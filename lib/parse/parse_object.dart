@@ -1,6 +1,5 @@
 part of flutter_parse;
 
-
 /// The [ParseObject] is a local representation of data that can be saved and retrieved from
 /// the Parse cloud.
 ///
@@ -75,9 +74,9 @@ class ParseObject {
       } else if (key == keyObjectId) {
         _objectId = value;
       } else if (key == keyCreatedAt) {
-        _createdAt = parseDateFormat.parse(value);
+        _createdAt = _parseDateFormat.parse(value);
       } else if (key == keyUpdatedAt) {
-        _updatedAt = parseDateFormat.parse(value);
+        _updatedAt = _parseDateFormat.parse(value);
       } else if (key == keyComplete) {
         _isComplete = value;
       } else if (key == keyIsDeletingEventually) {
@@ -93,7 +92,7 @@ class ParseObject {
       } else if (key == keyOperations) {
         _operations = List<dynamic>.from(value);
       } else {
-        _data[key] = parseDecoder.decode(value);
+        _data[key] = _parseDecoder.decode(value);
       }
     });
   }
@@ -110,12 +109,12 @@ class ParseObject {
 
     if (withData) {
       if (_createdAt != null && _updatedAt != null) {
-        map[keyCreatedAt] = parseDateFormat.format(_createdAt);
-        map[keyUpdatedAt] = parseDateFormat.format(_updatedAt);
+        map[keyCreatedAt] = _parseDateFormat.format(_createdAt);
+        map[keyUpdatedAt] = _parseDateFormat.format(_updatedAt);
       }
 
       _data.forEach((key, value) {
-        map[key] = parseEncoder.encode(value);
+        map[key] = _parseEncoder.encode(value);
       });
 
       map[keyComplete] = _isComplete;
@@ -127,21 +126,66 @@ class ParseObject {
     return map;
   }
 
+  // region SETTER
   /// Add a key-value pair to this object. It is recommended to name keys in
   /// <code>camelCaseLikeThis</code>.
   void set(String key, dynamic value) {
     assert(key != null);
 
     if (value == null) {
-      _data.remove(key);
-      _operations.add({
-        key: {'__op': 'Delete'}
-      });
+      remove(key);
     } else {
       _data[key] = value;
-      _operations.add({key: parseEncoder.encode(value)});
+      _operations.add({key: _parseEncoder.encode(value)});
     }
   }
+
+  void remove(String key) {
+    assert(key != null && key.isNotEmpty);
+
+    _data.remove(key);
+    _operations.add({
+      key: {'__op': 'Delete'}
+    });
+  }
+
+  void removeAll(String key, List<dynamic> values) {
+    _operations.add({
+      key: {'__op': 'Remove', 'objects': _parseEncoder.encode(values)}
+    });
+  }
+
+  void increment(key, {int by = 1}) {
+    _operations.add({
+      key: {'__op': 'Increment', 'amount': by}
+    });
+  }
+
+  void decrement(key, {int by = -1}) {
+    increment(key, by: by);
+  }
+
+  void add(String key, dynamic value) {
+    addAll(key, [value]);
+  }
+
+  void addAll(String key, List<dynamic> values) {
+    _operations.add({
+      key: {'__op': 'Add', 'objects': _parseEncoder.encode(values)}
+    });
+  }
+
+  void addUnique(String key, dynamic value) {
+    addAllUnique(key, [value]);
+  }
+
+  void addAllUnique(String key, List<dynamic> values) {
+    _operations.add({
+      key: {'__op': 'AddUnique', 'objects': _parseEncoder.encode(values)}
+    });
+  }
+
+  // endregion
 
   // region GETTER
   /// Accessor to the object id. An object id is assigned as soon as an object is saved to the
@@ -306,6 +350,7 @@ class ParseObject {
 
     return get(key);
   }
+
   // endregion
 
   // region SAVE
@@ -335,8 +380,7 @@ class ParseObject {
   /// saves to be silently  discarded until the connection can be re-established, and the queued
   /// objects can be saved.
   Future<ParseObject> _save(String method) async {
-    final result = await FlutterParse._channel
-        .invokeMethod(method, toString());
+    final result = await Parse._channel.invokeMethod(method, toString());
     if (result != null) {
       _mergeSave(json.decode(result));
       return this;
@@ -349,7 +393,7 @@ class ParseObject {
   ///
   /// Returns a [Future] of [ParseObject].
   Future<ParseObject> fetchInBackground() async {
-    final result = await FlutterParse._channel
+    final result = await Parse._channel
         .invokeMethod('fetchInBackground', toJson(withData: false));
     if (result != null) {
       _mergeSave(json.decode(result));
@@ -358,6 +402,7 @@ class ParseObject {
 
     return null;
   }
+
   // endregion
 
   // region DELETE
@@ -382,9 +427,9 @@ class ParseObject {
   }
 
   Future<void> _delete(String method) async {
-    await FlutterParse._channel.invokeMethod(
-        method, toJson(withData: false));
+    await Parse._channel.invokeMethod(method, toJson(withData: false));
   }
+
   // endregion
 
   @override

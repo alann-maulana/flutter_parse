@@ -34,7 +34,7 @@ class ParseQuery<T extends ParseObject> {
       whereValue = new Map();
     }
 
-    whereValue[condition] = parseEncoder.encode(value);
+    whereValue[condition] = _parseEncoder.encode(value);
 
     _where[key] = whereValue;
   }
@@ -42,7 +42,7 @@ class ParseQuery<T extends ParseObject> {
   /// Add a constraint to the query that requires a particular key's value to be equal to the
   /// provided value.
   void whereEqualTo(String key, dynamic value) {
-    _where[key] = parseEncoder.encode(value);
+    _where[key] = _parseEncoder.encode(value);
   }
 
   /// Add a constraint to the query that requires a particular key's value to be less than the
@@ -102,7 +102,6 @@ class ParseQuery<T extends ParseObject> {
   void whereNotContainedIn(String key, List<dynamic> values) {
     _addCondition(key, "whereNotContainedIn", values);
   }
-
 
   /// Add a regular expression constraint for finding string values that match the provided regular
   /// expression.
@@ -361,15 +360,18 @@ class ParseQuery<T extends ParseObject> {
     return params;
   }
 
-  /// Retrieves a list of [ParseObject]s that satisfy this query from the source in a
-  /// background thread.
-  Future<List<ParseObject>> findAsync() async {
-    final result = await FlutterParse._channel
-        .invokeMethod('queryInBackground', toString());
+  /// Retrieves a list of [ParseObject]s or [ParseUser]s that satisfy this query
+  /// from the source in a background thread.
+  Future<List<dynamic>> findAsync() async {
+    final result =
+        await Parse._channel.invokeMethod('queryInBackground', toString());
     if (result is String) {
       dynamic list = json.decode(result);
       if (list is List) {
-        return list.map((o) {
+        return list.map<dynamic>((o) {
+          if (className == ParseUser.keyParseClassName) {
+            return ParseUser(objectId: o[ParseObject.keyObjectId], json: o);
+          }
           return ParseObject._createFromJson(o);
         }).toList();
       }
@@ -382,8 +384,8 @@ class ParseQuery<T extends ParseObject> {
   /// caching.
   Future<int> countAsync() async {
     _countEnabled = true;
-    final result = await FlutterParse._channel
-        .invokeMethod('queryInBackground', toString());
+    final result =
+        await Parse._channel.invokeMethod('queryInBackground', toString());
     if (result is int) {
       int count = result;
       return count;

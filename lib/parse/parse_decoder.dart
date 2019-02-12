@@ -1,10 +1,10 @@
 part of flutter_parse;
 
-final ParseDecoder parseDecoder = new ParseDecoder._internal();
+final _ParseDecoder _parseDecoder = new _ParseDecoder._internal();
 
-/// A [ParseDecoder] can be used to transform JSON data structures into actual objects, such as [ParseObject]
-class ParseDecoder {
-  ParseDecoder._internal();
+/// A [_ParseDecoder] can be used to transform JSON data structures into actual objects, such as [ParseObject]
+class _ParseDecoder {
+  _ParseDecoder._internal();
 
   List<dynamic> _convertJSONArrayToList(List<dynamic> array) {
     List<dynamic> list = new List();
@@ -21,7 +21,6 @@ class ParseDecoder {
     });
     return map;
   }
-
 
   /// Decode any type value
   dynamic decode(dynamic value) {
@@ -57,7 +56,7 @@ class ParseDecoder {
     switch (map["__type"]) {
       case "Date":
         String iso = map["iso"];
-        return parseDateFormat.parse(iso);
+        return _parseDateFormat.parse(iso);
       case "Bytes":
         String val = map["base64"];
         return base64.decode(val);
@@ -68,12 +67,12 @@ class ParseDecoder {
       case "Object":
         String objectId = map["objectId"];
         String className = map["className"];
-        if (className == '_User') {
+        if (className == ParseUser.keyParseClassName) {
           return new ParseUser(objectId: objectId, json: map);
         }
         return new ParseObject(className, objectId: objectId, json: map);
       case "File":
-        return new ParseFile(map);
+        return new ParseFile._fromJson(map);
       case "GeoPoint":
         num latitude = map["latitude"] ?? 0.0;
         num longitude = map["longitude"] ?? 0.0;

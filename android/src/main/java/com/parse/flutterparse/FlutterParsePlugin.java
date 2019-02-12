@@ -1,6 +1,7 @@
 package com.parse.flutterparse;
 
 import com.parse.FlutterParse;
+import com.parse.FlutterParseConfig;
 import com.parse.FlutterParseInstallation;
 import com.parse.FlutterParseObject;
 import com.parse.FlutterParseQuery;
@@ -44,6 +45,12 @@ public class FlutterParsePlugin implements MethodCallHandler {
         break;
       case FlutterParseUser.LOGOUT:
         FlutterParseUser.logout(result);
+        break;
+      case FlutterParseConfig.GET_CURRENT:
+        FlutterParseConfig.getCurrent(result);
+        break;
+      case FlutterParseConfig.FETCH_IN_BACKGROUND:
+        FlutterParseConfig.fetchInBackground(result);
         break;
       case FlutterParseObject.DELETE_IN_BACKGROUND:
         FlutterParseObject.deleteAsync(call, result, false);

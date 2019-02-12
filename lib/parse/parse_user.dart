@@ -37,7 +37,7 @@ class ParseUser extends ParseObject {
   /// This retrieves the currently logged in [ParseUser] with a valid session, either from memory or
   /// disk if necessary.
   static Future<ParseUser> get currentUser =>
-      FlutterParse._channel.invokeMethod('getCurrentUser').then((jsonString) {
+      Parse._channel.invokeMethod('getCurrentUser').then((jsonString) {
         if (jsonString != null && jsonString is String) {
           final jsonObject = json.decode(jsonString);
           return ParseUser(json: jsonObject);
@@ -45,7 +45,8 @@ class ParseUser extends ParseObject {
       });
 
   /// Constructs a query for {@code ParseUser}.
-  static ParseQuery<ParseUser> get query => new ParseQuery<ParseUser>(keyParseClassName);
+  static ParseQuery<ParseUser> get query =>
+      new ParseQuery<ParseUser>(keyParseClassName);
 
   /// Logs in a user with a username and password. On success, this saves the session to disk, so you
   /// can retrieve the currently logged in user using [currentUser].
@@ -56,9 +57,7 @@ class ParseUser extends ParseObject {
 
     dynamic params = {'username': username, 'password': password};
 
-    return FlutterParse._channel
-        .invokeMethod('login', params)
-        .then((jsonString) {
+    return Parse._channel.invokeMethod('login', params).then((jsonString) {
       return _parseResult(jsonString);
     });
   }
@@ -71,12 +70,10 @@ class ParseUser extends ParseObject {
   Future<ParseUser> register() async {
     dynamic params = {};
     _data.forEach((key, value) {
-      params[key] = parseEncoder.encode(value);
+      params[key] = _parseEncoder.encode(value);
     });
 
-    return FlutterParse._channel
-        .invokeMethod('register', params)
-        .then((jsonString) {
+    return Parse._channel.invokeMethod('register', params).then((jsonString) {
       return _parseResult(jsonString);
     });
   }
@@ -93,6 +90,6 @@ class ParseUser extends ParseObject {
   /// Logs out the currently logged in user session. This will remove the session from disk, log out
   /// of linked services, and future calls to [currentUser] will return `null`.
   static Future<void> logOut() async {
-    return FlutterParse._channel.invokeMethod('logout');
+    return Parse._channel.invokeMethod('logout');
   }
 }

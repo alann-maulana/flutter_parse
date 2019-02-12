@@ -1,3 +1,6 @@
+## 0.1.3
+* Bug fix
+
 ## 0.1.2
 * Fix homepage url
 * Bug fix
