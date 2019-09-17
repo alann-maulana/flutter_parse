@@ -1,7 +1,7 @@
-# Flutter Parse
-[![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  
+# Flutter Parse   
+[![Build Status](https://travis-ci.org/alann-maulana/flutter_parse.svg?branch=master)](https://travis-ci.org/alann-maulana/flutter_parse#)  [![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  [![Coverage Status](https://coveralls.io/repos/github/alann-maulana/flutter_parse/badge.svg?branch=master)](https://coveralls.io/github/alann-maulana/flutter_parse?branch=master)
 
-Flutter plugin for managing Parse SDK for both Android and iOS. This plugins wraps both native Parse Android SDK and Parse iOS Framework to be accessed from Flutter code.
+Packages for managing Parse SDK using pure Dart. 
 
 Features:
 * ParseConfig
@@ -16,7 +16,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  flutter_parse: ^0.1.3
+  flutter_parse: ^0.2.0
 ```
 
 ## Import Library
