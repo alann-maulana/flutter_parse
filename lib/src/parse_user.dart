@@ -8,7 +8,7 @@ class ParseUser extends ParseObject {
   static const _keySessionToken = 'sessionToken';
   static const _keyAuthData = 'authData';
 
-  static const _readOnlyKeys = const <String>[_keySessionToken, _keyAuthData];
+  static const _readOnlyKeys = <String>[_keySessionToken, _keyAuthData];
 
   bool _isCurrentUser;
 
@@ -32,7 +32,9 @@ class ParseUser extends ParseObject {
 
   static Future<ParseUser> get currentUser async {
     final storage = await _currentUserStorage;
-    if (storage != null && storage.getData() != null && storage.getData().isNotEmpty) {
+    if (storage != null &&
+        storage.getData() != null &&
+        storage.getData().isNotEmpty) {
       final user = ParseUser._fromJson(json: storage.getData())
         .._isCurrentUser = true;
       return user;
@@ -87,6 +89,7 @@ class ParseUser extends ParseObject {
     }
     return this;
   }
+
   Future<ParseUser> signUp() async {
     await _uploadFiles();
 

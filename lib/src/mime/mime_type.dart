@@ -6,8 +6,8 @@ Map _extensions;
 
 /// Get the default extension for a given content type.
 String getExtension(String contentType) {
-  if (_contentTypes.containsKey(contentType)
-      && _contentTypes[contentType].containsKey('extensions')) {
+  if (_contentTypes.containsKey(contentType) &&
+      _contentTypes[contentType].containsKey('extensions')) {
     return _contentTypes[contentType]['extensions'].first;
   }
   return null;
@@ -16,7 +16,8 @@ String getExtension(String contentType) {
 /// Get the content type for a given extension or file path.
 String getContentType(String extension) {
   _processDb();
-  if (extension.lastIndexOf('.') >= 0) {  // assume a file name or path
+  if (extension.lastIndexOf('.') >= 0) {
+    // assume a file name or path
     extension = extension.substring(extension.lastIndexOf('.') + 1);
   }
   String contentType = _extensions[extension.toLowerCase()];

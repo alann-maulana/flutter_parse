@@ -1,16 +1,19 @@
-// import 'package:flutter_parse/flutter_parse.dart';
-// import 'package:test/test.dart';
+import 'package:flutter_parse/parse.dart';
+import 'package:test/test.dart';
 
-// void main() {
-//   group('A group of tests', () {
-//     Awesome awesome;
+void main() {
+  group('A group of tests', () {
+    Parse parse;
+    setUp(() {
+      parse = Parse.initialize(
+        server: 'PARSE_SERVER',
+        applicationId: 'PARSE_APPLICATION_ID',
+        clientKey: 'PARSE_CLIENT_KEY',
+      );
+    });
 
-//     setUp(() {
-//       awesome = Awesome();
-//     });
-
-//     test('First Test', () {
-//       expect(awesome.isAwesome, isTrue);
-//     });
-//   });
-// }
+    test('Parse initialization', () {
+      expect(parse.initialized, isTrue);
+    });
+  });
+}
