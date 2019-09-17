@@ -1,8 +1,8 @@
 DARTANALYZER_FLAGS=--fatal-warnings
 
-build: lib/*dart test/*dart bin/*dart deps
-	dartanalyzer ${DARTANALYZER_FLAGS} lib/ bin/
-	dartfmt -n --set-exit-if-changed lib/ test/ bin/
+build: lib/*dart test/*dart deps
+	dartanalyzer ${DARTANALYZER_FLAGS} lib/
+	dartfmt -n --set-exit-if-changed lib/ test/
 	pub run test_coverage
 
 deps: pubspec.yaml
