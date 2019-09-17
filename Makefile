@@ -9,7 +9,7 @@ deps: pubspec.yaml
 	pub get
 
 reformatting:
-	dartfmt -w lib/ test/ bin/
+	dartfmt -w lib/ test/
 
 build-local: reformatting build
 	genhtml -o coverage coverage/lcov.info
