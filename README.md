@@ -1,4 +1,6 @@
 # Flutter Parse
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_shield)
+
 [![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  
 
 Flutter plugin for managing Parse SDK for both Android and iOS. This plugins wraps both native Parse Android SDK and Parse iOS Framework to be accessed from Flutter code.
@@ -78,3 +80,6 @@ Parse SDK Android and Parse iOS Frameworks are distributed by [Parse Community](
 BSD License
 - [Parse SDK Android](https://github.com/parse-community/Parse-SDK-Android/blob/master/LICENSE)
 - [Parse SDK iOS](https://github.com/parse-community/Parse-SDK-iOS-OSX/blob/master/LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_large)
