@@ -55,13 +55,13 @@ class ParseObject implements ParseBaseObject {
   String get objectId => _objectId;
 
   /// This reports time as the server sees it, so that if you create a [ParseObject], then wait a
-  /// while, and then call [saveInBackground], the creation time will be the time of the first
-  /// [saveInBackground] call rather than the time the object was created locally.
+  /// while, and then call [save], the creation time will be the time of the first
+  /// [save] call rather than the time the object was created locally.
   DateTime get createdAt => _createdAt;
 
   /// This reports time as the server sees it, so that if you make changes to a [ParseObject], then
-  /// wait a while, and then call [saveInBackground], the updated time will be the time of the
-  /// [saveInBackground] call rather than the time the object was changed locally.
+  /// wait a while, and then call [save], the updated time will be the time of the
+  /// [save] call rather than the time the object was changed locally.
   DateTime get updatedAt => _updatedAt ?? _createdAt;
 
   /// Access a value. In most cases it is more convenient to use a helper function such as

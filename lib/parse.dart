@@ -1,7 +1,7 @@
 // Copyright (c) 2018, the Flutter Parse project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
-
+/// Dart package for accessing Parse Server
 library flutter_parse;
 
 import 'dart:async';
