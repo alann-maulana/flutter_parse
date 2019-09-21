@@ -1,16 +1,17 @@
-# Flutter Parse
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_shield)
+# Flutter Parse   
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_shield)  [![Build Status](https://travis-ci.org/alann-maulana/flutter_parse.svg?branch=master)](https://travis-ci.org/alann-maulana/flutter_parse#)  [![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  [![Coverage Status](https://coveralls.io/repos/github/alann-maulana/flutter_parse/badge.svg?branch=master)](https://coveralls.io/github/alann-maulana/flutter_parse?branch=master)
 
-[![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  
-
-Flutter plugin for managing Parse SDK for both Android and iOS. This plugins wraps both native Parse Android SDK and Parse iOS Framework to be accessed from Flutter code.
+Packages for managing Parse SDK using pure Dart. 
 
 Features:
+* ParseACL
 * ParseConfig
-* ParseInstallation
+* ParseFile
 * ParseObject
-* ParseUser
 * ParseQuery
+* ParseRole
+* ParseSession
+* ParseUser
     
 ## Installation
 
@@ -18,7 +19,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  flutter_parse: ^0.1.3
+  flutter_parse: ^0.2.0
 ```
 
 ## Import Library
@@ -29,13 +30,13 @@ import 'package:flutter_parse/flutter_parse.dart';
 ## Initializing Library
 
 ```dart
-void main() async {
-  await Parse.initialize(
-      server: 'YOUR_PARSE_SERVER_URL',
-      applicationId: 'YOUR_PARSE_APPLICATION_ID',
-      clientKey: 'YOUR_PARSE_CLIENT_KEY');
-  
-  // initialize parse libraru before running your app
+void main() {
+  ParseConfiguration config = ParseConfiguration(
+    server: 'YOUR_PARSE_SERVER_URL',
+    applicationId: 'YOUR_PARSE_APPLICATION_ID',
+    clientKey: 'YOUR_PARSE_CLIENT_KEY',
+  );
+  Parse.initialize(config);
   runApp(MyApp());
 }
 ```
@@ -48,7 +49,7 @@ final object = ParseObject('Beacon')
       ..set('major', 1)
       ..set('enabled', true)
       ..set('timestamp', DateTime.now());
-await object.saveInBackground();
+await object.save();
 ```
 
 ## Register User
@@ -57,7 +58,7 @@ await object.saveInBackground();
 final user = ParseUser()
   ..username = 'alan'
   ..password = 'maulana';
-await user.register();
+await user.signUp();
 ```
 
 ## Query Object
@@ -71,15 +72,9 @@ final listObjects = await query.findAsync();
 
 # Author
 
-Flutter Parse plugin is developed by Alann Maulana. You can contact me at <kangmas.alan@gmail.com>.
-
-Parse SDK Android and Parse iOS Frameworks are distributed by [Parse Community](https://github.com/parse-community).
+Parse Dart plugin is developed by Alann Maulana. You can contact me at <kangmas.alan@gmail.com>.
 
 ## License
 
 BSD License
-- [Parse SDK Android](https://github.com/parse-community/Parse-SDK-Android/blob/master/LICENSE)
-- [Parse SDK iOS](https://github.com/parse-community/Parse-SDK-iOS-OSX/blob/master/LICENSE)
-
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_large)
+- [See LICENSE](https://github.com/alann-maulana/flutter_parse/blob/master/LICENSE)
