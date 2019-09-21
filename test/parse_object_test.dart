@@ -145,7 +145,7 @@ void main() {
     });
 
     test('objectId must not be null', () {
-      expect(saved.objectId !=  null, isTrue);
+      expect(saved.objectId != null, isTrue);
     });
 
     test('createdAt must not be null', () {

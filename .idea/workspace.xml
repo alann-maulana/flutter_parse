@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9c6c1e83-907a-4f95-9061-a938745a7d16" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/flutter_parse.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/parse.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/parse.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/mime/mime_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/mime/mime_db.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/mime/mime_type.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/mime/mime_type.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_acl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_acl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_config.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_date_format.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_date_format.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_decoder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_decoder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_encoder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_encoder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_exception.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_exception.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_file.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_file.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_geo_point.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_geo_point.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_http_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_http_client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_object.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_object.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_query.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_query.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_role.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_session.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_session.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/parse_user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parse_user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/pointer_encoder.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/flutter_parse_test.dart" beforeDir="false" />
-    </list>
+    <list default="true" id="9c6c1e83-907a-4f95-9061-a938745a7d16" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +119,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Development/AndroidSDK" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />

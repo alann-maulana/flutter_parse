@@ -42,14 +42,11 @@ class ParseGeoPoint extends ParseBaseObject {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ParseGeoPoint &&
-              runtimeType == other.runtimeType &&
-              _latitude == other._latitude &&
-              _longitude == other._longitude;
+      other is ParseGeoPoint &&
+          runtimeType == other.runtimeType &&
+          _latitude == other._latitude &&
+          _longitude == other._longitude;
 
   @override
-  int get hashCode =>
-      _latitude.hashCode ^
-      _longitude.hashCode;
-
+  int get hashCode => _latitude.hashCode ^ _longitude.hashCode;
 }

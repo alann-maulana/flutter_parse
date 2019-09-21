@@ -24,16 +24,21 @@ void main() {
       expect(parse.server == 'https://parseapi.back4app.com', isTrue);
     });
 
-    test('server not equal to https://parseapi.back4app.com/ (removed last backslash)', () {
+    test(
+        'server not equal to https://parseapi.back4app.com/ (removed last backslash)',
+        () {
       expect(parse.server == 'https://parseapi.back4app.com/', isFalse);
     });
 
-    test('applicationId must equal to YtoxICpUQVRdQT96DUAdkGuk85unFzfuOUomHALP', () {
-      expect(parse.applicationId == 'YtoxICpUQVRdQT96DUAdkGuk85unFzfuOUomHALP', isTrue);
+    test('applicationId must equal to YtoxICpUQVRdQT96DUAdkGuk85unFzfuOUomHALP',
+        () {
+      expect(parse.applicationId == 'YtoxICpUQVRdQT96DUAdkGuk85unFzfuOUomHALP',
+          isTrue);
     });
 
     test('clientKey equal to 8OELUgIMBuEVNECy3jioGmDvf7QSyshVLshqNS6N', () {
-      expect(parse.clientKey == '8OELUgIMBuEVNECy3jioGmDvf7QSyshVLshqNS6N', isTrue);
+      expect(parse.clientKey == '8OELUgIMBuEVNECy3jioGmDvf7QSyshVLshqNS6N',
+          isTrue);
     });
 
     test('enableLogging must be true', () {

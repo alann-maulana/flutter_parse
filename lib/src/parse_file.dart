@@ -38,15 +38,13 @@ class ParseFile implements ParseBaseObject {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ParseFile &&
-              runtimeType == other.runtimeType &&
-              _name == other._name &&
-              _url == other._url;
+      other is ParseFile &&
+          runtimeType == other.runtimeType &&
+          _name == other._name &&
+          _url == other._url;
 
   @override
-  int get hashCode =>
-      _name.hashCode ^
-      _url.hashCode;
+  int get hashCode => _name.hashCode ^ _url.hashCode;
 
   Future<ParseFile> upload() async {
     if (saved) {
