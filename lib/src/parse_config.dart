@@ -5,14 +5,10 @@ final parseConfig = ParseConfig._internal();
 class ParseConfig implements ParseBaseObject {
   bool _isComplete;
   final Map<String, dynamic> _data;
-  final Map<String, dynamic> _operations;
-  final Map<String, ParseFile> _operationFiles;
 
   ParseConfig._internal()
       : _isComplete = false,
-        _data = {},
-        _operations = {},
-        _operationFiles = {};
+        _data = {};
 
   // region GETTER
   bool get isComplete => _isComplete;
@@ -23,7 +19,7 @@ class ParseConfig implements ParseBaseObject {
   /// Returns `null` if there is no such key.
   dynamic get(String key) {
     assert(key != null);
-    assert(isComplete);
+    assert(isComplete, 'call `fetch` first to get data');
 
     if (!_data.containsKey(key)) {
       return null;
@@ -163,25 +159,9 @@ class ParseConfig implements ParseBaseObject {
 
     return get(key);
   }
-// endregion
+  // endregion
 
   // region SETTER
-  /// Add a key-value pair to this object. It is recommended to name keys in
-  /// <code>camelCaseLikeThis</code>.
-  void set(String key, dynamic value) {
-    assert(key != null && key.isNotEmpty);
-
-    if (value is ParseFile) {
-      if (!value.saved) {
-        _operationFiles[key] = value;
-        return;
-      }
-    }
-
-    _data[key] = value;
-    _operations[key] = _parseEncoder.encode(value);
-  }
-
   void _mergeJson(dynamic json, {bool fromFetch = false}) {
     final result = json['result'];
     if (result == true) {
@@ -198,9 +178,6 @@ class ParseConfig implements ParseBaseObject {
         _data[key] = _parseDecoder.decode(value);
       });
 
-      if (_operations.isNotEmpty) {
-        _operations.clear();
-      }
       _isComplete = true;
     }
   }
@@ -209,7 +186,7 @@ class ParseConfig implements ParseBaseObject {
   // region HELPERS
   @override
   String get _path {
-    String path = '${_parse._uri.path}config';
+    String path = '${_parse._configuration.uri.path}/config';
 
     return path;
   }
@@ -232,40 +209,6 @@ class ParseConfig implements ParseBaseObject {
   // endregion
 
   // region EXECUTORS
-  Future<void> _uploadFiles() async {
-    if (_operationFiles.isNotEmpty) {
-      List<String> keys = [];
-      List<Future<ParseFile>> futures = [];
-      _operationFiles.forEach((key, parseFile) async {
-        keys.add(key);
-        final future = parseFile.upload();
-        futures.add(future);
-      });
-
-      List<ParseFile> files = await Future.wait(futures);
-      for (int i = 0; i < keys.length; i++) {
-        String key = keys[i];
-        ParseFile file = files[i];
-        if (file.saved) {
-          set(key, file);
-        }
-      }
-      _operationFiles.clear();
-    }
-    return;
-  }
-
-  Future<ParseConfig> save() async {
-    await _uploadFiles();
-
-    dynamic jsonBody = json.encode({'params': _operations});
-
-    final result = await _parseHTTPClient.put(_path, body: jsonBody);
-
-    _mergeJson(result);
-    return Future.value(this);
-  }
-
   Future<ParseConfig> fetch() async {
     final result = await _parseHTTPClient.get(_path);
     _mergeJson(result);

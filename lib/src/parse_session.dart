@@ -1,7 +1,7 @@
 part of flutter_parse;
 
 class ParseSession extends ParseObject {
-  ParseSession._({String objectId})
+  ParseSession._internal({String objectId})
       : super(className: '_Session', objectId: objectId);
 
   DateTime get expiresAt => getDateTime('expiresAt');
@@ -23,14 +23,14 @@ class ParseSession extends ParseObject {
   String get sessionToken => getString('sessionToken');
 
   static Future<ParseSession> _me() async {
-    final session = ParseSession._(objectId: 'me');
+    final session = ParseSession._internal(objectId: 'me');
     await session.fetch();
     return session;
   }
 
   @override
   String get _path {
-    String path = '${_parse._uri.path}sessions';
+    String path = '${_parse._configuration.uri.path}/sessions';
 
     if (objectId != null) {
       path = '$path/$objectId';

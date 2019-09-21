@@ -8,14 +8,14 @@ class _ParseHTTPClient {
   final _ParseBaseHTTPClient _httpClient;
 
   String _getFullUrl(String path) {
-    return _parse._uri.origin + path;
+    return _parse._configuration.uri.origin + path;
   }
 
   Future<dynamic> _parseResponse(http.Response httpResponse) {
     String response = httpResponse.body;
     final result = json.decode(response);
 
-    if (_parse._enableLogging) {
+    if (_parse.enableLogging) {
       print("╭-- JSON");
       _httpClient.printWrapped(response);
       print("╰-- result");
@@ -34,7 +34,7 @@ class _ParseHTTPClient {
     }
 
     throw ParseException(
-        code: ParseException.InvalidJson, message: 'invalid server response');
+        code: ParseException.invalidJson, message: 'invalid server response');
   }
 
   Future<dynamic> get(String path,
@@ -99,7 +99,8 @@ class _ParseHTTPClient {
 class _ParseBaseHTTPClient extends http.BaseClient {
   final http.Client _client;
 
-  _ParseBaseHTTPClient() : this._client = http.Client();
+  _ParseBaseHTTPClient()
+      : this._client = _parse._configuration.client ?? http.Client();
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
@@ -107,11 +108,11 @@ class _ParseBaseHTTPClient extends http.BaseClient {
 
     request.headers[HttpHeaders.userAgentHeader] =
         "Dart Parse SDK v${kParseSdkVersion}";
-    request.headers['X-Parse-Application-Id'] = _parse._applicationId;
+    request.headers['X-Parse-Application-Id'] = _parse.applicationId;
 
     // client key can be null with self-hosted Parse Server
-    if (_parse._clientKey != null) {
-      request.headers['X-Parse-Client-Key'] = _parse._clientKey;
+    if (_parse.clientKey != null) {
+      request.headers['X-Parse-Client-Key'] = _parse.clientKey;
     }
 
     request.headers['X-Parse-Client-Version'] = "dart${kParseSdkVersion}";
@@ -122,11 +123,11 @@ class _ParseBaseHTTPClient extends http.BaseClient {
       request.headers['X-Parse-Session-Token'] = currentUser.sessionId;
     }
 
-    if (_parse._enableLogging) {
+    if (_parse.enableLogging) {
       _logging(request);
     }
 
-    return _client.send(request);
+    return await _client.send(request);
   }
 
   void _logging(http.BaseRequest request) {

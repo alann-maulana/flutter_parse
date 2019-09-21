@@ -1,4 +1,4 @@
-part of parse_mime_type;
+part of flutter_parse.mime_type;
 
 /// From https://github.com/jshttp/mime-db
 final Map _contentTypes = {

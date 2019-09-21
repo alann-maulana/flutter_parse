@@ -31,7 +31,6 @@ part 'src/parse_query.dart';
 part 'src/parse_role.dart';
 part 'src/parse_session.dart';
 part 'src/parse_user.dart';
-part 'src/pointer_encoder.dart';
 
 const String kParseSdkVersion = "0.2.0";
 
@@ -40,7 +39,7 @@ final Parse _parse = Parse._internal();
 /// The {@code Parse} class contains static functions that handle global
 /// configuration for the Parse library.
 class Parse {
-  Parse._internal() : _enableLogging = false;
+  Parse._internal();
 
   /// Authenticates this client as belonging to your application.
   /// This must be called before your application can use the Parse library.
@@ -50,47 +49,48 @@ class Parse {
   ///
   /// ```
   /// void main() {
-  ///   Parse.initialize(
-  ///       server: 'YOUR_PARSE_SERVER_URL',
-  ///       applicationId: 'YOUR_PARSE_APPLICATION_ID',
-  ///       clientKey: 'YOUR_PARSE_CLIENT_KEY');
+  ///   ParseConfiguration config = ParseConfiguration(
+  ///     server: 'YOUR_PARSE_SERVER_URL',
+  ///     applicationId: 'YOUR_PARSE_APPLICATION_ID',
+  ///     clientKey: 'YOUR_PARSE_CLIENT_KEY',
+  ///   );
+  ///   Parse.initialize(config);
   ///   runApp(MyApp());
   /// }
   /// ```
-  factory Parse.initialize({
-    @required String server,
-    @required String applicationId,
-    String clientKey,
-    bool enableLogging = false,
-  }) {
-    assert(server != null);
-    assert(applicationId != null);
-
-    if (!server.endsWith("/")) {
-      server = server + "/";
-    }
-    _parse._uri = Uri.parse(server);
-    _parse._applicationId = applicationId;
-    _parse._clientKey = clientKey;
-    _parse._enableLogging = enableLogging;
-
-    return _parse;
+  factory Parse.initialize(ParseConfiguration configuration) {
+    return _parse.._configuration = configuration;
   }
 
-  Uri _uri;
-  String _applicationId;
-  String _clientKey;
-  bool _enableLogging;
+  ParseConfiguration _configuration;
 
-  String get clientKey => _parse._clientKey;
+  String get clientKey => _configuration.clientKey;
 
-  String get applicationId => _parse._applicationId;
+  String get applicationId => _configuration.applicationId;
 
-  String get server => _parse._uri.toString();
+  String get server => _configuration.uri.toString();
 
-  bool get enableLogging => _parse._enableLogging;
+  bool get enableLogging => _configuration.enableLogging;
 
-  bool get initialized => _parse.applicationId != null;
+  bool get initialized => _configuration != null;
+}
+
+class ParseConfiguration {
+  ParseConfiguration({
+    @required String server,
+    @required this.applicationId,
+    this.clientKey,
+    this.enableLogging,
+    this.client,
+  }) : uri = Uri.parse((server.endsWith("/")
+            ? server.substring(0, server.length - 1)
+            : server));
+
+  final Uri uri;
+  final String applicationId;
+  final String clientKey;
+  final bool enableLogging;
+  final http.BaseClient client;
 }
 
 abstract class ParseBaseObject {

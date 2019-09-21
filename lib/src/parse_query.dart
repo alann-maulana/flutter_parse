@@ -257,7 +257,9 @@ class ParseQuery<T extends ParseObject> {
     final className = queries[0].className;
     final clauseOr = queries.map((q) {
       if (q.className != className) {
-        throw Exception('different className');
+        throw ParseException(
+            code: ParseException.invalidClassName,
+            message: 'different className');
       }
       return q._where;
     }).toList();
@@ -265,59 +267,47 @@ class ParseQuery<T extends ParseObject> {
   }
 
   Future<List<dynamic>> findAsync() async {
-    try {
-      dynamic result = await _find();
-      if (result.containsKey("code")) {
-        var code = result["code"];
-        var message = result["error"];
-        return Future.error(ParseException(code: code, message: message));
-      } else {
-        List<dynamic> results = result["results"];
-        List<dynamic> objects = List();
-        results.forEach((json) {
-          String objectId = json["objectId"];
-          if (className == '_User') {
-            ParseUser user = ParseUser._fromJson(json: json);
-            objects.add(user);
-          } else {
-            ParseObject object = ParseObject._fromJson(
-                className: className, objectId: objectId, json: json);
-            objects.add(object);
-          }
-        });
-        return Future.value(objects);
-      }
-    } catch (e) {
-      return Future.error(ParseException(
-          code: ParseException.OtherCause, message: e.toString()));
+    dynamic result = await _find();
+    if (result.containsKey("results")) {
+      List<dynamic> results = result["results"];
+      List<dynamic> objects = List();
+      results.forEach((json) {
+        String objectId = json["objectId"];
+        if (className == '_User') {
+          ParseUser user = ParseUser.fromJson(json: json);
+          objects.add(user);
+        } else {
+          ParseObject object = ParseObject.fromJson(
+            className: className,
+            objectId: objectId,
+            json: json,
+          );
+          objects.add(object);
+        }
+      });
+      return objects;
     }
+
+    return [];
   }
 
   Future<dynamic> _find() {
     _countEnabled = false;
-    return this._query();
+    return _query();
   }
 
   Future<int> countAsync() async {
-    try {
-      dynamic result = await _count();
-      if (result.containsKey("code")) {
-        var code = result["code"];
-        var message = result["error"];
-        return Future.error(ParseException(code: code, message: message));
-      } else {
-        int count = result["count"];
-        return Future.value(count);
-      }
-    } catch (e) {
-      return Future.error(ParseException(
-          code: ParseException.OtherCause, message: e.toString()));
+    final result = await _count();
+    if (result.containsKey("count")) {
+      return result["count"];
     }
+
+    return 0;
   }
 
   Future<dynamic> _count() {
     _countEnabled = true;
-    return this._query();
+    return _query();
   }
 
   Future<dynamic> _query() {
@@ -330,7 +320,7 @@ class ParseQuery<T extends ParseObject> {
     };
 
     return _parseHTTPClient.post(
-      '${_parse._uri.path}classes/$className',
+      '${_parse._configuration.uri.path}/classes/$className',
       body: body,
       headers: headers,
     );

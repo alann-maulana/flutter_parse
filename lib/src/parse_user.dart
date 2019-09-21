@@ -16,13 +16,12 @@ class ParseUser extends ParseObject {
       : _isCurrentUser = false,
         super(className: '_User', objectId: objectId);
 
-  factory ParseUser._fromJson({dynamic json}) {
-    final user = ParseUser().._mergeJson(json);
-    return user;
+  factory ParseUser.fromJson({dynamic json}) {
+    return ParseUser()..mergeJson(json);
   }
 
   factory ParseUser.fromObject({@required ParseObject object}) {
-    return ParseUser._fromJson(json: object._toJson);
+    return ParseUser.fromJson(json: object._toJson);
   }
 
   Future<ParseSession> get session => ParseSession._me();
@@ -35,9 +34,7 @@ class ParseUser extends ParseObject {
     if (storage != null &&
         storage.getData() != null &&
         storage.getData().isNotEmpty) {
-      final user = ParseUser._fromJson(json: storage.getData())
-        .._isCurrentUser = true;
-      return user;
+      return ParseUser.fromJson(json: storage.getData()).._isCurrentUser = true;
     }
 
     return null;
@@ -96,31 +93,33 @@ class ParseUser extends ParseObject {
     dynamic jsonBody = json.encode(_operations);
     final headers = <String, String>{'X-Parse-Revocable-Session': '1'};
     final result = await _parseHTTPClient.post(
-      '${_parse._uri.path}users',
+      '${_parse._configuration.uri.path}/users',
       body: jsonBody,
       headers: headers,
     );
-    _mergeJson(result);
+    mergeJson(result);
     _isCurrentUser = true;
 
     final storage = await _currentUserStorage;
     await storage.setData(_toJson);
 
-    return Future.value(this);
+    return this;
   }
 
   static Future<ParseUser> signIn(
       {@required String username, @required String password}) async {
     final headers = <String, String>{'X-Parse-Revocable-Session': '1'};
     final params = <String, String>{'username': username, 'password': password};
-    final result = await _parseHTTPClient.get('${_parse._uri.path}login',
-        params: params, headers: headers);
-    final user = ParseUser._fromJson(json: result);
+    final result = await _parseHTTPClient.get(
+        '${_parse._configuration.uri.path}/login',
+        params: params,
+        headers: headers);
+    final user = ParseUser.fromJson(json: result);
 
     final storage = await _currentUserStorage;
     await storage.setData(user._toJson);
 
-    return Future.value(user);
+    return user;
   }
 
   static Future<void> resetPassword({@required String email}) async {
@@ -128,18 +127,16 @@ class ParseUser extends ParseObject {
     final headers = {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
     };
-    await _parseHTTPClient.post(
-      '${_parse._uri.path}requestPasswordReset',
+    return await _parseHTTPClient.post(
+      '${_parse._configuration.uri.path}/requestPasswordReset',
       body: body,
       headers: headers,
     );
-    return;
   }
 
   static Future<void> signOut() async {
     final storage = await _currentUserStorage;
-    await storage.delete();
-    return;
+    return await storage.delete();
   }
   // endregion
 }

@@ -68,17 +68,22 @@ class _ParseDecoder {
         String objectId = map["objectId"];
         String className = map["className"];
         if (className == '_User') {
-          return ParseUser._fromJson(json: map);
+          return ParseUser.fromJson(json: map);
         }
-        return ParseObject._fromJson(
-            className: className, objectId: objectId, json: map);
+        return ParseObject.fromJson(
+          className: className,
+          objectId: objectId,
+          json: map,
+        );
       case "File":
-        return ParseFile._fromJson(map);
+        return ParseFile.fromJson(map);
       case "GeoPoint":
         num latitude = map["latitude"] ?? 0.0;
         num longitude = map["longitude"] ?? 0.0;
         return ParseGeoPoint(
-            latitude: latitude.toDouble(), longitude: longitude.toDouble());
+          latitude: latitude.toDouble(),
+          longitude: longitude.toDouble(),
+        );
     }
 
     return null;

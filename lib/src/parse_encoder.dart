@@ -7,8 +7,8 @@ final _ParseEncoder _parseEncoder = _ParseEncoder._internal();
 class _ParseEncoder {
   _ParseEncoder._internal();
 
-  bool isValidType(dynamic value) {
-    return value == null ||
+  isValidType(dynamic value) {
+    assert(value == null ||
         value is String ||
         value is num ||
         value is bool ||
@@ -16,9 +16,10 @@ class _ParseEncoder {
         value is List ||
         value is Map ||
         value is Uint8List ||
+        value is ParseACL ||
         value is ParseObject ||
         value is ParseFile ||
-        value is ParseGeoPoint;
+        value is ParseGeoPoint);
   }
 
   /// Encode any type value into Map
@@ -57,6 +58,10 @@ class _ParseEncoder {
 
     if (value is ParseGeoPoint) {
       return value._toJson;
+    }
+
+    if (value is ParseACL) {
+      return value.map;
     }
 
     return value;

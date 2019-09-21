@@ -7,7 +7,7 @@ class ParseFile implements ParseBaseObject {
   String _name;
   String _url;
 
-  ParseFile._fromJson(dynamic json) {
+  ParseFile.fromJson(dynamic json) {
     _mergeFrom(json);
   }
 
@@ -25,7 +25,7 @@ class ParseFile implements ParseBaseObject {
   bool get saved => url != null;
 
   @override
-  String get _path => 'files/$_name';
+  String get _path => '${_parse._configuration.uri.path}/files/$_name';
 
   @override
   get _toJson => <String, String>{'__type': _type, 'name': _name, 'url': _url};
@@ -34,6 +34,19 @@ class ParseFile implements ParseBaseObject {
   String toString() {
     return json.encode(_toJson);
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ParseFile &&
+              runtimeType == other.runtimeType &&
+              _name == other._name &&
+              _url == other._url;
+
+  @override
+  int get hashCode =>
+      _name.hashCode ^
+      _url.hashCode;
 
   Future<ParseFile> upload() async {
     if (saved) {
@@ -53,6 +66,6 @@ class ParseFile implements ParseBaseObject {
     );
 
     _mergeFrom(response);
-    return Future.value(this);
+    return this;
   }
 }

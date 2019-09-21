@@ -6,6 +6,7 @@ class ParseObject implements ParseBaseObject {
   static const _keyCreatedAt = "createdAt";
   static const _keyUpdatedAt = "updatedAt";
   static const _keyClassName = "className";
+  static const _keyACL = "ACL";
 
   final String className;
   String _objectId;
@@ -29,11 +30,18 @@ class ParseObject implements ParseBaseObject {
     }
   }
 
-  factory ParseObject._fromJson(
-      {String className, String objectId, dynamic json}) {
-    final object = ParseObject(className: className, objectId: objectId);
-    object._mergeJson(json);
-    return object;
+  factory ParseObject.fromJson({
+    String className,
+    String objectId,
+    @required dynamic json,
+  }) {
+    className ??= json[_keyClassName];
+    assert(className != null, 'No className defined');
+
+    objectId ??= json[_keyObjectId];
+
+    return ParseObject(className: className, objectId: objectId)
+      ..mergeJson(json);
   }
 
   // region GETTER
@@ -209,12 +217,11 @@ class ParseObject implements ParseBaseObject {
     final acl = get('ACL');
     if (acl == null) {
       return ParseACL();
-    } else if (!(acl is Map)) {
-      // it won't going to happen
-      return null;
+    } else if (!(acl is ParseACL)) {
+      throw Exception("only ACLs can be stored in the ACL key");
     }
 
-    return ParseACL.fromMap(acl);
+    return acl;
   }
   // endregion
 
@@ -236,6 +243,7 @@ class ParseObject implements ParseBaseObject {
   void set(String key, dynamic value) {
     assert(key != null && key.isNotEmpty);
     _checkKeyIsMutable(key);
+    _parseEncoder.isValidType(value);
 
     if (value == null) {
       remove(key);
@@ -251,6 +259,10 @@ class ParseObject implements ParseBaseObject {
 
     _data[key] = value;
     _operations[key] = _parseEncoder.encode(value);
+  }
+
+  void setACL(ParseACL acl) {
+    set(_keyACL, acl);
   }
 
   void remove(String key) {
@@ -294,7 +306,7 @@ class ParseObject implements ParseBaseObject {
     };
   }
 
-  void _mergeJson(dynamic json, {bool fromFetch = false}) {
+  void mergeJson(dynamic json, {bool fromFetch = false}) {
     if (fromFetch) {
       _data.clear();
     }
@@ -309,6 +321,8 @@ class ParseObject implements ParseBaseObject {
         _createdAt = _parseDateFormat.parse(value);
       } else if (key == _keyUpdatedAt) {
         _updatedAt = _parseDateFormat.parse(value);
+      } else if (key == _keyACL) {
+        _data[key] = ParseACL.fromMap(value);
       } else {
         _data[key] = _parseDecoder.decode(value);
       }
@@ -337,7 +351,7 @@ class ParseObject implements ParseBaseObject {
 
   @override
   String get _path {
-    String path = '${_parse._uri.path}classes/$className';
+    String path = '${_parse._configuration.uri.path}/classes/$className';
 
     if (objectId != null) {
       path = '$path/$objectId';
@@ -426,8 +440,8 @@ class ParseObject implements ParseBaseObject {
         ? await _parseHTTPClient.post(_path, body: jsonBody, headers: headers)
         : await _parseHTTPClient.put(_path, body: jsonBody, headers: headers);
 
-    _mergeJson(result);
-    return Future.value(this);
+    mergeJson(result);
+    return this;
   }
 
   Future<ParseObject> fetchIfNeeded() async {
@@ -435,21 +449,19 @@ class ParseObject implements ParseBaseObject {
       return fetch();
     }
 
-    return Future.value(this);
+    return this;
   }
 
   Future<ParseObject> fetch({List<String> includes}) async {
-    if (objectId != null) {
-      var queryString = '';
-      if (includes != null) {
-        queryString = '?include=${includes.join(',')}';
-      }
-      final result = await _parseHTTPClient.get(_path + queryString);
-      _mergeJson(result);
-      return Future.value(this);
-    }
+    assert(objectId != null, 'cannot fetch ParseObject without objectId');
 
-    return null;
+    var queryString = '';
+    if (includes != null) {
+      queryString = '?include=${includes.join(',')}';
+    }
+    final result = await _parseHTTPClient.get(_path + queryString);
+    mergeJson(result);
+    return Future.value(this);
   }
 
   Future<void> delete() async {
@@ -458,7 +470,7 @@ class ParseObject implements ParseBaseObject {
       _isDeleted = true;
       _reset();
     }
-    return null;
+    return;
   }
   // endregion
 
@@ -480,13 +492,13 @@ class ParseObject implements ParseBaseObject {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
     };
     final results = await _parseHTTPClient.post(
-      '${_parse._uri.path}batch',
+      '${_parse._configuration.uri.path}/batch',
       body: jsonBody,
       headers: headers,
     );
     if (results is List<dynamic>) {
       for (int i = 0; i < results.length; i++) {
-        objects[i]._mergeJson(results[i]);
+        objects[i].mergeJson(results[i]);
       }
     }
     return;

@@ -6,16 +6,12 @@ final _ParseDateFormat _parseDateFormat = _ParseDateFormat._internal();
 class _ParseDateFormat {
   _ParseDateFormat._internal();
 
-  /// Deserialize an ISO-8601 full-precision extended format representation of date string into [DateTime].
-  DateTime parse(String strDate) {
-    try {
-      return DateTime.parse(strDate);
-    } on FormatException {
-      return null;
-    }
-  }
+  /// Deserialize an ISO-8601 full-precision extended format representation
+  /// of date string into [DateTime].
+  DateTime parse(String strDate) => DateTime.tryParse(strDate);
 
-  /// Serialize [DateTime] into an ISO-8601 full-precision extended format representation.
+  /// Serialize [DateTime] into an ISO-8601 full-precision
+  /// extended format representation.
   String format(DateTime datetime) {
     if (!datetime.isUtc) {
       datetime = datetime.toUtc();

@@ -1,4 +1,4 @@
-library parse_mime_type;
+library flutter_parse.mime_type;
 
 part 'mime_db.dart';
 
@@ -6,27 +6,27 @@ Map _extensions;
 
 /// Get the default extension for a given content type.
 String getExtension(String contentType) {
+  assert(contentType != null);
   if (_contentTypes.containsKey(contentType) &&
       _contentTypes[contentType].containsKey('extensions')) {
-    return _contentTypes[contentType]['extensions'].first;
+    final list = _contentTypes[contentType]['extensions'];
+    if (list is List && list.isNotEmpty) {
+      return _contentTypes[contentType]['extensions'].first;
+    }
   }
   return null;
 }
 
 /// Get the content type for a given extension or file path.
 String getContentType(String extension) {
+  assert(extension != null);
   _processDb();
   if (extension.lastIndexOf('.') >= 0) {
     // assume a file name or path
     extension = extension.substring(extension.lastIndexOf('.') + 1);
   }
-  String contentType = _extensions[extension.toLowerCase()];
 
-  if (contentType == null) {
-    contentType = 'application/octet-stream';
-  }
-
-  return contentType;
+  return _extensions[extension.toLowerCase()] ?? 'application/octet-stream';
 }
 
 /// Lazily process the content types in a map indexed by extension.

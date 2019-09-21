@@ -38,4 +38,18 @@ class ParseGeoPoint extends ParseBaseObject {
   String toString() {
     return json.encode(_toJson);
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ParseGeoPoint &&
+              runtimeType == other.runtimeType &&
+              _latitude == other._latitude &&
+              _longitude == other._longitude;
+
+  @override
+  int get hashCode =>
+      _latitude.hashCode ^
+      _longitude.hashCode;
+
 }
