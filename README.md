@@ -4,11 +4,14 @@
 Packages for managing Parse SDK using pure Dart. 
 
 Features:
+* ParseACL
 * ParseConfig
-* ParseInstallation
+* ParseFile
 * ParseObject
-* ParseUser
 * ParseQuery
+* ParseRole
+* ParseSession
+* ParseUser
     
 ## Installation
 
@@ -27,13 +30,13 @@ import 'package:flutter_parse/flutter_parse.dart';
 ## Initializing Library
 
 ```dart
-void main() async {
-  await Parse.initialize(
-      server: 'YOUR_PARSE_SERVER_URL',
-      applicationId: 'YOUR_PARSE_APPLICATION_ID',
-      clientKey: 'YOUR_PARSE_CLIENT_KEY');
-  
-  // initialize parse libraru before running your app
+void main() {
+  ParseConfiguration config = ParseConfiguration(
+    server: 'YOUR_PARSE_SERVER_URL',
+    applicationId: 'YOUR_PARSE_APPLICATION_ID',
+    clientKey: 'YOUR_PARSE_CLIENT_KEY',
+  );
+  Parse.initialize(config);
   runApp(MyApp());
 }
 ```
@@ -46,7 +49,7 @@ final object = ParseObject('Beacon')
       ..set('major', 1)
       ..set('enabled', true)
       ..set('timestamp', DateTime.now());
-await object.saveInBackground();
+await object.save();
 ```
 
 ## Register User
@@ -55,7 +58,7 @@ await object.saveInBackground();
 final user = ParseUser()
   ..username = 'alan'
   ..password = 'maulana';
-await user.register();
+await user.signUp();
 ```
 
 ## Query Object
@@ -69,12 +72,9 @@ final listObjects = await query.findAsync();
 
 # Author
 
-Flutter Parse plugin is developed by Alann Maulana. You can contact me at <kangmas.alan@gmail.com>.
-
-Parse SDK Android and Parse iOS Frameworks are distributed by [Parse Community](https://github.com/parse-community).
+Parse Dart plugin is developed by Alann Maulana. You can contact me at <kangmas.alan@gmail.com>.
 
 ## License
 
 BSD License
-- [Parse SDK Android](https://github.com/parse-community/Parse-SDK-Android/blob/master/LICENSE)
-- [Parse SDK iOS](https://github.com/parse-community/Parse-SDK-iOS-OSX/blob/master/LICENSE)
+- [See LICENSE](https://github.com/alann-maulana/flutter_parse/blob/master/LICENSE)

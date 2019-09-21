@@ -1,4 +1,4 @@
-import 'package:flutter_parse/parse.dart';
+import 'package:flutter_parse/flutter_parse.dart';
 import 'package:test/test.dart';
 
 final ParseConfiguration _configuration = ParseConfiguration(
