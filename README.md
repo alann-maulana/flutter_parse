@@ -1,5 +1,5 @@
 # Flutter Parse   
-[![Build Status](https://travis-ci.org/alann-maulana/flutter_parse.svg?branch=master)](https://travis-ci.org/alann-maulana/flutter_parse#)  [![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  [![Coverage Status](https://coveralls.io/repos/github/alann-maulana/flutter_parse/badge.svg?branch=master)](https://coveralls.io/github/alann-maulana/flutter_parse?branch=master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_parse?ref=badge_shield)  [![Build Status](https://travis-ci.org/alann-maulana/flutter_parse.svg?branch=master)](https://travis-ci.org/alann-maulana/flutter_parse#)  [![](https://img.shields.io/pub/v/flutter_parse.svg)](https://github.com/alann-maulana/flutter_parse)  [![Coverage Status](https://coveralls.io/repos/github/alann-maulana/flutter_parse/badge.svg?branch=master)](https://coveralls.io/github/alann-maulana/flutter_parse?branch=master)
 
 Packages for managing Parse SDK using pure Dart. 
 
