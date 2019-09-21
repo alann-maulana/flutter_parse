@@ -1,3 +1,6 @@
+## 0.2.1
+* Fix license, import package, description
+
 ## 0.2.0
 * Rebuilding package using pure Dart
 

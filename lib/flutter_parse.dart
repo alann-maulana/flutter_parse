@@ -12,9 +12,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
-import 'package:flutter_parse/src/mime/mime_type.dart' as mime;
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+
+import 'src/mime/mime_type.dart' as mime;
 
 part 'src/parse_acl.dart';
 part 'src/parse_config.dart';

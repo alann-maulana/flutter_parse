@@ -44,7 +44,7 @@ void main() {
 ## Create Object
 
 ```dart
-final object = ParseObject('Beacon')
+final object = ParseObject(className: 'Beacon')
       ..set('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
       ..set('major', 1)
       ..set('enabled', true)
@@ -64,7 +64,7 @@ await user.signUp();
 ## Query Object
 
 ```dart
-final query = ParseQuery('Beacon')
+final query = ParseQuery(className: 'Beacon')
   ..whereEqualTo('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
   ..whereLessThanOrEqualTo('major', 10);
 final listObjects = await query.findAsync();
