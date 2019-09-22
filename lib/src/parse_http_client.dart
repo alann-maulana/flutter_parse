@@ -105,7 +105,7 @@ class parseBaseHTTPClient extends http.BaseClient {
   final http.Client _client;
 
   parseBaseHTTPClient()
-      : this._client = parse.configuration.client ?? http.Client();
+      : this._client = parse.configuration.httpClient ?? http.Client();
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {

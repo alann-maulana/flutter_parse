@@ -1,3 +1,6 @@
+## 0.2.3    
+* Add parameter for `databaseFactory` for better support of web
+
 ## 0.2.2
 * Add support for web
 * Get rid of using `part` for library
