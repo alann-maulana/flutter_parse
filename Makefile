@@ -15,5 +15,8 @@ build-local: reformatting build
 	genhtml -o coverage coverage/lcov.info
 	open coverage/index.html
 
+pana:
+	pana --source path .
+
 publish:
 	pub publish

@@ -29,7 +29,8 @@ class LocalStorage {
   LocalStorage._internal(this._filename);
 
   _init() async {
-    _db = await parse.configuration.databaseFactory.openDatabase('flutter_parse.db');
+    _db = await parse.configuration.databaseFactory
+        .openDatabase('flutter_parse.db');
 
     final map = await _store.record(_filename).get(_db) as Map;
     if (map is Map) {
