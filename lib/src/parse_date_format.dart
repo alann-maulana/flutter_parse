@@ -1,10 +1,8 @@
-part of flutter_parse;
-
-final _ParseDateFormat _parseDateFormat = _ParseDateFormat._internal();
+final ParseDateFormat parseDateFormat = ParseDateFormat._internal();
 
 /// This is the currently used date format. It is precise to the millisecond.
-class _ParseDateFormat {
-  _ParseDateFormat._internal();
+class ParseDateFormat {
+  ParseDateFormat._internal();
 
   /// Deserialize an ISO-8601 full-precision extended format representation
   /// of date string into [DateTime].

@@ -1,11 +1,29 @@
-part of flutter_parse;
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:meta/meta.dart';
+
+import '../flutter_parse.dart';
+
+import 'mime/mime_type.dart' as mime;
+import 'parse_base_object.dart';
+import 'parse_http_client.dart';
 
 class ParseFile implements ParseBaseObject {
-  static const _type = 'File';
-
-  File _file;
-  String _name;
-  String _url;
+  ParseFile({
+    @required String name,
+    @required Uint8List fileBytes,
+    String fileExtension,
+    String contentType,
+  })  : assert(name != null && name.isNotEmpty),
+        assert(fileBytes != null),
+        assert(
+            fileExtension == null || contentType == null,
+            'Cannot provide both a fileExtension and a contentType\n'
+            'The fileExtension argument is just a shorthand for "contentType: mime.getContentType(fileExtension)".'),
+        this._name = name,
+        this._fileBytes = fileBytes,
+        this._contentType = contentType ?? mime.getContentType(fileExtension);
 
   ParseFile.fromJson(dynamic json) {
     _mergeFrom(json);
@@ -16,7 +34,12 @@ class ParseFile implements ParseBaseObject {
     _name = json['name'];
   }
 
-  ParseFile(this._file) : this._name = path.basename(_file.path);
+  static const _type = 'File';
+
+  String _name;
+  Uint8List _fileBytes;
+  String _contentType;
+  String _url;
 
   String get name => _name;
 
@@ -25,14 +48,14 @@ class ParseFile implements ParseBaseObject {
   bool get saved => url != null;
 
   @override
-  String get _path => '${_parse._configuration.uri.path}/files/$_name';
+  String get path => '${parse.configuration.uri.path}/files/$_name';
 
   @override
-  get _toJson => <String, String>{'__type': _type, 'name': _name, 'url': _url};
+  get asMap => <String, String>{'__type': _type, 'name': _name, 'url': _url};
 
   @override
   String toString() {
-    return json.encode(_toJson);
+    return json.encode(asMap);
   }
 
   @override
@@ -51,16 +74,12 @@ class ParseFile implements ParseBaseObject {
       return Future.value(this);
     }
 
-    final ext = path.extension(_file.path).replaceAll('.', '');
-    final headers = <String, String>{
-      HttpHeaders.contentTypeHeader: mime.getContentType(ext)
-    };
+    final headers = <String, String>{'content-type': _contentType};
 
-    final body = await _file.readAsBytes();
-    final response = await _parseHTTPClient.post(
-      _path,
+    final response = await parseHTTPClient.post(
+      path,
       headers: headers,
-      body: body,
+      body: _fileBytes,
     );
 
     _mergeFrom(response);

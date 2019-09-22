@@ -1,4 +1,7 @@
-part of flutter_parse;
+import '../flutter_parse.dart';
+
+import 'parse_object.dart';
+import 'parse_user.dart';
 
 class ParseSession extends ParseObject {
   ParseSession._internal({String objectId})
@@ -22,15 +25,15 @@ class ParseSession extends ParseObject {
   ParseUser get user => getParseUser('user');
   String get sessionToken => getString('sessionToken');
 
-  static Future<ParseSession> _me() async {
+  static Future<ParseSession> me() async {
     final session = ParseSession._internal(objectId: 'me');
     await session.fetch();
     return session;
   }
 
   @override
-  String get _path {
-    String path = '${_parse._configuration.uri.path}/sessions';
+  String get path {
+    String path = '${parse.configuration.uri.path}/sessions';
 
     if (objectId != null) {
       path = '$path/$objectId';

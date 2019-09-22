@@ -1,4 +1,4 @@
-part of flutter_parse;
+import 'parse_acl.dart';
 
 class ParseRole {
   ParseRole.fromMap(dynamic map)

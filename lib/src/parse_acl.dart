@@ -1,4 +1,5 @@
-part of flutter_parse;
+import 'parse_role.dart';
+import 'parse_user.dart';
 
 class ParseACL {
   /// Creates an ACL with no permissions granted.

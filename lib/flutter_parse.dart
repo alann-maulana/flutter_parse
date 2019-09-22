@@ -4,40 +4,25 @@
 /// Dart package for accessing Parse Server
 library flutter_parse;
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
-import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
 
-import 'src/mime/mime_type.dart' as mime;
-
-part 'src/parse_acl.dart';
-part 'src/parse_config.dart';
-part 'src/parse_date_format.dart';
-part 'src/parse_decoder.dart';
-part 'src/parse_encoder.dart';
-part 'src/parse_exception.dart';
-part 'src/parse_file.dart';
-part 'src/parse_geo_point.dart';
-part 'src/parse_http_client.dart';
-part 'src/parse_local_storage.dart';
-part 'src/parse_object.dart';
-part 'src/parse_query.dart';
-part 'src/parse_role.dart';
-part 'src/parse_session.dart';
-part 'src/parse_user.dart';
+export 'src/parse_acl.dart';
+export 'src/parse_config.dart';
+export 'src/parse_exception.dart';
+export 'src/parse_file.dart';
+export 'src/parse_geo_point.dart';
+export 'src/parse_object.dart';
+export 'src/parse_query.dart';
+export 'src/parse_role.dart';
+export 'src/parse_session.dart';
+export 'src/parse_user.dart';
 
 const String kParseSdkVersion = "0.2.0";
 
-final Parse _parse = Parse._internal();
+final Parse parse = Parse._internal();
 
-/// The {@code Parse} class contains static functions that handle global
+/// The [Parse] class contains static functions that handle global
 /// configuration for the Parse library.
 class Parse {
   Parse._internal();
@@ -60,20 +45,29 @@ class Parse {
   /// }
   /// ```
   factory Parse.initialize(ParseConfiguration configuration) {
-    return _parse.._configuration = configuration;
+    return parse..initialize(configuration);
+  }
+
+  void initialize(ParseConfiguration configuration) {
+    _configuration = configuration;
   }
 
   ParseConfiguration _configuration;
 
-  String get clientKey => _configuration.clientKey;
+  ParseConfiguration get configuration => _configuration;
 
-  String get applicationId => _configuration.applicationId;
+  String get clientKey => configuration.clientKey;
 
-  String get server => _configuration.uri.toString();
+  String get applicationId => configuration.applicationId;
 
-  bool get enableLogging => _configuration.enableLogging;
+  String get server => configuration.uri.toString();
 
-  bool get initialized => _configuration != null;
+  bool get enableLogging => configuration.enableLogging;
+
+  bool get initialized => configuration != null;
+
+  bool get isWebPlatform =>
+      Uri.base.scheme != 'file' || !Uri.base.path.endsWith('/');
 }
 
 class ParseConfiguration {
@@ -92,10 +86,4 @@ class ParseConfiguration {
   final String clientKey;
   final bool enableLogging;
   final http.BaseClient client;
-}
-
-abstract class ParseBaseObject {
-  external dynamic get _toJson;
-
-  external String get _path;
 }

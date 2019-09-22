@@ -1,21 +1,28 @@
-part of flutter_parse;
+import 'dart:convert';
 
-final _ParseHTTPClient _parseHTTPClient = _ParseHTTPClient._internal();
+import 'package:http/http.dart' as http;
 
-class _ParseHTTPClient {
-  _ParseHTTPClient._internal() : this._httpClient = _ParseBaseHTTPClient();
+import '../flutter_parse.dart';
 
-  final _ParseBaseHTTPClient _httpClient;
+import 'parse_exception.dart';
+import 'parse_user.dart';
+
+final ParseHTTPClient parseHTTPClient = ParseHTTPClient._internal();
+
+class ParseHTTPClient {
+  ParseHTTPClient._internal() : this._httpClient = parseBaseHTTPClient();
+
+  final parseBaseHTTPClient _httpClient;
 
   String _getFullUrl(String path) {
-    return _parse._configuration.uri.origin + path;
+    return parse.configuration.uri.origin + path;
   }
 
-  Future<dynamic> _parseResponse(http.Response httpResponse) {
+  Future<dynamic> parseResponse(http.Response httpResponse) {
     String response = httpResponse.body;
     final result = json.decode(response);
 
-    if (_parse.enableLogging) {
+    if (parse.enableLogging) {
       print("╭-- JSON");
       _httpClient.printWrapped(response);
       print("╰-- result");
@@ -46,15 +53,13 @@ class _ParseHTTPClient {
         final uri = Uri.parse(url).replace(queryParameters: params);
         return _httpClient
             .get(uri, headers: headers)
-            .then((r) => _parseResponse(r));
+            .then((r) => parseResponse(r));
       } on FormatException catch (e) {
         throw ParseException.fromThrow(e);
       }
     }
 
-    return _httpClient
-        .get(url, headers: headers)
-        .then((r) => _parseResponse(r));
+    return _httpClient.get(url, headers: headers).then((r) => parseResponse(r));
   }
 
   Future<dynamic> delete(String path,
@@ -65,7 +70,7 @@ class _ParseHTTPClient {
       try {
         var uri = Uri.parse(url).replace(queryParameters: params);
         return _httpClient.delete(uri, headers: headers).then((r) {
-          return _parseResponse(r);
+          return parseResponse(r);
         });
       } on FormatException catch (e) {
         throw ParseException.fromThrow(e);
@@ -74,7 +79,7 @@ class _ParseHTTPClient {
 
     return _httpClient
         .delete(url, headers: headers)
-        .then((r) => _parseResponse(r));
+        .then((r) => parseResponse(r));
   }
 
   Future<dynamic> post(String path,
@@ -83,7 +88,7 @@ class _ParseHTTPClient {
 
     return _httpClient
         .post(url, headers: headers, body: body, encoding: encoding)
-        .then((r) => _parseResponse(r));
+        .then((r) => parseResponse(r));
   }
 
   Future<dynamic> put(String path,
@@ -92,38 +97,36 @@ class _ParseHTTPClient {
 
     return _httpClient
         .put(url, headers: headers, body: body, encoding: encoding)
-        .then((r) => _parseResponse(r));
+        .then((r) => parseResponse(r));
   }
 }
 
-class _ParseBaseHTTPClient extends http.BaseClient {
+class parseBaseHTTPClient extends http.BaseClient {
   final http.Client _client;
 
-  _ParseBaseHTTPClient()
-      : this._client = _parse._configuration.client ?? http.Client();
+  parseBaseHTTPClient()
+      : this._client = parse.configuration.client ?? http.Client();
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    assert(_parse.applicationId != null);
+    assert(parse.applicationId != null);
 
-    request.headers[HttpHeaders.userAgentHeader] =
-        "Dart Parse SDK v${kParseSdkVersion}";
-    request.headers['X-Parse-Application-Id'] = _parse.applicationId;
+    request.headers["user-agent"] = "Dart Parse SDK v${kParseSdkVersion}";
+    request.headers['X-Parse-Application-Id'] = parse.applicationId;
 
     // client key can be null with self-hosted Parse Server
-    if (_parse.clientKey != null) {
-      request.headers['X-Parse-Client-Key'] = _parse.clientKey;
+    if (parse.clientKey != null) {
+      request.headers['X-Parse-Client-Key'] = parse.clientKey;
     }
 
     request.headers['X-Parse-Client-Version'] = "dart${kParseSdkVersion}";
-    request.headers['X-Parse-OS-Version'] = Platform.operatingSystem;
 
     final currentUser = await ParseUser.currentUser;
     if (currentUser != null && currentUser.sessionId != null) {
       request.headers['X-Parse-Session-Token'] = currentUser.sessionId;
     }
 
-    if (_parse.enableLogging) {
+    if (parse.enableLogging) {
       _logging(request);
     }
 
@@ -135,10 +138,10 @@ class _ParseBaseHTTPClient extends http.BaseClient {
     var compressed = false;
     var bodyAsText = false;
     request.headers.forEach((name, value) {
-      if (name.toLowerCase() == HttpHeaders.acceptEncodingHeader &&
+      if (name.toLowerCase() == "accept-encoding" &&
           value.toLowerCase() == "gzip") {
         compressed = true;
-      } else if (name.toLowerCase() == HttpHeaders.contentTypeHeader) {
+      } else if (name.toLowerCase() == "content-type") {
         bodyAsText =
             value.contains('application/json') || value.contains('text/plain');
       }

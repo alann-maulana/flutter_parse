@@ -1,10 +1,16 @@
-part of flutter_parse;
+import 'dart:convert';
 
-final _ParseDecoder _parseDecoder = _ParseDecoder._internal();
+import 'parse_date_format.dart';
+import 'parse_file.dart';
+import 'parse_geo_point.dart';
+import 'parse_object.dart';
+import 'parse_user.dart';
 
-/// A [_ParseDecoder] can be used to transform JSON data structures into actual objects, such as [ParseObject]
-class _ParseDecoder {
-  _ParseDecoder._internal();
+final ParseDecoder parseDecoder = ParseDecoder._internal();
+
+/// A [ParseDecoder] can be used to transform JSON data structures into actual objects, such as [ParseObject]
+class ParseDecoder {
+  ParseDecoder._internal();
 
   List<dynamic> _convertJSONArrayToList(List<dynamic> array) {
     List<dynamic> list = List();
@@ -56,7 +62,7 @@ class _ParseDecoder {
     switch (map["__type"]) {
       case "Date":
         String iso = map["iso"];
-        return _parseDateFormat.parse(iso);
+        return parseDateFormat.parse(iso);
       case "Bytes":
         String val = map["base64"];
         return base64.decode(val);

@@ -1,5 +1,3 @@
-part of flutter_parse;
-
 class ParseException implements Exception {
   static const int otherCause = -1;
   static const int connectionFailed = 100;

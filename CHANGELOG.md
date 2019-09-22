@@ -1,3 +1,7 @@
+## 0.2.2
+* Add support for web
+* Get rid of using `part` for library
+
 ## 0.2.1
 * Fix license, import package, description
 
