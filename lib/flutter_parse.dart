@@ -4,8 +4,10 @@
 /// Dart package for accessing Parse Server
 library flutter_parse;
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:meta/meta.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_memory.dart';
 
 export 'src/parse_acl.dart';
 export 'src/parse_config.dart';
@@ -18,7 +20,7 @@ export 'src/parse_role.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
 
-const String kParseSdkVersion = "0.2.0";
+const String kParseSdkVersion = "0.2.3";
 
 final Parse parse = Parse._internal();
 
@@ -65,9 +67,6 @@ class Parse {
   bool get enableLogging => configuration.enableLogging;
 
   bool get initialized => configuration != null;
-
-  bool get isWebPlatform =>
-      Uri.base.scheme != 'file' || !Uri.base.path.endsWith('/');
 }
 
 class ParseConfiguration {
@@ -76,14 +75,17 @@ class ParseConfiguration {
     @required this.applicationId,
     this.clientKey,
     this.enableLogging,
-    this.client,
-  }) : uri = Uri.parse((server.endsWith("/")
+    this.httpClient,
+    DatabaseFactory databaseFactory,
+  })  : uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
-            : server));
+            : server)),
+        databaseFactory = databaseFactoryMemory;
 
   final Uri uri;
   final String applicationId;
   final String clientKey;
   final bool enableLogging;
-  final http.BaseClient client;
+  final BaseClient httpClient;
+  final DatabaseFactory databaseFactory;
 }

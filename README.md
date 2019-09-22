@@ -19,7 +19,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  flutter_parse: ^0.2.0
+  flutter_parse: ^0.2.3
 ```
 
 ## Import Library
