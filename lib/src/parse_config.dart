@@ -1,4 +1,15 @@
-part of flutter_parse;
+import 'dart:convert';
+
+import '../flutter_parse.dart';
+
+import 'parse_base_object.dart';
+import 'parse_geo_point.dart';
+import 'parse_decoder.dart';
+import 'parse_encoder.dart';
+import 'parse_file.dart';
+import 'parse_http_client.dart';
+import 'parse_object.dart';
+import 'parse_user.dart';
 
 final parseConfig = ParseConfig._internal();
 
@@ -175,7 +186,7 @@ class ParseConfig implements ParseBaseObject {
     json = json['params'];
     if (json != null) {
       json.forEach((key, value) {
-        _data[key] = _parseDecoder.decode(value);
+        _data[key] = parseDecoder.decode(value);
       });
 
       _isComplete = true;
@@ -185,18 +196,18 @@ class ParseConfig implements ParseBaseObject {
 
   // region HELPERS
   @override
-  String get _path {
-    String path = '${_parse._configuration.uri.path}/config';
+  String get path {
+    String path = '${parse.configuration.uri.path}/config';
 
     return path;
   }
 
   @override
-  get _toJson {
+  get asMap {
     final map = <String, dynamic>{};
 
     _data.forEach((key, value) {
-      map[key] = _parseEncoder.encode(value);
+      map[key] = parseEncoder.encode(value);
     });
 
     return map;
@@ -204,13 +215,13 @@ class ParseConfig implements ParseBaseObject {
 
   @override
   String toString() {
-    return json.encode(_toJson);
+    return json.encode(asMap);
   }
   // endregion
 
   // region EXECUTORS
   Future<ParseConfig> fetch() async {
-    final result = await _parseHTTPClient.get(_path);
+    final result = await parseHTTPClient.get(path);
     _mergeJson(result);
     return Future.value(this);
   }

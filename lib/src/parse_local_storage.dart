@@ -1,15 +1,19 @@
-part of flutter_parse;
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
+import 'package:sembast/sembast_memory.dart';
 
-final _ParseLocalStorage _parseLocalStorage = _ParseLocalStorage._internal();
+import '../flutter_parse.dart';
 
-class _ParseLocalStorage {
-  final Map<String, _LocalStorage> _cache;
+final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
 
-  _ParseLocalStorage._internal() : _cache = {};
+class ParseLocalStorage {
+  final Map<String, LocalStorage> _cache;
 
-  Future<_LocalStorage> get(String key) async {
+  ParseLocalStorage._internal() : _cache = {};
+
+  Future<LocalStorage> get(String key) async {
     if (!_cache.containsKey(key)) {
-      final instance = _LocalStorage._internal(key);
+      final instance = LocalStorage._internal(key);
       await instance._init();
       _cache[key] = instance;
     }
@@ -18,16 +22,18 @@ class _ParseLocalStorage {
   }
 }
 
-class _LocalStorage {
+class LocalStorage {
   final StoreRef _store = StoreRef.main();
   final String _filename;
   final Map<String, dynamic> _data = {};
   Database _db;
 
-  _LocalStorage._internal(this._filename);
+  LocalStorage._internal(this._filename);
 
   _init() async {
-    _db = await databaseFactoryIo.openDatabase('flutter_parse.db');
+    final databaseFactory =
+        !parse.isWebPlatform ? databaseFactoryIo : databaseFactoryMemory;
+    _db = await databaseFactory.openDatabase('flutter_parse.db');
 
     final map = await _store.record(_filename).get(_db) as Map;
     if (map is Map) {

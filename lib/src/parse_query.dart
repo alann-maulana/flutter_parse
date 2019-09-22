@@ -1,4 +1,15 @@
-part of flutter_parse;
+import 'dart:convert';
+
+import 'package:meta/meta.dart';
+
+import '../flutter_parse.dart';
+
+import 'parse_encoder.dart';
+import 'parse_exception.dart';
+import 'parse_geo_point.dart';
+import 'parse_http_client.dart';
+import 'parse_object.dart';
+import 'parse_user.dart';
 
 class ParseQuery<T extends ParseObject> {
   final String className;
@@ -31,7 +42,7 @@ class ParseQuery<T extends ParseObject> {
   }
 
   void whereEqualTo(String key, dynamic value) {
-    _where.putIfAbsent(key, () => _parseEncoder.encode(value));
+    _where.putIfAbsent(key, () => parseEncoder.encode(value));
   }
 
   void whereLessThan(String key, dynamic value) {
@@ -39,7 +50,7 @@ class ParseQuery<T extends ParseObject> {
   }
 
   void whereNotEqualTo(String key, dynamic value) {
-    _addCondition(key, "\$ne", _parseEncoder.encode(value));
+    _addCondition(key, "\$ne", parseEncoder.encode(value));
   }
 
   void whereGreaterThan(String key, dynamic value) {
@@ -228,7 +239,7 @@ class ParseQuery<T extends ParseObject> {
     Map<String, dynamic> params = Map();
 
     if (_where.isNotEmpty) {
-      params.putIfAbsent("where", () => _parseEncoder.encode(_where));
+      params.putIfAbsent("where", () => parseEncoder.encode(_where));
     }
     if (_limit >= 0) {
       params.putIfAbsent("limit", () => _limit);
@@ -316,11 +327,11 @@ class ParseQuery<T extends ParseObject> {
 
     dynamic body = json.encode(params);
     final headers = {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      'content-type': 'application/json; charset=utf-8',
     };
 
-    return _parseHTTPClient.post(
-      '${_parse._configuration.uri.path}/classes/$className',
+    return parseHTTPClient.post(
+      '${parse.configuration.uri.path}/classes/$className',
       body: body,
       headers: headers,
     );

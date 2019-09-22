@@ -1,4 +1,18 @@
-part of flutter_parse;
+import 'dart:convert';
+
+import 'package:meta/meta.dart';
+
+import '../flutter_parse.dart';
+
+import 'parse_acl.dart';
+import 'parse_base_object.dart';
+import 'parse_date_format.dart';
+import 'parse_decoder.dart';
+import 'parse_encoder.dart';
+import 'parse_file.dart';
+import 'parse_geo_point.dart';
+import 'parse_http_client.dart';
+import 'parse_user.dart';
 
 class ParseObject implements ParseBaseObject {
   static const _limitBatchOperations = 50;
@@ -45,6 +59,8 @@ class ParseObject implements ParseBaseObject {
   }
 
   // region GETTER
+  Map<String, dynamic> get operations => _operations;
+
   bool get isDeleted => _isDeleted;
 
   bool get isComplete => _isComplete;
@@ -243,7 +259,7 @@ class ParseObject implements ParseBaseObject {
   void set(String key, dynamic value) {
     assert(key != null && key.isNotEmpty);
     _checkKeyIsMutable(key);
-    _parseEncoder.isValidType(value);
+    parseEncoder.isValidType(value);
 
     if (value == null) {
       remove(key);
@@ -257,8 +273,10 @@ class ParseObject implements ParseBaseObject {
       }
     }
 
-    _data[key] = value;
-    _operations[key] = _parseEncoder.encode(value);
+    if (key != 'password') {
+      _data[key] = value;
+    }
+    _operations[key] = parseEncoder.encode(value);
   }
 
   void setACL(ParseACL acl) {
@@ -275,7 +293,7 @@ class ParseObject implements ParseBaseObject {
   void removeAll(String key, List<dynamic> values) {
     _operations[key] = {
       '__op': 'Remove',
-      'objects': _parseEncoder.encode(values)
+      'objects': parseEncoder.encode(values)
     };
   }
 
@@ -292,7 +310,7 @@ class ParseObject implements ParseBaseObject {
   }
 
   void addAll(String key, List<dynamic> values) {
-    _operations[key] = {'__op': 'Add', 'objects': _parseEncoder.encode(values)};
+    _operations[key] = {'__op': 'Add', 'objects': parseEncoder.encode(values)};
   }
 
   void addUnique(String key, dynamic value) {
@@ -302,7 +320,7 @@ class ParseObject implements ParseBaseObject {
   void addAllUnique(String key, List<dynamic> values) {
     _operations[key] = {
       '__op': 'AddUnique',
-      'objects': _parseEncoder.encode(values)
+      'objects': parseEncoder.encode(values)
     };
   }
 
@@ -318,13 +336,13 @@ class ParseObject implements ParseBaseObject {
       } else if (key == _keyObjectId) {
         _objectId = value;
       } else if (key == _keyCreatedAt) {
-        _createdAt = _parseDateFormat.parse(value);
+        _createdAt = parseDateFormat.parse(value);
       } else if (key == _keyUpdatedAt) {
-        _updatedAt = _parseDateFormat.parse(value);
+        _updatedAt = parseDateFormat.parse(value);
       } else if (key == _keyACL) {
         _data[key] = ParseACL.fromMap(value);
       } else {
-        _data[key] = _parseDecoder.decode(value);
+        _data[key] = parseDecoder.decode(value);
       }
     });
 
@@ -350,8 +368,8 @@ class ParseObject implements ParseBaseObject {
   }
 
   @override
-  String get _path {
-    String path = '${_parse._configuration.uri.path}/classes/$className';
+  String get path {
+    String path = '${parse.configuration.uri.path}/classes/$className';
 
     if (objectId != null) {
       path = '$path/$objectId';
@@ -362,17 +380,17 @@ class ParseObject implements ParseBaseObject {
 
   dynamic get _batchSaveCommand => {
         'method': objectId != null ? 'PUT' : 'POST',
-        'path': '$_path',
+        'path': '$path',
         'body': _operations
       };
 
-  dynamic get _batchDeleteCommand => {'method': 'DELETE', 'path': '$_path'};
+  dynamic get _batchDeleteCommand => {'method': 'DELETE', 'path': '$path'};
 
-  get _toPointer =>
+  get asPointer =>
       {'__type': 'Pointer', _keyClassName: className, _keyObjectId: objectId};
 
   @override
-  get _toJson {
+  get asMap {
     final map = <String, dynamic>{
       _keyClassName: className,
     };
@@ -382,30 +400,28 @@ class ParseObject implements ParseBaseObject {
     }
 
     if (createdAt != null) {
-      map[_keyCreatedAt] = _parseDateFormat.format(createdAt);
+      map[_keyCreatedAt] = parseDateFormat.format(createdAt);
     }
 
     if (updatedAt != null) {
-      map[_keyUpdatedAt] = _parseDateFormat.format(updatedAt);
+      map[_keyUpdatedAt] = parseDateFormat.format(updatedAt);
     }
 
     _data.forEach((key, value) {
-      map[key] = _parseEncoder.encode(value);
+      map[key] = parseEncoder.encode(value);
     });
 
     return map;
   }
 
-  dynamic get asMap => _toJson;
-
   @override
   String toString() {
-    return json.encode(_toJson);
+    return json.encode(asMap);
   }
   // endregion
 
   // region EXECUTORS
-  Future<void> _uploadFiles() async {
+  Future<void> uploadFiles() async {
     if (_operationFiles.isNotEmpty) {
       List<String> keys = [];
       List<Future<ParseFile>> futures = [];
@@ -429,16 +445,14 @@ class ParseObject implements ParseBaseObject {
   }
 
   Future<ParseObject> save() async {
-    await _uploadFiles();
+    await uploadFiles();
 
     dynamic jsonBody = json.encode(_operations);
-    final headers = {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
-    };
+    final headers = {'content-type': 'application/json; charset=utf-8'};
 
     final result = objectId == null
-        ? await _parseHTTPClient.post(_path, body: jsonBody, headers: headers)
-        : await _parseHTTPClient.put(_path, body: jsonBody, headers: headers);
+        ? await parseHTTPClient.post(path, body: jsonBody, headers: headers)
+        : await parseHTTPClient.put(path, body: jsonBody, headers: headers);
 
     mergeJson(result);
     return this;
@@ -459,14 +473,14 @@ class ParseObject implements ParseBaseObject {
     if (includes != null) {
       queryString = '?include=${includes.join(',')}';
     }
-    final result = await _parseHTTPClient.get(_path + queryString);
+    final result = await parseHTTPClient.get(path + queryString);
     mergeJson(result);
     return Future.value(this);
   }
 
   Future<void> delete() async {
     if (objectId != null) {
-      await _parseHTTPClient.delete(_path);
+      await parseHTTPClient.delete(path);
       _isDeleted = true;
       _reset();
     }
@@ -480,7 +494,7 @@ class ParseObject implements ParseBaseObject {
         'batch operations limit are $_limitBatchOperations objects, currently ${objects.length}');
 
     for (int i = 0; i < objects.length; i++) {
-      await objects[i]._uploadFiles();
+      await objects[i].uploadFiles();
     }
 
     final jsonBody = json.encode({
@@ -489,10 +503,10 @@ class ParseObject implements ParseBaseObject {
           .toList(growable: false)
     });
     final headers = {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      'content-type': 'application/json; charset=utf-8',
     };
-    final results = await _parseHTTPClient.post(
-      '${_parse._configuration.uri.path}/batch',
+    final results = await parseHTTPClient.post(
+      '${parse.configuration.uri.path}/batch',
       body: jsonBody,
       headers: headers,
     );
@@ -515,9 +529,9 @@ class ParseObject implements ParseBaseObject {
     });
 
     final headers = {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      'content-type': 'application/json; charset=utf-8',
     };
-    final results = await _parseHTTPClient.post(
+    final results = await parseHTTPClient.post(
       'batch',
       body: jsonBody,
       headers: headers,

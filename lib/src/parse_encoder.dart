@@ -1,11 +1,19 @@
-part of flutter_parse;
+import 'dart:convert';
+import 'dart:typed_data';
 
-final _ParseEncoder _parseEncoder = _ParseEncoder._internal();
+import 'parse_acl.dart';
+import 'parse_date_format.dart';
+import 'parse_file.dart';
+import 'parse_geo_point.dart';
+import 'parse_object.dart';
+import 'parse_query.dart';
 
-/// A [_ParseEncoder] can be used to transform objects such as [ParseObject] into Map
+final ParseEncoder parseEncoder = ParseEncoder._internal();
+
+/// A [ParseEncoder] can be used to transform objects such as [ParseObject] into Map
 /// data structures.
-class _ParseEncoder {
-  _ParseEncoder._internal();
+class ParseEncoder {
+  ParseEncoder._internal();
 
   isValidType(dynamic value) {
     assert(value == null ||
@@ -45,7 +53,7 @@ class _ParseEncoder {
     }
 
     if (value is ParseObject) {
-      return value._toPointer;
+      return value.asPointer;
     }
 
     if (value is ParseQuery) {
@@ -53,11 +61,11 @@ class _ParseEncoder {
     }
 
     if (value is ParseFile) {
-      return value._toJson;
+      return value.asMap;
     }
 
     if (value is ParseGeoPoint) {
-      return value._toJson;
+      return value.asMap;
     }
 
     if (value is ParseACL) {
@@ -74,7 +82,7 @@ class _ParseEncoder {
   Map<String, dynamic> _encodeDate(DateTime date) {
     return <String, dynamic>{
       "__type": "Date",
-      "iso": _parseDateFormat.format(date)
+      "iso": parseDateFormat.format(date)
     };
   }
 }

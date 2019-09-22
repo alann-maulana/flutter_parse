@@ -1,4 +1,6 @@
-part of flutter_parse;
+import 'dart:convert';
+
+import 'parse_base_object.dart';
 
 class ParseGeoPoint extends ParseBaseObject {
   static const _type = 'GeoPoint';
@@ -28,7 +30,7 @@ class ParseGeoPoint extends ParseBaseObject {
   }
 
   @override
-  get _toJson => <String, dynamic>{
+  get asMap => <String, dynamic>{
         '__type': _type,
         'latitude': _latitude,
         'longitude': _longitude
@@ -36,7 +38,7 @@ class ParseGeoPoint extends ParseBaseObject {
 
   @override
   String toString() {
-    return json.encode(_toJson);
+    return json.encode(asMap);
   }
 
   @override
