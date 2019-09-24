@@ -9,6 +9,8 @@ import 'package:meta/meta.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 
+import 'src/parse_http_client.dart' as parseHttpClient;
+
 export 'src/parse_acl.dart';
 export 'src/parse_config.dart';
 export 'src/parse_exception.dart';
@@ -67,6 +69,8 @@ class Parse {
   bool get enableLogging => configuration.enableLogging;
 
   bool get initialized => configuration != null;
+
+  void logToCURL(BaseRequest request) => parseHttpClient.logToCURL(request);
 }
 
 class ParseConfiguration {
