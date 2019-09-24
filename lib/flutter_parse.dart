@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 
-import 'src/parse_http_client.dart' as parseHttpClient;
+import 'src/parse_http_client.dart' as client;
 
 export 'src/parse_acl.dart';
 export 'src/parse_config.dart';
@@ -70,7 +70,7 @@ class Parse {
 
   bool get initialized => configuration != null;
 
-  void logToCURL(BaseRequest request) => parseHttpClient.logToCURL(request);
+  void logToCURL(BaseRequest request) => client.logToCURL(request);
 }
 
 /// The [ParseConfiguration] class contains that handle global
@@ -90,19 +90,19 @@ class ParseConfiguration {
 
   /// The [Uri] object from [server]
   final Uri uri;
-  
+
   /// The application ID of Parse Server
   final String applicationId;
-  
+
   /// The client key of Parse Server
   final String clientKey;
-  
+
   /// Enable show every request sent to Parse Server into CURL format
   final bool enableLogging;
-  
+
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient httpClient;
-  
+
   /// The [DatabaseFactory] for storing [ParseUser] and [ParseSession] credentials.
   /// Default value is [databaseFactoryMemory]. Replace it into [databaseFactoryIO]
   /// for Flutter project that enable IO.
