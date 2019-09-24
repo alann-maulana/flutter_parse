@@ -73,6 +73,8 @@ class Parse {
   void logToCURL(BaseRequest request) => parseHttpClient.logToCURL(request);
 }
 
+/// The [ParseConfiguration] class contains that handle global
+/// configuration for the Parse library.
 class ParseConfiguration {
   ParseConfiguration({
     @required String server,
@@ -86,10 +88,23 @@ class ParseConfiguration {
             : server)),
         databaseFactory = databaseFactoryMemory;
 
+  /// The [Uri] object from [server]
   final Uri uri;
+  
+  /// The application ID of Parse Server
   final String applicationId;
+  
+  /// The client key of Parse Server
   final String clientKey;
+  
+  /// Enable show every request sent to Parse Server into CURL format
   final bool enableLogging;
+  
+  /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient httpClient;
+  
+  /// The [DatabaseFactory] for storing [ParseUser] and [ParseSession] credentials.
+  /// Default value is [databaseFactoryMemory]. Replace it into [databaseFactoryIO]
+  /// for Flutter project that enable IO.
   final DatabaseFactory databaseFactory;
 }
