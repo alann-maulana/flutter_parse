@@ -5,4 +5,5 @@ install:
   - gem install coveralls-lcov
 script: make
 after_success:
+  - make pana
   - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
