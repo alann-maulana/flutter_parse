@@ -133,7 +133,7 @@ class ParseUser extends ParseObject {
   static Future<void> resetPassword({@required String email}) async {
     final body = json.encode(<String, String>{'email': email});
     final headers = {
-      'content-type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     };
     return await parseHTTPClient.post(
       '${parse.configuration.uri.path}/requestPasswordReset',
@@ -143,6 +143,10 @@ class ParseUser extends ParseObject {
   }
 
   static Future<void> signOut() async {
+    await parseHTTPClient.post(
+      '${parse.configuration.uri.path}/logout',
+      ignoreResult: true,
+    );
     final storage = await _currentUserStorage;
     return await storage.delete();
   }
