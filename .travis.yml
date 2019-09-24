@@ -3,6 +3,7 @@ dart:
   - stable
 install:
   - gem install coveralls-lcov
+  - pub global activate pana
 script: make
 after_success:
   - make pana
