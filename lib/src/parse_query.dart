@@ -246,6 +246,7 @@ class ParseQuery<T extends ParseObject> {
     }
     if (_countEnabled) {
       params.putIfAbsent("count", () => 1);
+      params.putIfAbsent("limit", () => 0);
     } else {
       if (_skip > 0) {
         params.putIfAbsent("skip", () => _skip);
@@ -327,7 +328,7 @@ class ParseQuery<T extends ParseObject> {
 
     dynamic body = json.encode(params);
     final headers = {
-      'content-type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     };
 
     return parseHTTPClient.post(
