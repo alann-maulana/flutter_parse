@@ -74,7 +74,7 @@ class ParseFile implements ParseBaseObject {
       return Future.value(this);
     }
 
-    final headers = <String, String>{'content-type': _contentType};
+    final headers = <String, String>{'Content-Type': _contentType};
 
     final response = await parseHTTPClient.post(
       path,
