@@ -73,7 +73,7 @@ class Parse {
   void logToCURL(BaseRequest request) => client.logToCURL(request);
 }
 
-/// The [ParseConfiguration] class contains that handle global
+/// The [ParseConfiguration] class contains variable that handle global
 /// configuration for the Parse library.
 class ParseConfiguration {
   ParseConfiguration({
