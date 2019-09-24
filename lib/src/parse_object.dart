@@ -503,7 +503,7 @@ class ParseObject implements ParseBaseObject {
           .toList(growable: false)
     });
     final headers = {
-      'content-type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     };
     final results = await parseHTTPClient.post(
       '${parse.configuration.uri.path}/batch',
@@ -529,7 +529,7 @@ class ParseObject implements ParseBaseObject {
     });
 
     final headers = {
-      'content-type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     };
     final results = await parseHTTPClient.post(
       'batch',
