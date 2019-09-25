@@ -18,5 +18,9 @@ build-local: reformatting build
 pana:
 	pana --source path .
 
+docs:
+	rm -rf doc
+	dartdoc
+
 publish:
 	pub publish
