@@ -22,7 +22,8 @@ export 'src/parse_role.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
 
-const String kParseSdkVersion = "0.2.3";
+/// Displaying current Parse SDK version
+const String kParseSdkVersion = "0.2.4";
 
 final Parse parse = Parse._internal();
 
@@ -52,6 +53,7 @@ class Parse {
     return parse..initialize(configuration);
   }
 
+  /// Setter method for [ParseConfiguration] using [parse] global instance
   void initialize(ParseConfiguration configuration) {
     _configuration = configuration;
   }
@@ -60,16 +62,22 @@ class Parse {
 
   ParseConfiguration get configuration => _configuration;
 
+  /// Return [Parse] client key
   String get clientKey => configuration.clientKey;
 
+  /// Return [Parse] application ID
   String get applicationId => configuration.applicationId;
 
+  /// Return [Parse] server path
   String get server => configuration.uri.toString();
 
+  /// Return [Parse] logging status
   bool get enableLogging => configuration.enableLogging;
 
+  /// Return [Parse] initialized status
   bool get initialized => configuration != null;
 
+  /// Convert [BaseRequest] object into friendly formatted CURL command into console log
   void logToCURL(BaseRequest request) => client.logToCURL(request);
 }
 
@@ -88,7 +96,7 @@ class ParseConfiguration {
             : server)),
         databaseFactory = databaseFactoryMemory;
 
-  /// The [Uri] object from [server]
+  /// The [Uri] object parsed from `server`
   final Uri uri;
 
   /// The application ID of Parse Server
@@ -104,7 +112,7 @@ class ParseConfiguration {
   final BaseClient httpClient;
 
   /// The [DatabaseFactory] for storing [ParseUser] and [ParseSession] credentials.
-  /// Default value is [databaseFactoryMemory]. Replace it into [databaseFactoryIO]
+  /// Default value is [databaseFactoryMemory]. Replace it into `databaseFactoryIO`
   /// for Flutter project that enable IO.
   final DatabaseFactory databaseFactory;
 }
