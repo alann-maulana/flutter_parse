@@ -11,8 +11,10 @@ import 'parse_http_client.dart';
 import 'parse_object.dart';
 import 'parse_user.dart';
 
+/// Global instance of [ParseConfig]
 final parseConfig = ParseConfig._internal();
 
+/// The [ParseConfig] is a local representation of configuration data that can be set from the Parse dashboard.
 class ParseConfig implements ParseBaseObject {
   bool _isComplete;
   final Map<String, dynamic> _data;
@@ -22,6 +24,10 @@ class ParseConfig implements ParseBaseObject {
         _data = {};
 
   // region GETTER
+
+  /// Indicate that this object has been completely fetched.
+  /// 
+  /// Returns `false` if there hasn't been fetched.
   bool get isComplete => _isComplete;
 
   /// Access a value. In most cases it is more convenient to use a helper function such as
@@ -220,6 +226,8 @@ class ParseConfig implements ParseBaseObject {
   // endregion
 
   // region EXECUTORS
+
+  /// Fetch the latest current data from Parse Server
   Future<ParseConfig> fetch() async {
     final result = await parseHTTPClient.get(path);
     _mergeJson(result);
