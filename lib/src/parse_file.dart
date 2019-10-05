@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -25,6 +26,7 @@ class ParseFile implements ParseBaseObject {
         this._fileBytes = fileBytes,
         this._contentType = contentType ?? mime.getContentType(fileExtension);
 
+  @visibleForTesting
   ParseFile.fromJson(dynamic json) {
     _mergeFrom(json);
   }
@@ -33,8 +35,6 @@ class ParseFile implements ParseBaseObject {
     _url = json['url'];
     _name = json['name'];
   }
-
-  static const _type = 'File';
 
   String _name;
   Uint8List _fileBytes;
@@ -51,12 +51,10 @@ class ParseFile implements ParseBaseObject {
   String get path => '${parse.configuration.uri.path}/files/$_name';
 
   @override
-  get asMap => <String, String>{'__type': _type, 'name': _name, 'url': _url};
+  get asMap => <String, String>{'__type': 'File', 'name': _name, 'url': _url};
 
   @override
-  String toString() {
-    return json.encode(asMap);
-  }
+  String toString() => json.encode(asMap);
 
   @override
   bool operator ==(Object other) =>

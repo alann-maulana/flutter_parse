@@ -1,19 +1,17 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import 'parse_base_object.dart';
 
-class ParseGeoPoint extends ParseBaseObject {
-  static const _type = 'GeoPoint';
+class ParseGeoPoint {
+  ParseGeoPoint({double latitude = 0.0, double longitude = 0.0}) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 
   double _latitude;
   double _longitude;
-
-  ParseGeoPoint({double latitude = 0.0, double longitude = 0.0})
-      : assert(latitude >= -90.0 || latitude <= 90.0),
-        assert(longitude >= -180.0 || longitude <= 180.0) {
-    _latitude = latitude;
-    _longitude = longitude;
-  }
 
   double get latitude => _latitude;
 
@@ -29,9 +27,8 @@ class ParseGeoPoint extends ParseBaseObject {
     _longitude = value;
   }
 
-  @override
   get asMap => <String, dynamic>{
-        '__type': _type,
+        '__type': 'GeoPoint',
         'latitude': _latitude,
         'longitude': _longitude
       };
