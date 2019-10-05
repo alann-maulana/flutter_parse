@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -15,7 +16,7 @@ import 'parse_http_client.dart';
 import 'parse_user.dart';
 
 class ParseObject implements ParseBaseObject {
-  static const _limitBatchOperations = 50;
+  static int limitBatchOperations = 50;
   static const _keyObjectId = "objectId";
   static const _keyCreatedAt = "createdAt";
   static const _keyUpdatedAt = "updatedAt";
@@ -44,6 +45,7 @@ class ParseObject implements ParseBaseObject {
     }
   }
 
+  @visibleForTesting
   factory ParseObject.fromJson({
     String className,
     String objectId,
@@ -324,6 +326,7 @@ class ParseObject implements ParseBaseObject {
     };
   }
 
+  @visibleForTesting
   void mergeJson(dynamic json, {bool fromFetch = false}) {
     if (fromFetch) {
       _data.clear();
@@ -415,9 +418,7 @@ class ParseObject implements ParseBaseObject {
   }
 
   @override
-  String toString() {
-    return json.encode(asMap);
-  }
+  String toString() => json.encode(asMap);
   // endregion
 
   // region EXECUTORS
@@ -490,8 +491,8 @@ class ParseObject implements ParseBaseObject {
 
   // region BATCH OPERATIONS
   static Future<void> saveAll(List<ParseObject> objects) async {
-    assert(objects.length <= _limitBatchOperations,
-        'batch operations limit are $_limitBatchOperations objects, currently ${objects.length}');
+    assert(objects.length <= limitBatchOperations,
+        'batch operations limit are $limitBatchOperations objects, currently ${objects.length}');
 
     for (int i = 0; i < objects.length; i++) {
       await objects[i].uploadFiles();
@@ -519,8 +520,8 @@ class ParseObject implements ParseBaseObject {
   }
 
   static Future<void> deleteAll(List<ParseObject> objects) async {
-    assert(objects.length <= _limitBatchOperations,
-        'batch operations limit are $_limitBatchOperations objects');
+    assert(objects.length <= limitBatchOperations,
+        'batch operations limit are $limitBatchOperations objects');
 
     final jsonBody = json.encode({
       'requests': objects
