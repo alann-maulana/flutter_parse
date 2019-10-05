@@ -69,6 +69,9 @@ class ParseDecoder {
       case "Pointer":
         String objectId = map["objectId"];
         String className = map["className"];
+        if (className == '_User') {
+          return ParseUser(objectId: objectId);
+        }
         return ParseObject(className: className, objectId: objectId);
       case "Object":
         String objectId = map["objectId"];
