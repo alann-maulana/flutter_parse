@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -289,6 +290,7 @@ class ParseQuery<T extends ParseObject> {
           ParseUser user = ParseUser.fromJson(json: json);
           objects.add(user);
         } else {
+          // ignore: invalid_use_of_visible_for_testing_member
           ParseObject object = ParseObject.fromJson(
             className: className,
             objectId: objectId,

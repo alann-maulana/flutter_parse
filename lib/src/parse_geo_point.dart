@@ -1,9 +1,5 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
-import 'parse_base_object.dart';
-
 class ParseGeoPoint {
   ParseGeoPoint({double latitude = 0.0, double longitude = 0.0}) {
     this.latitude = latitude;

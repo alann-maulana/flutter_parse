@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import '../flutter_parse.dart';
@@ -26,7 +27,7 @@ class ParseConfig implements ParseBaseObject {
   // region GETTER
 
   /// Indicate that this object has been completely fetched.
-  /// 
+  ///
   /// Returns `false` if there hasn't been fetched.
   bool get isComplete => _isComplete;
 

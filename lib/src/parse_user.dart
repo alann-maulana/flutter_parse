@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -26,6 +27,7 @@ class ParseUser extends ParseObject {
         super(className: '_User', objectId: objectId);
 
   factory ParseUser.fromJson({dynamic json}) {
+    // ignore: invalid_use_of_visible_for_testing_member
     return ParseUser()..mergeJson(json);
   }
 
@@ -105,6 +107,7 @@ class ParseUser extends ParseObject {
       body: jsonBody,
       headers: headers,
     );
+    // ignore: invalid_use_of_visible_for_testing_member
     mergeJson(result);
     _isCurrentUser = true;
 

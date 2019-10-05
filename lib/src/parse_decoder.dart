@@ -79,12 +79,14 @@ class ParseDecoder {
         if (className == '_User') {
           return ParseUser.fromJson(json: map);
         }
+        // ignore: invalid_use_of_visible_for_testing_member
         return ParseObject.fromJson(
           className: className,
           objectId: objectId,
           json: map,
         );
       case "File":
+        // ignore: invalid_use_of_visible_for_testing_member
         return ParseFile.fromJson(map);
       case "GeoPoint":
         num latitude = map["latitude"] ?? 0.0;
