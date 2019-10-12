@@ -475,7 +475,7 @@ class ParseObject implements ParseBaseObject {
       queryString = '?include=${includes.join(',')}';
     }
     final result = await parseHTTPClient.get(path + queryString);
-    mergeJson(result);
+    mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
 
