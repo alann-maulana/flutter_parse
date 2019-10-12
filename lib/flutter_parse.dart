@@ -12,6 +12,7 @@ import 'package:sembast/sembast_memory.dart';
 import 'src/parse_http_client.dart' as client;
 
 export 'src/parse_acl.dart';
+export 'src/parse_cloud.dart';
 export 'src/parse_config.dart';
 export 'src/parse_exception.dart';
 export 'src/parse_file.dart';

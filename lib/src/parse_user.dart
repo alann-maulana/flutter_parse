@@ -117,6 +117,25 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  static Future<ParseUser> become(dynamic authData) async {
+    dynamic jsonBody = json.encode(authData);
+    final headers = <String, String>{
+      'X-Parse-Revocable-Session': '1',
+      'Content-Type': 'application/json',
+    };
+    final result = await parseHTTPClient.post(
+      '${parse.configuration.uri.path}/users',
+      body: jsonBody,
+      headers: headers,
+    );
+    final user = ParseUser.fromJson(json: result);
+
+    final storage = await _currentUserStorage;
+    await storage.setData(user.asMap);
+
+    return user;
+  }
+
   static Future<ParseUser> signIn(
       {@required String username, @required String password}) async {
     final headers = <String, String>{'X-Parse-Revocable-Session': '1'};
