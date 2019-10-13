@@ -95,7 +95,7 @@ class ParseConfiguration {
   })  : uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
             : server)),
-        databaseFactory = databaseFactoryMemory;
+        databaseFactory = databaseFactory ?? databaseFactoryMemory;
 
   /// The [Uri] object parsed from `server`
   final Uri uri;

@@ -51,25 +51,14 @@ class ParseHTTPClient {
       return null;
     }
 
+    dynamic result;
     try {
-      final result = json.decode(response);
+      result = json.decode(response);
 
       if (parse.enableLogging) {
         print("╭-- JSON");
         _parseLogWrapped(response);
         print("╰-- result");
-      }
-
-      if (result is Map<String, dynamic>) {
-        String error = result['error'];
-        if (error != null) {
-          int code = result['code'];
-          throw ParseException(code: code, message: error);
-        }
-
-        return Future.value(result);
-      } else if (result is List<dynamic>) {
-        return Future.value(result);
       }
     } catch (_) {
       if (parse.enableLogging) {
@@ -77,6 +66,18 @@ class ParseHTTPClient {
         _parseLogWrapped(response ?? '');
         print("╰-- result");
       }
+    }
+
+    if (result is Map<String, dynamic>) {
+      String error = result['error'];
+      if (error != null) {
+        int code = result['code'];
+        throw ParseException(code: code, message: error);
+      }
+
+      return Future.value(result);
+    } else if (result is List<dynamic>) {
+      return Future.value(result);
     }
 
     throw ParseException(

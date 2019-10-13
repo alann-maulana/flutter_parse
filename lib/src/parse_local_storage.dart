@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:sembast/sembast.dart';
 
 import '../flutter_parse.dart';
+import 'path/path_provider.dart';
 
 final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
+
+const String _kDatabaseName = 'flutter_parse.db';
 
 class ParseLocalStorage {
   final Map<String, LocalStorage> _cache;
@@ -24,17 +27,21 @@ class ParseLocalStorage {
 
 class LocalStorage {
   final StoreRef _store = StoreRef.main();
-  final String _filename;
+  final String _keyName;
   final Map<String, dynamic> _data = {};
   Database _db;
 
-  LocalStorage._internal(this._filename);
+  LocalStorage._internal(this._keyName);
 
   _init() async {
+    final path = await pathProvider.databasePath(_kDatabaseName);
     _db = await parse.configuration.databaseFactory
-        .openDatabase('flutter_parse.db');
+        .openDatabase(path);
+    if (parse.configuration.enableLogging) {
+      print(_db.path);
+    }
 
-    final map = await _store.record(_filename).get(_db) as Map;
+    final map = await _store.record(_keyName).get(_db) as Map;
     if (map is Map) {
       _data.addAll(map);
     }
@@ -55,7 +62,7 @@ class LocalStorage {
   }
 
   Future<void> delete() async {
-    await _store.record(_filename).delete(_db);
+    await _store.record(_keyName).delete(_db);
   }
 
   deleteItem(String key) async {
@@ -75,6 +82,6 @@ class LocalStorage {
   bool get isEmpty => _data.isEmpty;
 
   Future<void> _flush() async {
-    await _store.record(_filename).put(_db, _data);
+    await _store.record(_keyName).put(_db, _data);
   }
 }
