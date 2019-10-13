@@ -13,6 +13,7 @@ addons:
       - curl
 before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
+  - export PATH=`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
   - export PATH=`pwd`/flutter/bin:$PATH
   - flutter doctor
 install:
