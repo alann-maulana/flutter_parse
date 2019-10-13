@@ -165,10 +165,14 @@ class ParseUser extends ParseObject {
   }
 
   static Future<void> signOut() async {
-    await parseHTTPClient.post(
-      '${parse.configuration.uri.path}/logout',
-      ignoreResult: true,
-    );
+    try {
+      await parseHTTPClient.post(
+        '${parse.configuration.uri.path}/logout',
+        ignoreResult: true,
+      );
+    } catch (_) {
+      // ignores any exception that happen
+    }
     final storage = await _currentUserStorage;
     return await storage.delete();
   }
