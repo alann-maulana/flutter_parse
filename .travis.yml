@@ -11,12 +11,11 @@ addons:
       - lib32stdc++6 # https://github.com/flutter/flutter/issues/6207
       - libstdc++6
       - curl
-before_script:
+install:
   - git clone https://github.com/flutter/flutter.git -b beta
   - export PATH=`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
   - export PATH=`pwd`/flutter/bin:$PATH
   - flutter doctor
-install:
   - gem install coveralls-lcov
   - pub global activate pana
 script: make
