@@ -3,10 +3,10 @@ DARTANALYZER_FLAGS=--fatal-warnings
 build: lib/*dart test/*dart deps
 	dartanalyzer ${DARTANALYZER_FLAGS} lib/
 	dartfmt -n --set-exit-if-changed lib/ test/
-	flutter test --coverage
+	pub run test_coverage
 
 deps: pubspec.yaml
-	flutter pub get -v
+	pub get -v
 
 reformatting:
 	dartfmt -w lib/ test/

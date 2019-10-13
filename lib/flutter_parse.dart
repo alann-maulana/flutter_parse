@@ -89,6 +89,7 @@ class ParseConfiguration {
     this.clientKey,
     this.enableLogging,
     this.httpClient,
+    this.localStoragePath,
   }) : uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
             : server));
@@ -107,4 +108,9 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient httpClient;
+
+  /// Add local storage persistent path to your Flutter Android or iOS app.
+  ///
+  /// use packages [path_provider] and then set returned path from [getApplicationDocumentsDirectory()]
+  final String localStoragePath;
 }

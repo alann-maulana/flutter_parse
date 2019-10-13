@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter_parse/flutter_parse.dart';
 import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart' as pp;
 
 final ParsePathProvider parsePathProvider = ParsePathProvider._();
 
@@ -9,8 +9,9 @@ class ParsePathProvider {
   ParsePathProvider._();
 
   Future<String> databasePath(String dbName) async {
-    final appDocDir = await pp.getApplicationDocumentsDirectory();
+    final appDocDir = parse.configuration.localStoragePath;
+    assert(appDocDir != null || appDocDir.isEmpty);
 
-    return path.join(appDocDir.path, dbName);
+    return path.join(appDocDir, dbName);
   }
 }
