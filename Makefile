@@ -6,7 +6,6 @@ build: lib/*dart test/*dart deps
 	flutter test --coverage
 
 deps: pubspec.yaml
-	pub get -v
 	flutter pub get -v
 
 reformatting:
