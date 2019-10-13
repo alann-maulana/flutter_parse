@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-
 import 'mime/mime_type.dart' as mime;
 import 'parse_base_object.dart';
 import 'parse_http_client.dart';

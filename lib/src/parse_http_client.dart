@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../flutter_parse.dart';
-
 import 'parse_exception.dart';
 import 'parse_user.dart';
 

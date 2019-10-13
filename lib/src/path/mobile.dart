@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as pp;
 
-final PathProvider pathProvider = PathProvider._();
+final ParsePathProvider parsePathProvider = ParsePathProvider._();
 
-class PathProvider {
-  PathProvider._();
+class ParsePathProvider {
+  ParsePathProvider._();
 
   Future<String> databasePath(String dbName) async {
     final appDocDir = await pp.getApplicationDocumentsDirectory();

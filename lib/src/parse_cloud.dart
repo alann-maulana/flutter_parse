@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:meta/meta.dart';
 
@@ -33,7 +32,7 @@ class ParseCloud extends ParseBaseObject {
 
   Future<dynamic> execute() async {
     final headers = {
-      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
     };
     final response = await parseHTTPClient.post(
       path,

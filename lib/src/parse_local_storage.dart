@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:sembast/sembast.dart';
 
 import '../flutter_parse.dart';
+import 'db/db.dart';
 import 'path/path_provider.dart';
 
 final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
@@ -34,9 +35,8 @@ class LocalStorage {
   LocalStorage._internal(this._keyName);
 
   _init() async {
-    final path = await pathProvider.databasePath(_kDatabaseName);
-    _db = await parse.configuration.databaseFactory
-        .openDatabase(path);
+    final path = await parsePathProvider.databasePath(_kDatabaseName);
+    _db = await parseDB.databaseFactory.openDatabase(path);
     if (parse.configuration.enableLogging) {
       print(_db.path);
     }

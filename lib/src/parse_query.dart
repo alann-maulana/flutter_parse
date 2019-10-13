@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-
 import 'parse_encoder.dart';
 import 'parse_exception.dart';
 import 'parse_geo_point.dart';

@@ -6,8 +6,6 @@ library flutter_parse;
 
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
-import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_memory.dart';
 
 import 'src/parse_http_client.dart' as client;
 
@@ -91,11 +89,9 @@ class ParseConfiguration {
     this.clientKey,
     this.enableLogging,
     this.httpClient,
-    DatabaseFactory databaseFactory,
-  })  : uri = Uri.parse((server.endsWith("/")
+  }) : uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
-            : server)),
-        databaseFactory = databaseFactory ?? databaseFactoryMemory;
+            : server));
 
   /// The [Uri] object parsed from `server`
   final Uri uri;
@@ -111,9 +107,4 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient httpClient;
-
-  /// The [DatabaseFactory] for storing [ParseUser] and [ParseSession] credentials.
-  /// Default value is [databaseFactoryMemory]. Replace it into `databaseFactoryIO`
-  /// for Flutter project that enable IO.
-  final DatabaseFactory databaseFactory;
 }

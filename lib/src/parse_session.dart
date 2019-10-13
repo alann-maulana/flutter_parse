@@ -1,6 +1,6 @@
 import 'dart:async';
-import '../flutter_parse.dart';
 
+import '../flutter_parse.dart';
 import 'parse_object.dart';
 import 'parse_user.dart';
 
@@ -9,6 +9,7 @@ class ParseSession extends ParseObject {
       : super(className: '_Session', objectId: objectId);
 
   DateTime get expiresAt => getDateTime('expiresAt');
+
   bool get restricted => getBoolean('restricted');
 
   /// `createdWith` (readonly): Information about how this session was created
@@ -23,7 +24,9 @@ class ParseSession extends ParseObject {
   /// `authProvider` could have values: `password`, `anonymous`, `facebook`, or `twitter`.
   String get authProvider =>
       createdWith == null ? null : createdWith['authProvider'];
+
   ParseUser get user => getParseUser('user');
+
   String get sessionToken => getString('sessionToken');
 
   static Future<ParseSession> me() async {

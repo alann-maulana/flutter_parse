@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import '../flutter_parse.dart';
-
 import 'parse_base_object.dart';
-import 'parse_geo_point.dart';
 import 'parse_decoder.dart';
 import 'parse_encoder.dart';
 import 'parse_file.dart';
+import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
 import 'parse_object.dart';
 import 'parse_user.dart';
@@ -177,6 +176,7 @@ class ParseConfig implements ParseBaseObject {
 
     return get(key);
   }
+
   // endregion
 
   // region SETTER
@@ -199,6 +199,7 @@ class ParseConfig implements ParseBaseObject {
       _isComplete = true;
     }
   }
+
   // endregion
 
   // region HELPERS
@@ -224,6 +225,7 @@ class ParseConfig implements ParseBaseObject {
   String toString() {
     return json.encode(asMap);
   }
+
   // endregion
 
   // region EXECUTORS

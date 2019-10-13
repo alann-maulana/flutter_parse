@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-
 import 'parse_acl.dart';
 import 'parse_base_object.dart';
 import 'parse_date_format.dart';
@@ -241,6 +240,7 @@ class ParseObject implements ParseBaseObject {
 
     return acl;
   }
+
   // endregion
 
   // region SETTER
@@ -353,6 +353,7 @@ class ParseObject implements ParseBaseObject {
       _operations.clear();
     }
   }
+
   // endregion
 
   // region HELPERS
@@ -419,6 +420,7 @@ class ParseObject implements ParseBaseObject {
 
   @override
   String toString() => json.encode(asMap);
+
   // endregion
 
   // region EXECUTORS
@@ -487,6 +489,7 @@ class ParseObject implements ParseBaseObject {
     }
     return;
   }
+
   // endregion
 
   // region BATCH OPERATIONS
@@ -545,6 +548,6 @@ class ParseObject implements ParseBaseObject {
     }
     return;
   }
-  // endregion
+// endregion
 
 }

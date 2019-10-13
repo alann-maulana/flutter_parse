@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-
 import 'parse_http_client.dart';
 import 'parse_local_storage.dart';
 import 'parse_object.dart';
@@ -176,5 +175,5 @@ class ParseUser extends ParseObject {
     final storage = await _currentUserStorage;
     return await storage.delete();
   }
-  // endregion
+// endregion
 }
