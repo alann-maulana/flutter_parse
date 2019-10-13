@@ -47,28 +47,36 @@ class ParseHTTPClient {
   Future<dynamic> _parseResponse(http.Response httpResponse,
       {bool ignoreResult = false}) {
     String response = httpResponse.body;
-    final result = json.decode(response);
-
-    if (parse.enableLogging) {
-      print("╭-- JSON");
-      _parseLogWrapped(response);
-      print("╰-- result");
-    }
-
     if (ignoreResult) {
       return null;
     }
 
-    if (result is Map<String, dynamic>) {
-      String error = result['error'];
-      if (error != null) {
-        int code = result['code'];
-        throw ParseException(code: code, message: error);
+    try {
+      final result = json.decode(response);
+
+      if (parse.enableLogging) {
+        print("╭-- JSON");
+        _parseLogWrapped(response);
+        print("╰-- result");
       }
 
-      return Future.value(result);
-    } else if (result is List<dynamic>) {
-      return Future.value(result);
+      if (result is Map<String, dynamic>) {
+        String error = result['error'];
+        if (error != null) {
+          int code = result['code'];
+          throw ParseException(code: code, message: error);
+        }
+
+        return Future.value(result);
+      } else if (result is List<dynamic>) {
+        return Future.value(result);
+      }
+    } catch (_) {
+      if (parse.enableLogging) {
+        print("╭-- RESPONSE");
+        _parseLogWrapped(response ?? '');
+        print("╰-- result");
+      }
     }
 
     throw ParseException(
