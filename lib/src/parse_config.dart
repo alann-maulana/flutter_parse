@@ -114,12 +114,12 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [Map] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [Map].
-  Map<String, dynamic> getMap(String key) {
+  Map<String, T> getMap<T>(String key) {
     if (get(key) is! Map) {
       return null;
     }
 
-    return Map<String, dynamic>.from(get(key));
+    return Map<String, T>.from(get(key));
   }
 
   /// Access a [List] value.
