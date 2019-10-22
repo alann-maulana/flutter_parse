@@ -35,7 +35,7 @@ class LocalStorage {
   LocalStorage._internal(this._keyName);
 
   _init() async {
-    final path = await parsePathProvider.databasePath(_kDatabaseName);
+    final path = parsePathProvider.databasePath(_kDatabaseName);
     _db = await parseDB.databaseFactory.openDatabase(path);
     if (parse.configuration.enableLogging) {
       print(_db.path);

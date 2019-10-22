@@ -1,11 +1,9 @@
-import 'dart:async';
-
 final ParsePathProvider parsePathProvider = ParsePathProvider._();
 
 class ParsePathProvider {
   ParsePathProvider._();
 
-  Future<String> databasePath(String dbName) async {
+  String databasePath(String dbName) {
     return dbName;
   }
 }
