@@ -64,6 +64,9 @@ class Parse {
   /// Return [Parse] client key
   String get clientKey => configuration.clientKey;
 
+  /// Return [Parse] master key
+  String get masterKey => configuration.masterKey;
+
   /// Return [Parse] application ID
   String get applicationId => configuration.applicationId;
 
@@ -87,6 +90,7 @@ class ParseConfiguration {
     @required String server,
     @required this.applicationId,
     this.clientKey,
+    this.masterKey,
     this.enableLogging,
     this.httpClient,
     this.localStoragePath,
@@ -102,6 +106,9 @@ class ParseConfiguration {
 
   /// The client key of Parse Server
   final String clientKey;
+
+  /// The master key of Parse Server
+  final String masterKey;
 
   /// Enable show every request sent to Parse Server into CURL format
   final bool enableLogging;

@@ -32,6 +32,9 @@ class ParseHTTPClient {
     if (parse.clientKey != null) {
       headers['X-Parse-Client-Key'] = parse.clientKey;
     }
+    if (parse.masterKey != null) {
+      headers['X-Parse-Master-Key'] = parse.masterKey;
+    }
 
     headers['X-Parse-Client-Version'] = "dart${kParseSdkVersion}";
 
