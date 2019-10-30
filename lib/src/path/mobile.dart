@@ -15,7 +15,7 @@ class ParsePathProvider {
           'Use packages [path_provider] and then set returned [path] from [getApplicationDocumentsDirectory()]');
     }
 
-    if (appDocDir != null || appDocDir.isNotEmpty) {
+    if (appDocDir != null && appDocDir.isNotEmpty) {
       return path.join(appDocDir, dbName);
     }
 
