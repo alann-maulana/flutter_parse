@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_parse/src/config/config.dart';
 import 'package:http/http.dart' as http;
 
 import '../flutter_parse.dart';
@@ -25,7 +26,9 @@ class ParseHTTPClient {
     assert(parse.applicationId != null);
     final headers = additionalHeaders ?? <String, String>{};
 
-    headers["User-Agent"] = "Dart Parse SDK v${kParseSdkVersion}";
+    if (kOverrideHeaderRequest) {
+      headers["User-Agent"] = "Dart Parse SDK v${kParseSdkVersion}";
+    }
     headers['X-Parse-Application-Id'] = parse.applicationId;
 
     // client key can be null with self-hosted Parse Server
