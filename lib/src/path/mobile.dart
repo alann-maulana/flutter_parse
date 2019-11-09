@@ -11,7 +11,7 @@ class ParsePathProvider {
   String databasePath(String dbName) {
     final appDocDir = parse.configuration.localStoragePath;
     if (Platform.isAndroid || Platform.isIOS) {
-      assert(appDocDir != null || appDocDir.isEmpty,
+      assert(appDocDir != null && appDocDir.isNotEmpty,
           'Use packages [path_provider] and then set returned [path] from [getApplicationDocumentsDirectory()]');
     }
 
