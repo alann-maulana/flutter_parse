@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
 import 'package:sembast/sembast.dart';
+import 'package:synchronized/synchronized.dart';
 
 import '../flutter_parse.dart';
 import 'db/db.dart';
@@ -11,18 +13,40 @@ final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
 const String _kDatabaseName = 'flutter_parse.db';
 
 class ParseLocalStorage {
+  final Lock lock = Lock();
   final Map<String, LocalStorage> _cache;
+  Database _db;
 
   ParseLocalStorage._internal() : _cache = {};
 
+  Future<void> _init() async {
+    if (_db == null) {
+      await lock.synchronized(() async {
+        if (_db == null) {
+          final path = parsePathProvider.databasePath(_kDatabaseName);
+          _db = await parseDB.databaseFactory.openDatabase(path);
+        }
+      });
+    }
+  }
+
   Future<LocalStorage> get(String key) async {
+    await _init();
     if (!_cache.containsKey(key)) {
-      final instance = LocalStorage._internal(key);
+      final instance = LocalStorage._internal(_db, key);
       await instance._init();
       _cache[key] = instance;
     }
 
     return _cache[key];
+  }
+
+  @visibleForTesting
+  Future<void> clear() async {
+    _cache?.forEach((key, cache) async {
+      await cache.delete();
+    });
+    _cache?.clear();
   }
 }
 
@@ -30,13 +54,11 @@ class LocalStorage {
   final StoreRef _store = StoreRef.main();
   final String _keyName;
   final Map<String, dynamic> _data = {};
-  Database _db;
+  final Database _db;
 
-  LocalStorage._internal(this._keyName);
+  LocalStorage._internal(this._db, this._keyName);
 
   _init() async {
-    final path = parsePathProvider.databasePath(_kDatabaseName);
-    _db = await parseDB.databaseFactory.openDatabase(path);
     if (parse.configuration.enableLogging) {
       print(_db.path);
     }
@@ -62,7 +84,9 @@ class LocalStorage {
   }
 
   Future<void> delete() async {
-    await _store.record(_keyName).delete(_db);
+    _data.clear();
+
+    return _flush();
   }
 
   deleteItem(String key) async {
