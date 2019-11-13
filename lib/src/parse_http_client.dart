@@ -27,7 +27,7 @@ class ParseHTTPClient {
     assert(parse.applicationId != null);
     final headers = additionalHeaders ?? <String, String>{};
 
-    if (kOverrideHeaderRequest) {
+    if (kOverrideUserAgentHeaderRequest) {
       headers["User-Agent"] = "Dart Parse SDK v${kParseSdkVersion}";
     }
     headers['X-Parse-Application-Id'] = parse.applicationId;

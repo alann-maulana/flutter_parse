@@ -1,1 +1,1 @@
-const bool kOverrideHeaderRequest = false;
+const bool kOverrideUserAgentHeaderRequest = false;
