@@ -8,3 +8,4 @@ script: make
 after_success:
   - make pana
   - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
+  - bash <(curl -s https://codecov.io/bash)
