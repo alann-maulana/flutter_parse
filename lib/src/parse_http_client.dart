@@ -5,6 +5,7 @@ import 'package:flutter_parse/src/config/config.dart';
 import 'package:http/http.dart' as http;
 
 import '../flutter_parse.dart';
+import 'http/http.dart';
 import 'parse_exception.dart';
 import 'parse_user.dart';
 
@@ -13,7 +14,7 @@ final ParseHTTPClient parseHTTPClient = ParseHTTPClient._internal();
 class ParseHTTPClient {
   ParseHTTPClient._internal()
       : this._httpClient =
-            parse.configuration.httpClient ?? _ParseBaseHTTPClient();
+            parse.configuration.httpClient ?? ParseBaseHTTPClient();
 
   final http.BaseClient _httpClient;
 
@@ -156,21 +157,6 @@ class ParseHTTPClient {
     return _httpClient
         .put(url, headers: headers, body: body, encoding: encoding)
         .then((r) => _parseResponse(r));
-  }
-}
-
-class _ParseBaseHTTPClient extends http.BaseClient {
-  final http.Client _client;
-
-  _ParseBaseHTTPClient() : this._client = http.Client();
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    if (parse.enableLogging) {
-      logToCURL(request);
-    }
-
-    return await _client.send(request);
   }
 }
 
