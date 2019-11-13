@@ -61,7 +61,7 @@ class ParseConfig implements ParseBaseObject {
   /// Returns `0` if there is no such key or if it is not a [int].
   int getInteger(String key) {
     if (get(key) is! int) {
-      return 0;
+      return null;
     }
 
     return get(key);
