@@ -42,9 +42,11 @@ class ParseHTTPClient {
 
     headers['X-Parse-Client-Version'] = "dart${kParseSdkVersion}";
 
-    final currentUser = await ParseUser.currentUser;
-    if (currentUser != null && currentUser.sessionId != null) {
-      headers['X-Parse-Session-Token'] = currentUser.sessionId;
+    if (!headers.containsKey('X-Parse-Revocable-Session')) {
+      final currentUser = await ParseUser.currentUser;
+      if (currentUser != null && currentUser.sessionId != null) {
+        headers['X-Parse-Session-Token'] = currentUser.sessionId;
+      }
     }
 
     return headers;
