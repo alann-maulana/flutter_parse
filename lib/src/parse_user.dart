@@ -76,8 +76,8 @@ class ParseUser extends ParseObject {
   }
 
   // region EXECUTORS
-  Future<ParseUser> save() async {
-    await super.save();
+  Future<ParseUser> save({bool useMasterKey = false}) async {
+    await super.save(useMasterKey: useMasterKey);
     final currentUser = await ParseUser.currentUser;
     if (currentUser != null && currentUser.objectId == this.objectId) {
       final storage = await _currentUserStorage;
@@ -86,8 +86,8 @@ class ParseUser extends ParseObject {
     return this;
   }
 
-  Future<ParseUser> fetch({List<String> includes}) async {
-    await super.fetch(includes: includes);
+  Future<ParseUser> fetch({List<String> includes, bool useMasterKey = false}) async {
+    await super.fetch(includes: includes, useMasterKey: useMasterKey);
     final currentUser = await ParseUser.currentUser;
     if (currentUser != null && currentUser.objectId == this.objectId) {
       final storage = await _currentUserStorage;

@@ -447,43 +447,43 @@ class ParseObject implements ParseBaseObject {
     return;
   }
 
-  Future<ParseObject> save() async {
+  Future<ParseObject> save({bool useMasterKey = false}) async {
     await uploadFiles();
 
     dynamic jsonBody = json.encode(_operations);
     final headers = {'content-type': 'application/json; charset=utf-8'};
 
     final result = objectId == null
-        ? await parseHTTPClient.post(path, body: jsonBody, headers: headers)
-        : await parseHTTPClient.put(path, body: jsonBody, headers: headers);
+        ? await parseHTTPClient.post(path, body: jsonBody, headers: headers, useMasterKey: useMasterKey)
+        : await parseHTTPClient.put(path, body: jsonBody, headers: headers, useMasterKey: useMasterKey);
 
     mergeJson(result);
     return this;
   }
 
-  Future<ParseObject> fetchIfNeeded() async {
+  Future<ParseObject> fetchIfNeeded({bool useMasterKey = false}) async {
     if (!isComplete) {
-      return fetch();
+      return fetch(useMasterKey: useMasterKey);
     }
 
     return this;
   }
 
-  Future<ParseObject> fetch({List<String> includes}) async {
+  Future<ParseObject> fetch({List<String> includes, bool useMasterKey = false}) async {
     assert(objectId != null, 'cannot fetch ParseObject without objectId');
 
     var queryString = '';
     if (includes != null) {
       queryString = '?include=${includes.join(',')}';
     }
-    final result = await parseHTTPClient.get(path + queryString);
+    final result = await parseHTTPClient.get(path + queryString, useMasterKey: useMasterKey);
     mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
 
-  Future<void> delete() async {
+  Future<void> delete({bool useMasterKey = false}) async {
     if (objectId != null) {
-      await parseHTTPClient.delete(path);
+      await parseHTTPClient.delete(path, useMasterKey: useMasterKey);
       _isDeleted = true;
       _reset();
     }
@@ -493,7 +493,7 @@ class ParseObject implements ParseBaseObject {
   // endregion
 
   // region BATCH OPERATIONS
-  static Future<void> saveAll(List<ParseObject> objects) async {
+  static Future<void> saveAll(List<ParseObject> objects, {bool useMasterKey = false}) async {
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects, currently ${objects.length}');
 
@@ -513,6 +513,7 @@ class ParseObject implements ParseBaseObject {
       '${parse.configuration.uri.path}/batch',
       body: jsonBody,
       headers: headers,
+      useMasterKey: useMasterKey,
     );
     if (results is List<dynamic>) {
       for (int i = 0; i < results.length; i++) {
@@ -522,7 +523,7 @@ class ParseObject implements ParseBaseObject {
     return;
   }
 
-  static Future<void> deleteAll(List<ParseObject> objects) async {
+  static Future<void> deleteAll(List<ParseObject> objects, {bool useMasterKey = false}) async {
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects');
 
@@ -539,6 +540,7 @@ class ParseObject implements ParseBaseObject {
       'batch',
       body: jsonBody,
       headers: headers,
+      useMasterKey: useMasterKey,
     );
     if (results is List<dynamic>) {
       for (int i = 0; i < results.length; i++) {
