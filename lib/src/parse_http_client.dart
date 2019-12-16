@@ -23,7 +23,9 @@ class ParseHTTPClient {
   }
 
   Future<Map<String, String>> _addHeader(
-      Map<String, String> additionalHeaders) async {
+    Map<String, String> additionalHeaders, {
+    bool useMasterKey = false,
+  }) async {
     assert(parse.applicationId != null);
     final headers = additionalHeaders ?? <String, String>{};
 
@@ -33,10 +35,10 @@ class ParseHTTPClient {
     headers['X-Parse-Application-Id'] = parse.applicationId;
 
     // client key can be null with self-hosted Parse Server
-    if (parse.clientKey != null) {
+    if (!useMasterKey && parse.clientKey != null) {
       headers['X-Parse-Client-Key'] = parse.clientKey;
     }
-    if (parse.masterKey != null) {
+    if (useMasterKey && parse.masterKey != null) {
       headers['X-Parse-Master-Key'] = parse.masterKey;
     }
 
@@ -94,10 +96,11 @@ class ParseHTTPClient {
 
   Future<dynamic> get(
     String path, {
+    bool useMasterKey = false,
     Map<String, dynamic> params,
     Map<String, String> headers,
   }) async {
-    headers = await _addHeader(headers);
+    headers = await _addHeader(headers, useMasterKey: useMasterKey);
     final url = _getFullUrl(path);
 
     if (params != null) {
@@ -114,10 +117,11 @@ class ParseHTTPClient {
 
   Future<dynamic> delete(
     String path, {
+    bool useMasterKey = false,
     Map<String, String> params,
     Map<String, String> headers,
   }) async {
-    headers = await _addHeader(headers);
+    headers = await _addHeader(headers, useMasterKey: useMasterKey);
     final url = _getFullUrl(path);
 
     if (params != null) {
@@ -134,12 +138,13 @@ class ParseHTTPClient {
 
   Future<dynamic> post(
     String path, {
+    bool useMasterKey = false,
     Map<String, String> headers,
     dynamic body,
     Encoding encoding,
     bool ignoreResult = false,
   }) async {
-    headers = await _addHeader(headers);
+    headers = await _addHeader(headers, useMasterKey: useMasterKey);
     final url = _getFullUrl(path);
 
     return _httpClient
@@ -149,11 +154,12 @@ class ParseHTTPClient {
 
   Future<dynamic> put(
     String path, {
+    bool useMasterKey = false,
     Map<String, String> headers,
     dynamic body,
     Encoding encoding,
   }) async {
-    headers = await _addHeader(headers);
+    headers = await _addHeader(headers, useMasterKey: useMasterKey);
     final url = _getFullUrl(path);
 
     return _httpClient

@@ -278,8 +278,8 @@ class ParseQuery<T extends ParseObject> {
     return ParseQuery(className: className)..whereEqualTo("\$or", clauseOr);
   }
 
-  Future<List<dynamic>> findAsync() async {
-    dynamic result = await _find();
+  Future<List<dynamic>> findAsync({bool useMasterKey = false}) async {
+    dynamic result = await _find(useMasterKey: useMasterKey);
     if (result.containsKey("results")) {
       List<dynamic> results = result["results"];
       List<dynamic> objects = List();
@@ -304,13 +304,13 @@ class ParseQuery<T extends ParseObject> {
     return [];
   }
 
-  Future<dynamic> _find() {
+  Future<dynamic> _find({bool useMasterKey = false}) {
     _countEnabled = false;
-    return _query();
+    return _query(useMasterKey: useMasterKey);
   }
 
-  Future<int> countAsync() async {
-    final result = await _count();
+  Future<int> countAsync({bool useMasterKey = false}) async {
+    final result = await _count(useMasterKey: useMasterKey);
     if (result.containsKey("count")) {
       return result["count"];
     }
@@ -318,12 +318,12 @@ class ParseQuery<T extends ParseObject> {
     return 0;
   }
 
-  Future<dynamic> _count() {
+  Future<dynamic> _count({bool useMasterKey = false}) {
     _countEnabled = true;
-    return _query();
+    return _query(useMasterKey: useMasterKey);
   }
 
-  Future<dynamic> _query() {
+  Future<dynamic> _query({bool useMasterKey = false}) {
     Map<String, dynamic> params = toJsonParams();
     params.putIfAbsent("_method", () => "GET");
 
@@ -334,6 +334,7 @@ class ParseQuery<T extends ParseObject> {
 
     return parseHTTPClient.post(
       '${parse.configuration.uri.path}/classes/$className',
+      useMasterKey: useMasterKey,
       body: body,
       headers: headers,
     );
