@@ -48,6 +48,8 @@ class ParseCloud extends ParseBaseObject {
       }
 
       return result;
+    } else if (result is List) {
+      return result;
     }
 
     return null;
