@@ -454,8 +454,10 @@ class ParseObject implements ParseBaseObject {
     final headers = {'content-type': 'application/json; charset=utf-8'};
 
     final result = objectId == null
-        ? await parseHTTPClient.post(path, body: jsonBody, headers: headers, useMasterKey: useMasterKey)
-        : await parseHTTPClient.put(path, body: jsonBody, headers: headers, useMasterKey: useMasterKey);
+        ? await parseHTTPClient.post(path,
+            body: jsonBody, headers: headers, useMasterKey: useMasterKey)
+        : await parseHTTPClient.put(path,
+            body: jsonBody, headers: headers, useMasterKey: useMasterKey);
 
     mergeJson(result);
     return this;
@@ -469,14 +471,16 @@ class ParseObject implements ParseBaseObject {
     return this;
   }
 
-  Future<ParseObject> fetch({List<String> includes, bool useMasterKey = false}) async {
+  Future<ParseObject> fetch(
+      {List<String> includes, bool useMasterKey = false}) async {
     assert(objectId != null, 'cannot fetch ParseObject without objectId');
 
     var queryString = '';
     if (includes != null) {
       queryString = '?include=${includes.join(',')}';
     }
-    final result = await parseHTTPClient.get(path + queryString, useMasterKey: useMasterKey);
+    final result = await parseHTTPClient.get(path + queryString,
+        useMasterKey: useMasterKey);
     mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
@@ -493,7 +497,8 @@ class ParseObject implements ParseBaseObject {
   // endregion
 
   // region BATCH OPERATIONS
-  static Future<void> saveAll(List<ParseObject> objects, {bool useMasterKey = false}) async {
+  static Future<void> saveAll(List<ParseObject> objects,
+      {bool useMasterKey = false}) async {
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects, currently ${objects.length}');
 
@@ -523,7 +528,8 @@ class ParseObject implements ParseBaseObject {
     return;
   }
 
-  static Future<void> deleteAll(List<ParseObject> objects, {bool useMasterKey = false}) async {
+  static Future<void> deleteAll(List<ParseObject> objects,
+      {bool useMasterKey = false}) async {
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects');
 

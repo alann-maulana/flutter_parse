@@ -88,7 +88,8 @@ class ParseUser extends ParseObject {
     return this;
   }
 
-  Future<ParseUser> fetch({List<String> includes, bool useMasterKey = false}) async {
+  Future<ParseUser> fetch(
+      {List<String> includes, bool useMasterKey = false}) async {
     await super.fetch(includes: includes, useMasterKey: useMasterKey);
     final currentUser = await ParseUser.currentUser;
     if (currentUser != null && currentUser.objectId == this.objectId) {

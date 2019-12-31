@@ -93,7 +93,6 @@ class Parse {
   }
 
   Platform get platform => _platform ?? kDefaultPlatform;
-
 }
 
 /// The [ParseConfiguration] class contains variable that handle global
