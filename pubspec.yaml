@@ -1,7 +1,7 @@
 name: flutter_parse
 description: Plugin for managing and accessing Parse Server for Dart VM and Flutter.
 version: 0.2.4
-author: Eyro Labs <me@eyro.co.id>
+author: Eyro Labs <maulana@cubeacon.com>
 homepage: https://github.com/eyro-labs/flutter_parse
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   http: ^0.12.0+2
   meta: ^1.1.7
   path: ^1.6.0
+  platform: ^2.2.1
   sembast: ^2.1.0
 
 dev_dependencies:

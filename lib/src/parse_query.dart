@@ -285,7 +285,10 @@ class ParseQuery<T extends ParseObject> {
       List<dynamic> objects = List();
       results.forEach((json) {
         String objectId = json["objectId"];
-        if (className == '_User') {
+        if (className == '_Session') {
+          ParseSession session = ParseSession.fromJson(json: json);
+          objects.add(session);
+        } else if (className == '_User') {
           ParseUser user = ParseUser.fromJson(json: json);
           objects.add(user);
         } else {

@@ -4,6 +4,7 @@ import 'parse_date_format.dart';
 import 'parse_file.dart';
 import 'parse_geo_point.dart';
 import 'parse_object.dart';
+import 'parse_session.dart';
 import 'parse_user.dart';
 
 final ParseDecoder parseDecoder = ParseDecoder._internal();
@@ -76,6 +77,9 @@ class ParseDecoder {
       case "Object":
         String objectId = map["objectId"];
         String className = map["className"];
+        if (className == '_Session') {
+          return ParseSession.fromJson(json: map);
+        }
         if (className == '_User') {
           return ParseUser.fromJson(json: map);
         }

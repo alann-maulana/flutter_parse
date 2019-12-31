@@ -4,8 +4,10 @@
 /// Dart package for accessing Parse Server
 library flutter_parse;
 
+import 'package:flutter_parse/src/platform/platform.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
+import 'package:platform/platform.dart';
 
 import 'src/parse_http_client.dart' as client;
 
@@ -18,6 +20,7 @@ export 'src/parse_geo_point.dart';
 export 'src/parse_object.dart';
 export 'src/parse_query.dart';
 export 'src/parse_role.dart';
+export 'src/parse_schema.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
 
@@ -79,8 +82,18 @@ class Parse {
   /// Return [Parse] initialized status
   bool get initialized => configuration != null;
 
+  Platform _platform;
+
   /// Convert [BaseRequest] object into friendly formatted CURL command into console log
   void logToCURL(BaseRequest request) => client.logToCURL(request);
+
+  @visibleForTesting
+  set platform(Platform platform) {
+    _platform = platform;
+  }
+
+  Platform get platform => _platform ?? kDefaultPlatform;
+
 }
 
 /// The [ParseConfiguration] class contains variable that handle global

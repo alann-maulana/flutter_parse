@@ -1,12 +1,20 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
+
 import '../flutter_parse.dart';
 import 'parse_object.dart';
 import 'parse_user.dart';
 
 class ParseSession extends ParseObject {
-  ParseSession._internal({String objectId})
+  @visibleForTesting
+  ParseSession({String objectId})
       : super(className: '_Session', objectId: objectId);
+
+  factory ParseSession.fromJson({dynamic json}) {
+    // ignore: invalid_use_of_visible_for_testing_member
+    return ParseSession()..mergeJson(json);
+  }
 
   DateTime get expiresAt => getDateTime('expiresAt');
 
@@ -30,7 +38,7 @@ class ParseSession extends ParseObject {
   String get sessionToken => getString('sessionToken');
 
   static Future<ParseSession> me() async {
-    final session = ParseSession._internal(objectId: 'me');
+    final session = ParseSession(objectId: 'me');
     await session.fetch();
     return session;
   }

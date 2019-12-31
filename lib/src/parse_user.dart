@@ -50,6 +50,8 @@ class ParseUser extends ParseObject {
     return null;
   }
 
+  static ParseQuery get query => ParseQuery(className: '_User');
+
   @override
   bool isKeyMutable(String key) {
     return !_readOnlyKeys.contains(key);
