@@ -75,6 +75,16 @@ class Schema {
         'classLevelPermissions': classLevelPermissions,
         'fieindexeslds': indexes,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ParseSchema &&
+          runtimeType == other.runtimeType &&
+          className == other.className;
+
+  @override
+  int get hashCode => className.hashCode;
 }
 
 class SchemaType {
