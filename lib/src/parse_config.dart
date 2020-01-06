@@ -30,6 +30,12 @@ class ParseConfig implements ParseBaseObject {
   /// Returns `false` if there hasn't been fetched.
   bool get isComplete => _isComplete;
 
+  /// Returns true if there is no key/value pair in the map.
+  bool get isEmpty => _data.isEmpty;
+
+  /// Returns true if there is at least one key/value pair in the map.
+  bool get isNotEmpty => _data.isNotEmpty;
+
   /// Access a value. In most cases it is more convenient to use a helper function such as
   /// [getString] or [getInteger].
   ///
@@ -231,8 +237,8 @@ class ParseConfig implements ParseBaseObject {
   // region EXECUTORS
 
   /// Fetch the latest current data from Parse Server
-  Future<ParseConfig> fetch() async {
-    final result = await parseHTTPClient.get(path);
+  Future<ParseConfig> fetch({bool useMasterKey = false}) async {
+    final result = await parseHTTPClient.get(path, useMasterKey: useMasterKey);
     _mergeJson(result);
     return Future.value(this);
   }
