@@ -18,10 +18,12 @@ final parseConfig = ParseConfig._internal();
 class ParseConfig implements ParseBaseObject {
   bool _isComplete;
   final Map<String, dynamic> _data;
+  final Map<String, dynamic> _masterKeyOnly;
 
   ParseConfig._internal()
       : _isComplete = false,
-        _data = {};
+        _data = {},
+        _masterKeyOnly = {};
 
   // region GETTER
 
@@ -183,6 +185,16 @@ class ParseConfig implements ParseBaseObject {
     return get(key);
   }
 
+  /// Check if a key is only accessed using masterKey only
+  ///
+  /// Returns `true` if only accessed using masterKey only
+  bool masterKeyOnly(String key) {
+    return _masterKeyOnly.containsKey(key) ? _masterKeyOnly[key] : false;
+  }
+
+  Iterable<String> get keys => _data.keys;
+
+  Iterable<String> get values => _data.values;
   // endregion
 
   // region SETTER
@@ -197,12 +209,17 @@ class ParseConfig implements ParseBaseObject {
     }
 
     json = json['params'];
-    if (json != null) {
+    if (json is Map) {
       json.forEach((key, value) {
         _data[key] = parseDecoder.decode(value);
       });
 
       _isComplete = true;
+    }
+
+    final masterKeyOnly = json['masterKeyOnly'];
+    if (masterKeyOnly is Map) {
+      _masterKeyOnly.addAll(masterKeyOnly);
     }
   }
 
