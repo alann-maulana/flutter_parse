@@ -259,7 +259,7 @@ class ParseQuery<T extends ParseObject> {
       params.putIfAbsent("include", () => _includes.join(','));
     }
     if (_selectedKeys != null) {
-      params.putIfAbsent("fields", () => _selectedKeys.join(','));
+      params.putIfAbsent("keys", () => _selectedKeys.join(','));
     }
 
     return params;
