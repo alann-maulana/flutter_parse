@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_parse/flutter_parse.dart';
 import 'package:path/path.dart' as path;
 
@@ -10,7 +8,9 @@ class ParsePathProvider {
 
   String databasePath(String dbName) {
     final appDocDir = parse.configuration.localStoragePath;
-    if (Platform.isAndroid || Platform.isIOS) {
+
+    final platform = parse.platform;
+    if (platform.isAndroid || platform.isIOS) {
       assert(appDocDir != null && appDocDir.isNotEmpty,
           'Use packages [path_provider] and then set returned [path] from [getApplicationDocumentsDirectory()]');
     }

@@ -18,10 +18,12 @@ final parseConfig = ParseConfig._internal();
 class ParseConfig implements ParseBaseObject {
   bool _isComplete;
   final Map<String, dynamic> _data;
+  final Map<String, dynamic> _masterKeyOnly;
 
   ParseConfig._internal()
       : _isComplete = false,
-        _data = {};
+        _data = {},
+        _masterKeyOnly = {};
 
   // region GETTER
 
@@ -29,6 +31,12 @@ class ParseConfig implements ParseBaseObject {
   ///
   /// Returns `false` if there hasn't been fetched.
   bool get isComplete => _isComplete;
+
+  /// Returns true if there is no key/value pair in the map.
+  bool get isEmpty => _data.isEmpty;
+
+  /// Returns true if there is at least one key/value pair in the map.
+  bool get isNotEmpty => _data.isNotEmpty;
 
   /// Access a value. In most cases it is more convenient to use a helper function such as
   /// [getString] or [getInteger].
@@ -177,6 +185,16 @@ class ParseConfig implements ParseBaseObject {
     return get(key);
   }
 
+  /// Check if a key is only accessed using masterKey only
+  ///
+  /// Returns `true` if only accessed using masterKey only
+  bool masterKeyOnly(String key) {
+    return _masterKeyOnly.containsKey(key) ? _masterKeyOnly[key] : false;
+  }
+
+  Iterable<String> get keys => _data.keys;
+
+  Iterable<String> get values => _data.values;
   // endregion
 
   // region SETTER
@@ -191,12 +209,17 @@ class ParseConfig implements ParseBaseObject {
     }
 
     json = json['params'];
-    if (json != null) {
+    if (json is Map) {
       json.forEach((key, value) {
         _data[key] = parseDecoder.decode(value);
       });
 
       _isComplete = true;
+    }
+
+    final masterKeyOnly = json['masterKeyOnly'];
+    if (masterKeyOnly is Map) {
+      _masterKeyOnly.addAll(masterKeyOnly);
     }
   }
 
@@ -231,8 +254,8 @@ class ParseConfig implements ParseBaseObject {
   // region EXECUTORS
 
   /// Fetch the latest current data from Parse Server
-  Future<ParseConfig> fetch() async {
-    final result = await parseHTTPClient.get(path);
+  Future<ParseConfig> fetch({bool useMasterKey = false}) async {
+    final result = await parseHTTPClient.get(path, useMasterKey: useMasterKey);
     _mergeJson(result);
     return Future.value(this);
   }
