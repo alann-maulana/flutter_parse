@@ -185,7 +185,7 @@ void logToCURL(http.BaseRequest request) {
   if (<String>['POST', 'PUT', 'PATCH'].contains(request.method)) {
     if (request is http.Request) {
       curlCmd +=
-          " -d '${bodyAsText ? request.body : request.bodyBytes}' \\\n  ";
+          " -d '${bodyAsText ? request.body : base64Encode(request.bodyBytes)}' \\\n  ";
     }
   }
   curlCmd += (compressed ? " --compressed " : " ") + request.url.toString();
