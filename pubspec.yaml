@@ -12,7 +12,8 @@ dependencies:
   meta: ^1.1.7
   path: ^1.6.0
   platform: ^2.2.1
-  sembast: ^2.1.0
+  shared_preferences: ^0.5.6+1
+  web_socket_channel: ^1.1.0
 
 dev_dependencies:
   pedantic: ^1.8.0

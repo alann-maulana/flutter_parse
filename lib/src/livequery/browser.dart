@@ -29,7 +29,7 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
           print('Listening to stream');
         }
         _channel.stream.listen(
-              (dynamic message) {
+          (dynamic message) {
             if (parse.enableLogging == true) {
               print('RECEIVE: $message');
             }
