@@ -12,8 +12,10 @@ final ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient();
 class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
   WebSocket _webSocket;
   IOWebSocketChannel _channel;
+  bool _userDisconnected = false;
 
   Future<void> connect(ParseLiveQueryCallback callback) async {
+    _userDisconnected = false;
     final server = parse.configuration.liveQueryServer;
     try {
       if (parse.enableLogging == true) {
@@ -45,12 +47,27 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
             if (parse.enableLogging == true) {
               print('Listening done');
             }
+
+            if (!_userDisconnected) {
+              if (parse.enableLogging == true) {
+                print('Reconnecting');
+              }
+              connect(callback);
+            }
           },
           onError: (error) {
             if (parse.enableLogging == true) {
               print('Listening error: $error');
             }
-            callback(ParseException(message: error.toString()));
+
+            if (!_userDisconnected) {
+              if (parse.enableLogging == true) {
+                print('Reconnecting');
+              }
+              connect(callback);
+            } else {
+              callback(ParseException(message: error.toString()));
+            }
           },
         );
       } else {
@@ -73,6 +90,8 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
       await _webSocket.close();
       _webSocket = null;
     }
+
+    _userDisconnected = true;
   }
 
   @override
