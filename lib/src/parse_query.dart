@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -22,6 +23,19 @@ class ParseQuery<T extends ParseObject> {
   bool _countEnabled = false;
 
   ParseQuery({@required this.className});
+
+  ParseQuery get copy {
+    final newQuery = ParseQuery(className: className);
+    newQuery._includes.addAll(_includes);
+    newQuery._order.addAll(_order);
+    newQuery._where.addAll(_where);
+    newQuery._selectedKeys.addAll(_selectedKeys);
+    newQuery._limit = _limit;
+    newQuery._skip = _skip;
+    newQuery._countEnabled = _countEnabled;
+
+    return newQuery;
+  }
 
   void _addCondition(String key, String condition, dynamic value) {
     Map<String, dynamic> whereValue;
