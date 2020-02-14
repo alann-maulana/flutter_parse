@@ -29,7 +29,7 @@ class ParseQuery<T extends ParseObject> {
     newQuery._includes.addAll(_includes);
     newQuery._order.addAll(_order);
     newQuery._where.addAll(_where);
-    newQuery._selectedKeys.addAll(_selectedKeys);
+    newQuery._selectedKeys = _selectedKeys;
     newQuery._limit = _limit;
     newQuery._skip = _skip;
     newQuery._countEnabled = _countEnabled;
