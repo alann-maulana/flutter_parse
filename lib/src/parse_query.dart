@@ -302,6 +302,9 @@ class ParseQuery<T extends ParseObject> {
         if (className == '_Session') {
           ParseSession session = ParseSession.fromJson(json: json);
           objects.add(session);
+        } else if (className == '_Role') {
+          ParseRole role = ParseRole.fromMap(json);
+          objects.add(role);
         } else if (className == '_User') {
           ParseUser user = ParseUser.fromJson(json: json);
           objects.add(user);

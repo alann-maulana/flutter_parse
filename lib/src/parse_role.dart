@@ -1,3 +1,5 @@
+import 'package:flutter_parse/flutter_parse.dart';
+
 import 'parse_acl.dart';
 
 class ParseRole {
@@ -13,4 +15,6 @@ class ParseRole {
   final ParseACL acl;
   final DateTime createdAt;
   final DateTime updatedAt;
+
+  static ParseQuery get query => ParseQuery(className: '_Role');
 }
