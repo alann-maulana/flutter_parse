@@ -558,4 +558,14 @@ class ParseObject implements ParseBaseObject {
   }
 // endregion
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ParseObject &&
+          runtimeType == other.runtimeType &&
+          className == other.className &&
+          _objectId == other._objectId;
+
+  @override
+  int get hashCode => className.hashCode ^ _objectId.hashCode;
 }
