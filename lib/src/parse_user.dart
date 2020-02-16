@@ -189,5 +189,5 @@ class ParseUser extends ParseObject {
           objectId == other.objectId;
 
   @override
-  int get hashCode => className.hashCode ^ _objectId.hashCode;
+  int get hashCode => className.hashCode ^ objectId.hashCode;
 }
