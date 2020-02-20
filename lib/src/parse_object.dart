@@ -60,6 +60,16 @@ class ParseObject implements ParseBaseObject {
   }
 
   // region GETTER
+  ParseObject get copy => ParseObject(className: className, objectId: objectId)
+    .._createdAt = _createdAt
+    .._updatedAt = _updatedAt
+    .._isComplete = _isComplete
+    .._isDeleted = _isDeleted
+    .._isDeleted = _isDeleted
+    .._data.addAll(_data)
+    .._operations.addAll(_operations)
+    .._operationFiles.addAll(_operationFiles);
+
   Map<String, dynamic> get operations => _operations;
 
   bool get isDeleted => _isDeleted;
