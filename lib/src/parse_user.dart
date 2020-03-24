@@ -179,4 +179,15 @@ class ParseUser extends ParseObject {
     return await storage.delete();
   }
 // endregion
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ParseUser &&
+          runtimeType == other.runtimeType &&
+          className == other.className &&
+          objectId == other.objectId;
+
+  @override
+  int get hashCode => className.hashCode ^ objectId.hashCode;
 }

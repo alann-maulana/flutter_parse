@@ -17,6 +17,7 @@ export 'src/parse_config.dart';
 export 'src/parse_exception.dart';
 export 'src/parse_file.dart';
 export 'src/parse_geo_point.dart';
+export 'src/parse_live_query.dart';
 export 'src/parse_object.dart';
 export 'src/parse_query.dart';
 export 'src/parse_role.dart';
@@ -101,17 +102,34 @@ class ParseConfiguration {
   ParseConfiguration({
     @required String server,
     @required this.applicationId,
+    this.liveQueryServer,
     this.clientKey,
     this.masterKey,
     this.enableLogging,
     this.httpClient,
-    this.localStoragePath,
-  }) : uri = Uri.parse((server.endsWith("/")
+  })  : assert(
+          server != null ||
+              server.startsWith('https://') ||
+              server.startsWith('http://'),
+          'Invalid parse server',
+        ),
+        assert(applicationId != null),
+        assert(
+          liveQueryServer == null ||
+              liveQueryServer.startsWith('wss://') ||
+              liveQueryServer.startsWith('ws://'),
+          'Invalid parse live query server',
+        ),
+        assert(enableLogging != null),
+        uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
             : server));
 
   /// The [Uri] object parsed from `server`
   final Uri uri;
+
+  /// The live query server
+  final String liveQueryServer;
 
   /// The application ID of Parse Server
   final String applicationId;
@@ -127,9 +145,4 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient httpClient;
-
-  /// Add local storage persistent path to your Flutter Android or iOS app.
-  ///
-  /// use packages [path_provider] and then set returned path from [getApplicationDocumentsDirectory()]
-  final String localStoragePath;
 }
