@@ -40,6 +40,11 @@ class ParseCloud extends ParseBaseObject {
       headers: headers,
     );
     final result = response['result'];
+
+    if (result is List) {
+      return result;
+    }
+
     if (result is Map) {
       final error = result['error'];
       final code = result['code'];

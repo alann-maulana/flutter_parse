@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -22,6 +23,19 @@ class ParseQuery<T extends ParseObject> {
   bool _countEnabled = false;
 
   ParseQuery({@required this.className});
+
+  ParseQuery get copy {
+    final newQuery = ParseQuery(className: className);
+    newQuery._includes.addAll(_includes);
+    newQuery._order.addAll(_order);
+    newQuery._where.addAll(_where);
+    newQuery._selectedKeys = _selectedKeys;
+    newQuery._limit = _limit;
+    newQuery._skip = _skip;
+    newQuery._countEnabled = _countEnabled;
+
+    return newQuery;
+  }
 
   void _addCondition(String key, String condition, dynamic value) {
     Map<String, dynamic> whereValue;
@@ -288,6 +302,9 @@ class ParseQuery<T extends ParseObject> {
         if (className == '_Session') {
           ParseSession session = ParseSession.fromJson(json: json);
           objects.add(session);
+        } else if (className == '_Role') {
+          ParseRole role = ParseRole.fromMap(json);
+          objects.add(role);
         } else if (className == '_User') {
           ParseUser user = ParseUser.fromJson(json: json);
           objects.add(user);
