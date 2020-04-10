@@ -553,7 +553,7 @@ class ParseObject implements ParseBaseObject {
       'Content-Type': 'application/json; charset=utf-8',
     };
     final results = await parseHTTPClient.post(
-      'batch',
+      '${parse.configuration.uri.path}/batch',
       body: jsonBody,
       headers: headers,
       useMasterKey: useMasterKey,
