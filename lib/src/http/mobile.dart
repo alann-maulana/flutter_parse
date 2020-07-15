@@ -8,18 +8,18 @@ import '../../flutter_parse.dart';
 import '../parse_http_client.dart';
 
 class ParseBaseHTTPClient extends IOClient {
-  final http.Client _client;
+  final IOClient _client;
 
   ParseBaseHTTPClient()
       : this._client =
             IOClient(HttpClient()..connectionTimeout = Duration(seconds: 20));
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+  Future<IOStreamedResponse> send(http.BaseRequest request) {
     if (parse.enableLogging) {
       logToCURL(request);
     }
 
-    return await _client.send(request);
+    return _client.send(request);
   }
 }
