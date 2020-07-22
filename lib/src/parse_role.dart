@@ -21,5 +21,11 @@ class ParseRole {
   final DateTime createdAt;
   final DateTime updatedAt;
 
+  get asMap => <String, dynamic>{
+        '__type': 'Pointer',
+        'className': '_Role',
+        'objectId': objectId,
+      };
+
   static ParseQuery get query => ParseQuery(className: '_Role');
 }
