@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_parse/flutter_parse.dart';
+
 import 'parse_date_format.dart';
 import 'parse_file.dart';
 import 'parse_geo_point.dart';
@@ -72,6 +74,8 @@ class ParseDecoder {
         String className = map["className"];
         if (className == '_User') {
           return ParseUser(objectId: objectId);
+        } else if (className == '_Role') {
+          return ParseRole.fromMap(map);
         }
         return ParseObject(className: className, objectId: objectId);
       case "Object":

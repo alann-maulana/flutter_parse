@@ -237,6 +237,17 @@ class ParseObject implements ParseBaseObject {
     return get(key);
   }
 
+  /// Access a [ParseRole] value.
+  ///
+  /// Returns `null` if there is no such key or if it is not a [ParseRole].
+  ParseRole getParseRole(String key) {
+    if (get(key) is! ParseRole) {
+      return null;
+    }
+
+    return get(key);
+  }
+
   /// Access a [ParseACL] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [ParseACL].
