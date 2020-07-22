@@ -8,8 +8,12 @@ class ParseRole {
       : objectId = map['objectId'],
         name = map['name'],
         acl = ParseACL.fromMap(map['ACL']),
-        createdAt = parseDateFormat.parse(map['createdAt']),
-        updatedAt = parseDateFormat.parse(map['updatedAt']);
+        createdAt = map['createdAt'] == null
+            ? null
+            : parseDateFormat.parse(map['createdAt']),
+        updatedAt = map['updatedAt'] == null
+            ? null
+            : parseDateFormat.parse(map['updatedAt']);
 
   final String objectId;
   final String name;
