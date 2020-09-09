@@ -19,11 +19,13 @@ class ParseConfig implements ParseBaseObject {
   bool _isComplete;
   final Map<String, dynamic> _data;
   final Map<String, dynamic> _masterKeyOnly;
+  final Map<String, dynamic> _operations;
 
   ParseConfig._internal()
       : _isComplete = false,
         _data = {},
-        _masterKeyOnly = {};
+        _masterKeyOnly = {},
+        _operations = {};
 
   // region GETTER
 
@@ -251,6 +253,15 @@ class ParseConfig implements ParseBaseObject {
 
   // endregion
 
+  /// Add a key-value pair to this object. It is recommended to name keys in
+  /// <code>camelCaseLikeThis</code>.
+  void set(String key, dynamic value) {
+    assert(key != null && key.isNotEmpty);
+    parseEncoder.isValidType(value);
+
+    _operations[key] = parseEncoder.encode(value);
+  }
+
   // region EXECUTORS
 
   /// Fetch the latest current data from Parse Server
@@ -258,6 +269,25 @@ class ParseConfig implements ParseBaseObject {
     final result = await parseHTTPClient.get(path, useMasterKey: useMasterKey);
     _mergeJson(result);
     return Future.value(this);
+  }
+
+  Future<ParseConfig> save() async {
+    assert(parse.masterKey != null, 'masterKey not set');
+
+    final params = {'params': _operations};
+    dynamic jsonBody = json.encode(params);
+    final headers = {'content-type': 'application/json; charset=utf-8'};
+
+    await parseHTTPClient.put(
+      path,
+      body: jsonBody,
+      headers: headers,
+      useMasterKey: true,
+    );
+
+    _mergeJson(params);
+    _operations.clear();
+    return this;
   }
 // endregion
 }
