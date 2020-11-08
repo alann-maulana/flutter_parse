@@ -49,6 +49,12 @@ class ParseUser extends ParseObject {
 
     return null;
   }
+  
+  Future<ParseUser> setCurrentUser() async {
+    final storage = await _currentUserStorage;
+    await storage.setData(asMap);
+    return this;
+  }
 
   static ParseQuery get query => ParseQuery(className: '_User');
 
@@ -148,8 +154,7 @@ class ParseUser extends ParseObject {
         headers: headers);
     final user = ParseUser.fromJson(json: result);
 
-    final storage = await _currentUserStorage;
-    await storage.setData(user.asMap);
+    await user.setCurrentUser();
 
     return user;
   }
