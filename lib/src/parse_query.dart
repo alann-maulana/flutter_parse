@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -158,6 +157,13 @@ class ParseQuery<T extends ParseObject> {
 
   void whereNear(String key, ParseGeoPoint point) {
     _addCondition(key, "\$nearSphere", point);
+  }
+
+  void whereWithinKilometers(String key, ParseGeoPoint point, num maxDistance) {
+    Map<String, dynamic> condition = Map();
+    condition["\$nearSphere"] = point;
+    condition["\$maxDistanceInKilometers"] = maxDistance;
+    _where.putIfAbsent(key, () => parseEncoder.encode(condition));
   }
 
   void maxDistance(String key, double maxDistance) {
