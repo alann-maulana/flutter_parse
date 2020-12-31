@@ -105,7 +105,7 @@ class ParseConfiguration {
     this.liveQueryServer,
     this.clientKey,
     this.masterKey,
-    this.enableLogging,
+    this.enableLogging = false,
     this.httpClient,
   })  : assert(
           server != null ||
