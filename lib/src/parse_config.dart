@@ -267,7 +267,7 @@ class ParseConfig implements ParseBaseObject {
   /// Fetch the latest current data from Parse Server
   Future<ParseConfig> fetch({bool useMasterKey = false}) async {
     final result = await parseHTTPClient.get(path, useMasterKey: useMasterKey);
-    _mergeJson(result);
+    _mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
 
