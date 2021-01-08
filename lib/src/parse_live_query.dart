@@ -63,6 +63,7 @@ class ParseLiveQuery {
     }
 
     if (result.containsKey('object')) {
+      if (callback == null) return;
       final Map<String, dynamic> map = result['object'];
       final String className = map['className'];
       if (className == '_User') {
