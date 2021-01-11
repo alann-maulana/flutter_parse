@@ -45,7 +45,7 @@ class ParseException implements Exception {
   static const int unsupportedService = 252;
 
   @pragma("vm:entry-point")
-  const ParseException({int code, this.message})
+  const ParseException({int code, this.message, this.data})
       : assert(message != null),
         code = code ?? otherCause;
 
@@ -53,10 +53,12 @@ class ParseException implements Exception {
       : code = otherCause,
         message = (e is FormatException)
             ? e.message
-            : e.toString().replaceFirst('$Exception: ', '');
+            : e.toString().replaceFirst('Exception: ', ''),
+        data = e;
 
   final int code;
   final String message;
+  final dynamic data;
 
   @override
   String toString() {

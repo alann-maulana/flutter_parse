@@ -92,7 +92,10 @@ class ParseHTTPClient {
     }
 
     throw ParseException(
-        code: ParseException.invalidJson, message: 'invalid server response');
+      code: ParseException.invalidJson,
+      message: 'invalid server response',
+      data: response,
+    );
   }
 
   Future<dynamic> get(
