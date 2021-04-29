@@ -29,7 +29,6 @@ class ParseCloud extends ParseBaseObject {
   String get path {
     assert(parse.configuration != null);
     return '${parse.configuration!.uri.path}/$type/$method';
-    ;
   }
 
   Future<dynamic> execute({bool useMasterKey = false}) async {

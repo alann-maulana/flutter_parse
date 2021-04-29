@@ -112,16 +112,16 @@ class ParseACL {
   /// object.
   void setRoleReadAccess(ParseRole role, bool allowed) {
     _validateRoleState(role);
-    _map['role:${role.name}'] = _Permissions(
-        write: getRoleReadAccess(role), read: allowed);
+    _map['role:${role.name}'] =
+        _Permissions(write: getRoleReadAccess(role), read: allowed);
   }
 
   /// Set whether users belonging to the [role] with the given roleName are [allowed] to write this
   /// object.
   void setRoleWriteAccess(ParseRole role, bool allowed) {
     _validateRoleState(role);
-    _map['role:${role.name}'] = _Permissions(
-        write: allowed, read: getRoleWriteAccess(role));
+    _map['role:${role.name}'] =
+        _Permissions(write: allowed, read: getRoleWriteAccess(role));
   }
 
   /// Return this ACL into Map format

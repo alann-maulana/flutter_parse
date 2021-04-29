@@ -10,7 +10,7 @@ import 'live_query.dart';
 final ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient();
 
 class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
-  WebSocket? _webSocket;
+  late WebSocket _webSocket;
   HtmlWebSocketChannel? _channel;
   bool _userDisconnected = false;
 
@@ -24,11 +24,11 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
         print('Connecting web socket');
       }
       _webSocket = WebSocket(server);
-      if (_webSocket != null && _webSocket!.readyState == WebSocket.OPEN) {
+      if (_webSocket.readyState == WebSocket.OPEN) {
         if (parse.enableLogging == true) {
           print('Connecting html web socket');
         }
-        _channel = HtmlWebSocketChannel(_webSocket!);
+        _channel = HtmlWebSocketChannel(_webSocket);
         if (parse.enableLogging == true) {
           print('Listening to stream');
         }
@@ -80,7 +80,7 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
     }
   }
 
-  bool get isConnected => _channel != null && _webSocket != null;
+  bool get isConnected => _channel != null && !_userDisconnected;
 
   Future<void> disconnect() async {
     if (_channel != null) {
@@ -88,9 +88,8 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
       _channel = null;
     }
 
-    if (_webSocket != null && _webSocket!.readyState == WebSocket.OPEN) {
-      _webSocket!.close();
-      _webSocket = null;
+    if (_webSocket.readyState == WebSocket.OPEN) {
+      _webSocket.close();
     }
 
     _userDisconnected = true;
