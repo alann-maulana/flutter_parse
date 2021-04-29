@@ -75,7 +75,7 @@ class ParseACL {
   void setUserWriteAccess(ParseUser user, bool allowed) {
     _validateUserState(user);
     _map[user.objectId!] =
-        _Permissions(read: getUserReadAccess(user) ?? false, write: allowed);
+        _Permissions(read: getUserReadAccess(user), write: allowed);
   }
 
   /// Set whether the given [user] is [allowed] to read this object.
