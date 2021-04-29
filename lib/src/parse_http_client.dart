@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_parse/src/config/config.dart';
 import 'package:http/http.dart' as http;
 
 import '../flutter_parse.dart';
 import 'http/http.dart';
+import 'log/log.dart' as log;
 import 'parse_exception.dart';
 import 'parse_user.dart';
 
@@ -203,10 +203,5 @@ void logToCURL(http.BaseRequest request) {
 }
 
 void _parseLogWrapped(String text) {
-  if (kIsWeb) {
-    print(text);
-    return;
-  }
-  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
-  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  log.parseLogWrapped(text);
 }
