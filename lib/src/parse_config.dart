@@ -45,7 +45,6 @@ class ParseConfig implements ParseBaseObject {
   ///
   /// Returns `null` if there is no such key.
   dynamic get(String key) {
-    assert(key != null);
     assert(isComplete, 'call `fetch` first to get data');
 
     if (!_data.containsKey(key)) {
@@ -69,7 +68,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access an [int] value.
   ///
   /// Returns `0` if there is no such key or if it is not a [int].
-  int getInteger(String key) {
+  int? getInteger(String key) {
     if (get(key) is! int) {
       return null;
     }
@@ -79,10 +78,10 @@ class ParseConfig implements ParseBaseObject {
 
   /// Access a [double] value.
   ///
-  /// Returns `double.nan` if there is no such key or if it is not a [double].
-  double getDouble(String key) {
+  /// Returns `null` if there is no such key or if it is not a [double].
+  double? getDouble(String key) {
     if (get(key) is! double) {
-      return double.nan;
+      return null;
     }
 
     return get(key);
@@ -91,7 +90,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [num] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [num].
-  num getNumber(String key) {
+  num? getNumber(String key) {
     if (get(key) is! num) {
       return null;
     }
@@ -102,7 +101,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [String] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [String].
-  String getString(String key) {
+  String? getString(String key) {
     if (get(key) is! String) {
       return null;
     }
@@ -113,7 +112,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [DateTime] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [DateTime].
-  DateTime getDateTime(String key) {
+  DateTime? getDateTime(String key) {
     if (get(key) is! DateTime) {
       return null;
     }
@@ -124,7 +123,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [Map] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [Map].
-  Map<String, T> getMap<T>(String key) {
+  Map<String, T>? getMap<T>(String key) {
     if (get(key) is! Map) {
       return null;
     }
@@ -135,7 +134,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [List] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [List].
-  List<T> getList<T>(String key) {
+  List<T>? getList<T>(String key) {
     if (get(key) is! List) {
       return null;
     }
@@ -146,7 +145,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [ParseGeoPoint] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [ParseGeoPoint].
-  ParseGeoPoint getParseGeoPoint(String key) {
+  ParseGeoPoint? getParseGeoPoint(String key) {
     if (get(key) is! ParseGeoPoint) {
       return null;
     }
@@ -157,7 +156,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [ParseFile] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [ParseFile].
-  ParseFile getParseFile(String key) {
+  ParseFile? getParseFile(String key) {
     if (get(key) is! ParseFile) {
       return null;
     }
@@ -168,7 +167,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [ParseObject] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [ParseObject].
-  ParseObject getParseObject(String key) {
+  ParseObject? getParseObject(String key) {
     if (get(key) is! ParseObject) {
       return null;
     }
@@ -179,7 +178,7 @@ class ParseConfig implements ParseBaseObject {
   /// Access a [ParseUser] value.
   ///
   /// Returns `null` if there is no such key or if it is not a [ParseUser].
-  ParseUser getParseUser(String key) {
+  ParseUser? getParseUser(String key) {
     if (get(key) is! ParseUser) {
       return null;
     }
@@ -196,7 +195,8 @@ class ParseConfig implements ParseBaseObject {
 
   Iterable<String> get keys => _data.keys;
 
-  Iterable<String> get values => _data.values;
+  Iterable<dynamic> get values => _data.values;
+
   // endregion
 
   // region SETTER
@@ -220,7 +220,7 @@ class ParseConfig implements ParseBaseObject {
     }
 
     final masterKeyOnly = json['masterKeyOnly'];
-    if (masterKeyOnly is Map) {
+    if (masterKeyOnly is Map<String, dynamic>) {
       _masterKeyOnly.addAll(masterKeyOnly);
     }
   }
@@ -230,7 +230,8 @@ class ParseConfig implements ParseBaseObject {
   // region HELPERS
   @override
   String get path {
-    String path = '${parse.configuration.uri.path}/config';
+    assert(parse.configuration != null);
+    String path = '${parse.configuration!.uri.path}/config';
 
     return path;
   }
@@ -256,7 +257,7 @@ class ParseConfig implements ParseBaseObject {
   /// Add a key-value pair to this object. It is recommended to name keys in
   /// <code>camelCaseLikeThis</code>.
   void set(String key, dynamic value) {
-    assert(key != null && key.isNotEmpty);
+    assert(key.isNotEmpty);
     parseEncoder.isValidType(value);
 
     _operations[key] = parseEncoder.encode(value);

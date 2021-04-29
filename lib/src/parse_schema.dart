@@ -6,39 +6,31 @@ import '../flutter_parse.dart';
 import 'parse_base_object.dart';
 import 'parse_http_client.dart';
 
-final ParseSchema parseSchema = ParseSchema.global();
-
 class ParseSchema implements ParseBaseObject {
-  ParseSchema({@required this.className}) : assert(className != null);
-
-  @visibleForTesting
-  ParseSchema.global() : className = null;
+  ParseSchema({required this.className});
 
   final String className;
-  List<Schema> _schemas;
+  List<Schema>? _schemas;
 
-  List<Schema> get schemas => _schemas;
+  List<Schema>? get schemas => _schemas;
 
   @visibleForTesting
-  void setSchemas(List<dynamic> values) {
-    _schemas = values?.map((map) => Schema.fromJson(map))?.toList();
+  void setSchemas(List<dynamic>? values) {
+    _schemas = values?.map((map) => Schema.fromJson(map)).toList();
   }
 
   @override
-  get asMap => _schemas?.map((s) => s.asMap)?.toList();
+  get asMap => _schemas?.map((s) => s.asMap).toList();
 
   @override
   String get path {
-    String path = '${parse.configuration.uri.path}/schemas';
-
-    if (className != null) {
-      path = '$path/$className';
-    }
-
+    assert(parse.configuration != null);
+    String path = '${parse.configuration!.uri.path}/schemas';
+    path = '$path/$className';
     return path;
   }
 
-  Future<List<Schema>> fetch() async {
+  Future<List<Schema>?> fetch() async {
     final result = await parseHTTPClient.get(path, useMasterKey: true);
     setSchemas(result['results']);
     return schemas;
@@ -53,11 +45,11 @@ class Schema {
         indexes = map['indexes'];
 
   final String className;
-  final Map<String, SchemaType> fields;
+  final Map<String, SchemaType>? fields;
   final Map<String, dynamic> classLevelPermissions;
   final Map<String, dynamic> indexes;
 
-  static Map<String, SchemaType> _parseFields(dynamic json) {
+  static Map<String, SchemaType>? _parseFields(dynamic json) {
     if (json is Map) {
       final map = <String, SchemaType>{};
       json.forEach((key, value) {
@@ -73,7 +65,7 @@ class Schema {
         'className': className,
         'fields': fields,
         'classLevelPermissions': classLevelPermissions,
-        'fieindexeslds': indexes,
+        'indexes': indexes,
       };
 
   @override
@@ -93,7 +85,7 @@ class SchemaType {
   SchemaType.fromJson(dynamic map) : this(map['type'], map['targetClass']);
 
   final String type;
-  final String targetClass;
+  final String? targetClass;
 
   dynamic get asMap => <String, dynamic>{
         'type': type,

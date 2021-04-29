@@ -1,3 +1,3 @@
 import 'package:platform/platform.dart';
 
-Platform get kDefaultPlatform => null;
+Platform get kDefaultPlatform => throw Exception('unsupported platform');

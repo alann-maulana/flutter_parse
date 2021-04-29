@@ -61,29 +61,29 @@ class Parse {
     _configuration = configuration;
   }
 
-  ParseConfiguration _configuration;
+  ParseConfiguration? _configuration;
 
-  ParseConfiguration get configuration => _configuration;
+  ParseConfiguration? get configuration => _configuration;
 
   /// Return [Parse] client key
-  String get clientKey => configuration.clientKey;
+  String? get clientKey => configuration?.clientKey;
 
   /// Return [Parse] master key
-  String get masterKey => configuration.masterKey;
+  String? get masterKey => configuration?.masterKey;
 
   /// Return [Parse] application ID
-  String get applicationId => configuration.applicationId;
+  String? get applicationId => configuration?.applicationId;
 
   /// Return [Parse] server path
-  String get server => configuration.uri.toString();
+  String? get server => configuration?.uri.toString();
 
   /// Return [Parse] logging status
-  bool get enableLogging => configuration.enableLogging;
+  bool get enableLogging => configuration?.enableLogging ?? false;
 
   /// Return [Parse] initialized status
   bool get initialized => configuration != null;
 
-  Platform _platform;
+  Platform? _platform;
 
   /// Convert [BaseRequest] object into friendly formatted CURL command into console log
   void logToCURL(BaseRequest request) => client.logToCURL(request);
@@ -100,27 +100,23 @@ class Parse {
 /// configuration for the Parse library.
 class ParseConfiguration {
   ParseConfiguration({
-    @required String server,
-    @required this.applicationId,
+    required String server,
+    required this.applicationId,
     this.liveQueryServer,
     this.clientKey,
     this.masterKey,
     this.enableLogging = false,
     this.httpClient,
   })  : assert(
-          server != null ||
-              server.startsWith('https://') ||
-              server.startsWith('http://'),
+          server.startsWith('https://') || server.startsWith('http://'),
           'Invalid parse server',
         ),
-        assert(applicationId != null),
         assert(
           liveQueryServer == null ||
               liveQueryServer.startsWith('wss://') ||
               liveQueryServer.startsWith('ws://'),
           'Invalid parse live query server',
         ),
-        assert(enableLogging != null),
         uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
             : server));
@@ -129,20 +125,20 @@ class ParseConfiguration {
   final Uri uri;
 
   /// The live query server
-  final String liveQueryServer;
+  final String? liveQueryServer;
 
   /// The application ID of Parse Server
   final String applicationId;
 
   /// The client key of Parse Server
-  final String clientKey;
+  final String? clientKey;
 
   /// The master key of Parse Server
-  final String masterKey;
+  final String? masterKey;
 
   /// Enable show every request sent to Parse Server into CURL format
   final bool enableLogging;
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
-  final BaseClient httpClient;
+  final BaseClient? httpClient;
 }

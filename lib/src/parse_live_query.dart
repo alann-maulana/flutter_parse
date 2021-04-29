@@ -10,7 +10,7 @@ import 'parse_exception.dart';
 ParseLiveQuery parseLiveQuery = ParseLiveQuery();
 
 class ParseLiveQuery {
-  String _clientId;
+  String? _clientId;
 
   @protected
   ParseLiveQuery();
@@ -23,12 +23,12 @@ class ParseLiveQuery {
     await parseLiveQueryClient.disconnect();
   }
 
-  _callback(Object object) {
+  _callback(Object? object) {
     if (object is Exception) {
       throw object;
     }
 
-    if (object == null || object is! Map) {
+    if (object == null || object is! Map<String, dynamic>) {
       // TODO: result is empty
       return;
     }
@@ -42,7 +42,7 @@ class ParseLiveQuery {
       return;
     }
 
-    ParseLiveQuerySubscription subscription;
+    ParseLiveQuerySubscription? subscription;
     if (result.containsKey('requestId')) {
       final int requestId = result['requestId'];
       subscription = mapRequestSubscription[requestId];
@@ -58,7 +58,9 @@ class ParseLiveQuery {
       final int code = result['code'];
       final String error = result['error'];
 
-      callback(ParseException(code: code, message: error));
+      if (callback != null) {
+        callback(ParseException(code: code, message: error));
+      }
       return;
     }
 
@@ -82,21 +84,24 @@ class ParseLiveQuery {
 
     final bodyMessage = <String, String>{
       'op': 'connect',
-      'applicationId': parse.applicationId,
     };
+
+    if (parse.applicationId != null) {
+      bodyMessage['applicationId'] = parse.applicationId!;
+    }
 
     final user = await ParseUser.currentUser;
 
-    if (user.sessionId != null) {
-      bodyMessage['sessionToken'] = user.sessionId;
+    if (user != null && user.sessionId != null) {
+      bodyMessage['sessionToken'] = user.sessionId!;
     }
 
     if (parse.clientKey != null) {
-      bodyMessage['clientKey'] = parse.clientKey;
+      bodyMessage['clientKey'] = parse.clientKey!;
     }
 
     if (parse.masterKey != null) {
-      bodyMessage['masterKey'] = parse.masterKey;
+      bodyMessage['masterKey'] = parse.masterKey!;
     }
 
     parseLiveQueryClient.sendMessage(json.encode(bodyMessage));
@@ -104,16 +109,19 @@ class ParseLiveQuery {
 
   Future<ParseLiveQuerySubscription> subscribe(
     ParseQuery<ParseObject> query, {
-    ParseLiveQuerySubscription subscription,
+    ParseLiveQuerySubscription? subscription,
   }) async {
     final selectedKeys = query.selectedKeys;
-    final Map<String, dynamic> where = query.toJsonParams()['where'];
+    final Map<String, dynamic>? where = query.toJsonParams()['where'];
     subscription ??= ParseLiveQuerySubscription(
       clientId: _clientId,
       requestId: requestIdCounter++,
       parseQuery: query,
     );
-    mapRequestSubscription[subscription.requestId] = subscription;
+
+    if (subscription.requestId != null) {
+      mapRequestSubscription[subscription.requestId!] = subscription;
+    }
 
     final subscribeMessage = <String, dynamic>{
       'op': 'subscribe',
@@ -129,7 +137,7 @@ class ParseLiveQuery {
     }
 
     final user = await ParseUser.currentUser;
-    if (user.sessionId != null) {
+    if (user != null && user.sessionId != null) {
       subscribeMessage['sessionToken'] = user.sessionId;
     }
 
@@ -138,7 +146,7 @@ class ParseLiveQuery {
     return subscription;
   }
 
-  Future<void> unsubscribe(ParseLiveQuerySubscription subscription) {
+  Future<void> unsubscribe(ParseLiveQuerySubscription subscription) async {
     final unsubscribeMessage = <String, dynamic>{
       'op': 'unsubscribe',
       'requestId': subscription.requestId,
@@ -148,16 +156,14 @@ class ParseLiveQuery {
       parseLiveQueryClient.sendMessage(json.encode(unsubscribeMessage));
       mapRequestSubscription.remove(subscription.requestId);
     }
-
-    return null;
   }
 }
 
 class ParseLiveQuerySubscription {
-  final Map<String, ParseLiveQueryCallback> mapOperationCallback = {};
-  final String clientId;
-  final ParseQuery parseQuery;
-  final int requestId;
+  final Map<String, ParseLiveQueryCallback?> mapOperationCallback = {};
+  final String? clientId;
+  final ParseQuery? parseQuery;
+  final int? requestId;
 
   ParseLiveQuerySubscription({
     this.clientId,
@@ -165,13 +171,13 @@ class ParseLiveQuerySubscription {
     this.parseQuery,
   });
 
-  void on(ParseLiveQueryEvent op, {ParseLiveQueryCallback callback}) {
+  void on(ParseLiveQueryEvent op, {ParseLiveQueryCallback? callback}) {
     mapOperationCallback[op.value] = callback;
   }
 
   @override
   String toString() {
-    return 'ParseLiveQuerySubscription{clientId: $clientId, parseQuery: ${parseQuery.toJsonParams()}, requestId: $requestId}';
+    return 'ParseLiveQuerySubscription{clientId: $clientId, parseQuery: ${parseQuery?.toJsonParams()}, requestId: $requestId}';
   }
 }
 

@@ -10,27 +10,29 @@ import 'live_query.dart';
 final ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient();
 
 class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
-  WebSocket _webSocket;
-  HtmlWebSocketChannel _channel;
+  WebSocket? _webSocket;
+  HtmlWebSocketChannel? _channel;
   bool _userDisconnected = false;
 
   Future<void> connect(ParseLiveQueryCallback callback) async {
+    assert(parse.configuration != null &&
+        parse.configuration!.liveQueryServer != null);
     _userDisconnected = false;
-    final server = parse.configuration.liveQueryServer;
+    final server = parse.configuration!.liveQueryServer!;
     try {
       if (parse.enableLogging == true) {
         print('Connecting web socket');
       }
-      _webSocket = await WebSocket(server);
-      if (_webSocket != null && _webSocket.readyState == WebSocket.OPEN) {
+      _webSocket = WebSocket(server);
+      if (_webSocket != null && _webSocket!.readyState == WebSocket.OPEN) {
         if (parse.enableLogging == true) {
           print('Connecting html web socket');
         }
-        _channel = HtmlWebSocketChannel(_webSocket);
+        _channel = HtmlWebSocketChannel(_webSocket!);
         if (parse.enableLogging == true) {
           print('Listening to stream');
         }
-        _channel.stream.listen(
+        _channel!.stream.listen(
           (dynamic message) {
             if (parse.enableLogging == true) {
               print('RECEIVE: $message');
@@ -81,13 +83,13 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
   bool get isConnected => _channel != null && _webSocket != null;
 
   Future<void> disconnect() async {
-    if (_channel != null && _channel.sink != null) {
-      await _channel.sink.close();
+    if (_channel != null) {
+      await _channel!.sink.close();
       _channel = null;
     }
 
-    if (_webSocket != null && _webSocket.readyState == WebSocket.OPEN) {
-      await _webSocket.close();
+    if (_webSocket != null && _webSocket!.readyState == WebSocket.OPEN) {
+      _webSocket!.close();
       _webSocket = null;
     }
 
@@ -101,7 +103,7 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
     }
 
     if (_channel != null) {
-      _channel.sink.add(message);
+      _channel!.sink.add(message);
     }
   }
 }

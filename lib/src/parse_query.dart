@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../flutter_parse.dart';
 import 'parse_encoder.dart';
 import 'parse_exception.dart';
@@ -13,15 +11,15 @@ import 'parse_user.dart';
 
 class ParseQuery<T extends ParseObject> {
   final String className;
-  final List<String> _includes = List();
-  final List<String> _order = List();
+  final List<String> _includes = [];
+  final List<String> _order = [];
   final Map<String, dynamic> _where = Map();
-  List<String> _selectedKeys;
+  List<String>? _selectedKeys;
   int _limit = -1;
   int _skip = 0;
   bool _countEnabled = false;
 
-  ParseQuery({@required this.className});
+  ParseQuery({required this.className});
 
   ParseQuery get copy {
     final newQuery = ParseQuery(className: className);
@@ -37,17 +35,17 @@ class ParseQuery<T extends ParseObject> {
   }
 
   void _addCondition(String key, String condition, dynamic value) {
-    Map<String, dynamic> whereValue;
+    Map<String, dynamic>? whereValue;
 
     // Check if we already have some of a condition
     if (_where.containsKey(key)) {
       dynamic existingValue = _where[key];
-      if (existingValue is Map) {
+      if (existingValue is Map<String, dynamic>) {
         whereValue = existingValue;
       }
     }
 
-    whereValue ??= Map();
+    whereValue ??= {};
 
     whereValue.putIfAbsent(condition, () => value);
 
@@ -172,7 +170,7 @@ class ParseQuery<T extends ParseObject> {
 
   void whereWithin(
       String key, ParseGeoPoint southwest, ParseGeoPoint northeast) {
-    List<dynamic> array = List();
+    List<dynamic> array = [];
     array.add(southwest);
     array.add(northeast);
     Map<String, List<dynamic>> dictionary = Map();
@@ -227,13 +225,13 @@ class ParseQuery<T extends ParseObject> {
 
   void selectKeys(List<String> keys) {
     if (_selectedKeys == null) {
-      _selectedKeys = List();
+      _selectedKeys = [];
     }
 
-    _selectedKeys.addAll(keys);
+    _selectedKeys!.addAll(keys);
   }
 
-  List<String> get selectedKeys => _selectedKeys;
+  List<String>? get selectedKeys => _selectedKeys;
 
   void setLimit(int limit) {
     _limit = limit;
@@ -279,7 +277,7 @@ class ParseQuery<T extends ParseObject> {
       params.putIfAbsent("include", () => _includes.join(','));
     }
     if (_selectedKeys != null) {
-      params.putIfAbsent("keys", () => _selectedKeys.join(','));
+      params.putIfAbsent("keys", () => _selectedKeys!.join(','));
     }
 
     return params;
@@ -302,7 +300,7 @@ class ParseQuery<T extends ParseObject> {
     dynamic result = await _find(useMasterKey: useMasterKey);
     if (result.containsKey("results")) {
       List<dynamic> results = result["results"];
-      List<dynamic> objects = List();
+      List<dynamic> objects = [];
       results.forEach((json) {
         String objectId = json["objectId"];
         if (className == '_Session') {
@@ -350,6 +348,7 @@ class ParseQuery<T extends ParseObject> {
   }
 
   Future<dynamic> _query({bool useMasterKey = false}) {
+    assert(parse.configuration != null);
     Map<String, dynamic> params = toJsonParams();
     params.putIfAbsent("_method", () => "GET");
 
@@ -359,7 +358,7 @@ class ParseQuery<T extends ParseObject> {
     };
 
     return parseHTTPClient.post(
-      '${parse.configuration.uri.path}/classes/$className',
+      '${parse.configuration!.uri.path}/classes/$className',
       useMasterKey: useMasterKey,
       body: body,
       headers: headers,

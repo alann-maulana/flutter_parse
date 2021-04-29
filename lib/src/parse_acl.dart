@@ -13,10 +13,10 @@ class ParseACL {
   ParseACL() : _map = {};
 
   /// Clone an ACL from another ACL.
-  ParseACL.fromACL(ParseACL acl) : _map = acl._map;
+  ParseACL.fromACL(ParseACL? acl) : _map = acl?._map ?? {};
 
   /// Creates an ACL where only the provided user has access.
-  ParseACL.fromUser(ParseUser user) : _map = {user.objectId: _Permissions()};
+  ParseACL.fromUser(ParseUser user) : _map = {user.objectId!: _Permissions()};
 
   /// A helper for creating a ParseACL from the wire.
   /// We iterate over it rather than just copying to permissionsById so that we
@@ -36,23 +36,22 @@ class ParseACL {
   final Map<String, _Permissions> _map;
 
   /// Get whether the public is allowed to read this object.
-  bool get publicReadAccess => _map['*'].read;
+  bool get publicReadAccess => _map['*']?.read ?? false;
 
   /// Get whether the public is allowed to write this object.
-  bool get publicWriteAccess => _map['*'].write;
+  bool get publicWriteAccess => _map['*']?.write ?? false;
 
   /// Set whether the public is [allowed] to read this object.
   set publicReadAccess(bool allowed) {
-    _map['*'] = _Permissions(read: allowed, write: _map['*'].write);
+    _map['*'] = _Permissions(read: allowed, write: _map['*']?.write ?? false);
   }
 
   /// Set whether the public is [allowed] to read this object.
   set publicWriteAccess(bool allowed) {
-    _map['*'] = _Permissions(read: _map['*'].read, write: allowed);
+    _map['*'] = _Permissions(read: _map['*']?.read ?? false, write: allowed);
   }
 
   static void _validateUserState(ParseUser user) {
-    assert(user != null);
     assert(user.objectId != null, "cannot get or set access for null userId");
   }
 
@@ -61,7 +60,7 @@ class ParseACL {
   /// `true` or a role that the user belongs to has read access.
   bool getUserReadAccess(ParseUser user) {
     _validateUserState(user);
-    return _map[user.objectId].read;
+    return _map[user.objectId]?.read ?? false;
   }
 
   /// Get whether the given [user] is *explicitly* allowed to write this object. Even if this
@@ -69,25 +68,25 @@ class ParseACL {
   /// `true` or a role that the user belongs to has write access.
   bool getUserWriteAccess(ParseUser user) {
     _validateUserState(user);
-    return _map[user.objectId].write;
+    return _map[user.objectId]?.write ?? false;
   }
 
   /// Set whether the given [user] is [allowed] to write this object.
   void setUserWriteAccess(ParseUser user, bool allowed) {
     _validateUserState(user);
-    _map[user.objectId] =
-        _Permissions(read: _map[user.objectId].read, write: allowed);
+    _map[user.objectId!] =
+        _Permissions(read: getUserReadAccess(user) ?? false, write: allowed);
   }
 
   /// Set whether the given [user] is [allowed] to read this object.
   void setUserReadAccess(ParseUser user, bool allowed) {
     _validateUserState(user);
-    _map[user.objectId] =
-        _Permissions(read: allowed, write: _map[user.objectId].write);
+    _map[user.objectId!] =
+        _Permissions(read: allowed, write: getUserWriteAccess(user));
   }
 
   static void _validateRoleState(ParseRole role) {
-    assert(role != null && role.objectId != null,
+    assert(role.objectId != null,
         "Roles must be saved to the server before they can be used in an ACL.");
   }
 
@@ -97,7 +96,7 @@ class ParseACL {
   /// use this method.
   bool getRoleReadAccess(ParseRole role) {
     _validateRoleState(role);
-    return _map['role:${role.name}'].read;
+    return _map['role:${role.name}']?.read ?? false;
   }
 
   /// Get whether users belonging to the given role are allowed to write this object. Even if this
@@ -106,23 +105,23 @@ class ParseACL {
   /// order to use this method.
   bool getRoleWriteAccess(ParseRole role) {
     _validateRoleState(role);
-    return _map['role:${role.name}'].write;
+    return _map['role:${role.name}']?.write ?? false;
   }
 
   /// Set whether users belonging to the [role] with the given roleName are [allowed] to read this
   /// object.
   void setRoleReadAccess(ParseRole role, bool allowed) {
     _validateRoleState(role);
-    _map['role:${role.name}'] =
-        _Permissions(write: _map['role:${role.name}'].read, read: allowed);
+    _map['role:${role.name}'] = _Permissions(
+        write: getRoleReadAccess(role), read: allowed);
   }
 
   /// Set whether users belonging to the [role] with the given roleName are [allowed] to write this
   /// object.
   void setRoleWriteAccess(ParseRole role, bool allowed) {
     _validateRoleState(role);
-    _map['role:${role.name}'] =
-        _Permissions(write: allowed, read: _map['role:${role.name}'].write);
+    _map['role:${role.name}'] = _Permissions(
+        write: allowed, read: getRoleWriteAccess(role));
   }
 
   /// Return this ACL into Map format
@@ -132,7 +131,7 @@ class ParseACL {
   static void setDefaultACL(ParseACL acl, bool withAccessForCurrentUser) =>
       _parseDefaultACLController.set(acl, withAccessForCurrentUser);
 
-  static Future<ParseACL> defaultACL() => _parseDefaultACLController.get();
+  static Future<ParseACL?> defaultACL() => _parseDefaultACLController.get();
 }
 
 final _ParseDefaultACLController _parseDefaultACLController =
@@ -141,12 +140,12 @@ final _ParseDefaultACLController _parseDefaultACLController =
 class _ParseDefaultACLController {
   _ParseDefaultACLController._internal();
 
-  ParseACL defaultACL;
-  bool defaultACLUsesCurrentUser;
-  ParseUser lastCurrentUser;
-  ParseACL defaultACLWithCurrentUser;
+  ParseACL? defaultACL;
+  bool? defaultACLUsesCurrentUser;
+  ParseUser? lastCurrentUser;
+  ParseACL? defaultACLWithCurrentUser;
 
-  void set(ParseACL acl, bool withAccessForCurrentUser) {
+  void set(ParseACL? acl, bool withAccessForCurrentUser) {
     defaultACLWithCurrentUser = null;
     lastCurrentUser = null;
     if (acl != null) {
@@ -158,12 +157,12 @@ class _ParseDefaultACLController {
     }
   }
 
-  Future<ParseACL> get() async {
-    if (defaultACLUsesCurrentUser && defaultACL != null) {
-      ParseUser currentUser = await ParseUser.currentUser;
+  Future<ParseACL?> get() async {
+    if (defaultACLUsesCurrentUser == true && defaultACL != null) {
+      ParseUser? currentUser = await ParseUser.currentUser;
       if (currentUser != null) {
         // If the currentUser has changed, generate a new ACL from the defaultACL.
-        ParseUser last = lastCurrentUser != null ? lastCurrentUser : null;
+        ParseUser? last = lastCurrentUser;
         if (last != currentUser) {
           ParseACL newDefaultACLWithCurrentUser = ParseACL.fromACL(defaultACL);
           newDefaultACLWithCurrentUser.setUserReadAccess(currentUser, true);
@@ -184,19 +183,19 @@ class _Permissions {
   _Permissions.fromMap(dynamic map)
       : this(read: map['read'], write: map['write']);
 
-  final bool read;
+  final bool? read;
 
-  final bool write;
+  final bool? write;
 
   dynamic get _map {
     final map = <String, bool>{};
 
     if (read != null) {
-      map['read'] = read;
+      map['read'] = read!;
     }
 
     if (write != null) {
-      map['write'] = write;
+      map['write'] = write!;
     }
 
     return map;

@@ -16,7 +16,7 @@ class ParseDecoder {
   ParseDecoder._internal();
 
   List<dynamic> _convertJSONArrayToList(List<dynamic> array) {
-    List<dynamic> list = List();
+    List<dynamic> list = [];
     array.forEach((value) {
       list.add(decode(value));
     });
@@ -53,11 +53,11 @@ class ParseDecoder {
       return value;
     }
 
-    if (!(value is Map)) {
+    if (!(value is Map<String, dynamic>)) {
       return value;
     }
 
-    Map map = value;
+    Map<String, dynamic> map = value;
     if (!map.containsKey("__type")) {
       return _convertJSONObjectToMap(map);
     }

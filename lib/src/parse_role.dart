@@ -15,11 +15,11 @@ class ParseRole {
             ? null
             : parseDateFormat.parse(map['updatedAt']);
 
-  final String objectId;
+  final String? objectId;
   final String name;
   final ParseACL acl;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   get asMap => <String, dynamic>{
         '__type': 'Pointer',

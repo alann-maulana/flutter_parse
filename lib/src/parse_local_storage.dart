@@ -11,7 +11,7 @@ class ParseLocalStorage {
 
   ParseLocalStorage._internal() : _cache = {};
 
-  Future<LocalStorage> get(String key) async {
+  Future<LocalStorage?> get(String key) async {
     if (!_cache.containsKey(key)) {
       final instance = LocalStorage._internal(key);
       await instance._init();
@@ -23,10 +23,10 @@ class ParseLocalStorage {
 
   @visibleForTesting
   Future<void> clear() async {
-    _cache?.forEach((key, cache) async {
+    _cache.forEach((key, cache) async {
       await cache.delete();
     });
-    _cache?.clear();
+    _cache.clear();
   }
 }
 
@@ -40,8 +40,8 @@ class LocalStorage {
     final _db = await SharedPreferences.getInstance();
     final source = _db.getString(_keyName);
     try {
-      final map = json.decode(source);
-      if (map is Map) {
+      final map = json.decode(source!);
+      if (map is Map<String, dynamic>) {
         _data.addAll(map);
       }
     } catch (_) {}

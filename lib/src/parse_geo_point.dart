@@ -6,8 +6,8 @@ class ParseGeoPoint {
     this.longitude = longitude;
   }
 
-  double _latitude;
-  double _longitude;
+  late double _latitude;
+  late double _longitude;
 
   double get latitude => _latitude;
 

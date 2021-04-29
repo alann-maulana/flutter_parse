@@ -11,19 +11,18 @@ import 'parse_http_client.dart';
 
 class ParseFile implements ParseBaseObject {
   ParseFile({
-    @required String name,
-    @required Uint8List fileBytes,
-    String fileExtension,
-    String contentType,
-  })  : assert(name != null && name.isNotEmpty),
-        assert(fileBytes != null),
+    required String name,
+    required Uint8List fileBytes,
+    String? fileExtension,
+    String? contentType,
+  })  : assert(name.isNotEmpty),
         assert(
             fileExtension == null || contentType == null,
             'Cannot provide both a fileExtension and a contentType\n'
             'The fileExtension argument is just a shorthand for "contentType: mime.getContentType(fileExtension)".'),
         this._name = name,
         this._fileBytes = fileBytes,
-        this._contentType = contentType ?? mime.getContentType(fileExtension);
+        this._contentType = contentType ?? mime.getContentType(fileExtension!);
 
   @visibleForTesting
   ParseFile.fromJson(dynamic json) {
@@ -35,22 +34,36 @@ class ParseFile implements ParseBaseObject {
     _name = json['name'];
   }
 
-  String _name;
-  Uint8List _fileBytes;
-  String _contentType;
-  String _url;
+  late String _name;
+  Uint8List? _fileBytes;
+  String? _contentType;
+  String? _url;
 
   String get name => _name;
 
-  String get url => _url;
+  String? get url => _url;
 
   bool get saved => url != null;
 
   @override
-  String get path => '${parse.configuration.uri.path}/files/$_name';
+  String get path {
+    assert(parse.configuration != null);
+    return '${parse.configuration!.uri.path}/files/$_name';
+  }
 
   @override
-  get asMap => <String, String>{'__type': 'File', 'name': _name, 'url': _url};
+  get asMap {
+    final map = <String, String>{
+      '__type': 'File',
+      'name': _name,
+    };
+
+    if (saved) {
+      map['url'] = _url!;
+    }
+
+    return map;
+  }
 
   @override
   String toString() => json.encode(asMap);
@@ -71,7 +84,7 @@ class ParseFile implements ParseBaseObject {
       return Future.value(this);
     }
 
-    final headers = <String, String>{'Content-Type': _contentType};
+    final headers = <String, String>{'Content-Type': _contentType!};
 
     final response = await parseHTTPClient.post(
       path,

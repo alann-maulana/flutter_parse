@@ -13,7 +13,10 @@ typedef ParseLiveQueryCallback = void Function(Object object);
 
 abstract class ParseBaseLiveQueryClient {
   Future<void> connect(ParseLiveQueryCallback callback);
+
   Future<void> disconnect();
+
   bool get isConnected;
+
   void sendMessage(dynamic message);
 }

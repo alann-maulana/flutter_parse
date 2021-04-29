@@ -1,20 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../flutter_parse.dart';
 import 'parse_base_object.dart';
 import 'parse_http_client.dart';
 
 class ParseCloud extends ParseBaseObject {
   ParseCloud.functions({
-    @required this.method,
+    required this.method,
     this.body = const {},
   }) : this.type = 'functions';
 
   ParseCloud.jobs({
-    @required this.method,
+    required this.method,
     this.body = const {},
   }) : this.type = 'jobs';
 
@@ -28,10 +26,13 @@ class ParseCloud extends ParseBaseObject {
   get asMap => body;
 
   @override
-  String get path => '${parse.configuration.uri.path}/$type/$method';
+  String get path {
+    assert(parse.configuration != null);
+    return '${parse.configuration!.uri.path}/$type/$method';
+    ;
+  }
 
   Future<dynamic> execute({bool useMasterKey = false}) async {
-    assert(useMasterKey != null, 'Master key cannot be null');
     final headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };
