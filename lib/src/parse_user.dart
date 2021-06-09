@@ -111,7 +111,7 @@ class ParseUser extends ParseObject {
     return this;
   }
 
-  Future<ParseUser> signUp() async {
+  Future<ParseUser> create({bool useMasterKey = false}) async {
     assert(parse.configuration != null);
     await uploadFiles();
 
@@ -121,9 +121,15 @@ class ParseUser extends ParseObject {
       '${parse.configuration!.uri.path}/users',
       body: jsonBody,
       headers: headers,
+      useMasterKey: useMasterKey,
     );
     // ignore: invalid_use_of_visible_for_testing_member
     mergeJson(result);
+    return this;
+  }
+
+  Future<ParseUser> signUp() async {
+    await create();
     _isCurrentUser = true;
 
     final storage = await _currentUserStorage;
