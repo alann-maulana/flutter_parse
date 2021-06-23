@@ -4,12 +4,12 @@
 /// Dart package for accessing Parse Server
 library flutter_parse;
 
-import 'package:flutter_parse/src/platform/platform.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:platform/platform.dart';
 
 import 'src/parse_http_client.dart' as client;
+import 'src/platform/platform.dart';
 
 export 'src/parse_acl.dart';
 export 'src/parse_cloud.dart';
