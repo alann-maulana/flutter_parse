@@ -14,6 +14,8 @@ import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
 import 'parse_user.dart';
 
+typedef ParseObjectCreator<T extends ParseObject> = T Function(dynamic data);
+
 class ParseObject implements ParseBaseObject {
   static int limitBatchOperations = 50;
   static const _keyObjectId = "objectId";
@@ -32,8 +34,11 @@ class ParseObject implements ParseBaseObject {
   final Map<String, dynamic> _operations;
   final Map<String, ParseFile> _operationFiles;
 
-  ParseObject({required this.className, String? objectId})
-      : assert(className.isNotEmpty),
+  ParseObject({
+    required this.className,
+    String? objectId,
+    dynamic? json,
+  })  : assert(className.isNotEmpty),
         _isComplete = false,
         _data = {},
         _operations = {},
@@ -41,23 +46,46 @@ class ParseObject implements ParseBaseObject {
     if (objectId != null) {
       assert(objectId.isNotEmpty);
       _objectId = objectId;
+    } else if (json != null) {
+      mergeJson(json);
     }
   }
 
   @visibleForTesting
   factory ParseObject.fromJson({
-    String? className,
-    String? objectId,
     required dynamic json,
   }) {
-    className ??= json[_keyClassName];
+    String? className = json[_keyClassName];
     assert(className != null, 'No className defined');
 
-    objectId ??= json[_keyObjectId];
+    String? objectId = json[_keyObjectId];
 
-    return ParseObject(className: className!, objectId: objectId)
-      ..mergeJson(json);
+    return ParseObject(
+      className: className!,
+      objectId: objectId,
+      json: json,
+    );
   }
+
+  // region SUBCLASS
+  @visibleForTesting
+  static final Map<Type, ParseObjectCreator> kExistingCustomObjects = {
+    ParseSession: (data) => ParseSession.fromJson(json: data),
+    ParseRole: (data) => ParseRole.fromJson(json: data),
+    ParseUser: (data) => ParseUser.fromJson(json: data),
+  };
+  static registerSubclass(
+    ParseObjectCreator creator, [
+    bool replace = false,
+  ]) {
+    Type type = creator({}).runtimeType;
+    if (replace) {
+      kExistingCustomObjects[type] = creator;
+    } else {
+      kExistingCustomObjects.putIfAbsent(type, () => creator);
+    }
+  }
+  // endregion
 
   // region GETTER
   ParseObject get copy => ParseObject(className: className, objectId: objectId)

@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ParseObject variable check after fetch', () {
-    final fetch = ParseObject.fromJson(className: 'Fetch', json: {
+    final fetch = ParseObject.fromJson(json: {
+      "className": "Fetch",
       "objectId": "jmRXtNVKL8",
       "integer": 1234567890,
       "double": 1.23456789,
@@ -162,7 +163,8 @@ void main() {
   });
 
   group('ParseObject variable change', () {
-    final dummy = ParseObject.fromJson(className: 'Dummy', json: {
+    final dummy = ParseObject.fromJson(json: {
+      "className": "Dummy",
       "objectId": "jmRXtNVKL8",
       "boolean": true,
       "createdAt": "2019-09-03T03:24:57.580Z",
@@ -180,7 +182,8 @@ void main() {
   });
 
   group('ParseObject variable remove', () {
-    final dummy = ParseObject.fromJson(className: 'Dummy', json: {
+    final dummy = ParseObject.fromJson(json: {
+      "className": "Dummy",
       "objectId": "jmRXtNVKL8",
       "integer": 1234567890,
       "createdAt": "2019-09-03T03:24:57.580Z",

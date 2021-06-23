@@ -1,27 +1,22 @@
 import 'package:flutter_parse/flutter_parse.dart';
-import 'package:flutter_parse/src/parse_date_format.dart';
 
 import 'parse_acl.dart';
 
-class ParseRole {
-  ParseRole.fromMap(dynamic map)
-      : objectId = map['objectId'],
-        name = map['name'],
-        acl = ParseACL.fromMap(map['ACL']),
-        createdAt = map['createdAt'] == null
-            ? null
-            : parseDateFormat.parse(map['createdAt']),
-        updatedAt = map['updatedAt'] == null
-            ? null
-            : parseDateFormat.parse(map['updatedAt']);
+class ParseRole extends ParseObject {
+  ParseRole({required dynamic json})
+      : name = json['name'],
+        acl = ParseACL.fromMap(json['ACL']),
+        super(className: '_Role', json: json);
 
-  final String? objectId;
+  factory ParseRole.fromJson({required dynamic json}) {
+    return ParseRole(json: json);
+  }
+
   final String name;
   final ParseACL acl;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
-  get asMap => <String, dynamic>{
+  @override
+  dynamic get asMap => <String, dynamic>{
         '__type': 'Pointer',
         'className': '_Role',
         'objectId': objectId,
