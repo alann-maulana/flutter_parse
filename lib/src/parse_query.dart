@@ -25,7 +25,7 @@ class ParseQuery<T extends ParseObject> {
       // ignore: invalid_use_of_visible_for_testing_member
       final creator = ParseObject.kExistingCustomObjects[genericType];
       if (creator != null) {
-        final parseObject = creator({}) as T;
+        final parseObject = creator(<String, dynamic>{}) as T;
         this.className = parseObject.className;
       } else {
         throw Exception('className required');
@@ -297,7 +297,7 @@ class ParseQuery<T extends ParseObject> {
     return params;
   }
 
-  static ParseQuery or(List<ParseQuery> queries) {
+  static ParseQuery<T> or<T extends ParseObject>(List<ParseQuery<T>> queries) {
     final className = queries[0].className;
     final clauseOr = queries.map((q) {
       if (q.className != className) {
@@ -307,7 +307,7 @@ class ParseQuery<T extends ParseObject> {
       }
       return q._where;
     }).toList();
-    return ParseQuery(className: className)..whereEqualTo("\$or", clauseOr);
+    return ParseQuery<T>()..whereEqualTo("\$or", clauseOr);
   }
 
   Future<List<T>> findAsync({bool useMasterKey = false}) async {
