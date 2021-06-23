@@ -78,7 +78,7 @@ class ParseObject implements ParseBaseObject {
     ParseObjectCreator creator, [
     bool replace = false,
   ]) {
-    Type type = creator({}).runtimeType;
+    Type type = creator(<String, dynamic>{}).runtimeType;
     if (replace) {
       kExistingCustomObjects[type] = creator;
     } else {
