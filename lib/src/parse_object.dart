@@ -46,7 +46,9 @@ class ParseObject implements ParseBaseObject {
     if (objectId != null) {
       assert(objectId.isNotEmpty);
       _objectId = objectId;
-    } else if (json != null) {
+    }
+    
+    if (json != null) {
       mergeJson(json);
     }
   }
