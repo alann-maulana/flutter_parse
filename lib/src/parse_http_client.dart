@@ -71,14 +71,18 @@ class ParseHTTPClient {
 
     if (params != null) {
       final uri = Uri.parse(url).replace(queryParameters: params);
-      return _httpClient
-          .get(uri, headers: headers)
-          .then((r) => compute(_parseResponse, r.body));
+      return _httpClient.get(uri, headers: headers).then((r) => compute(
+            _parseResponse,
+            _HttpResponse(r.body, parse.enableLogging),
+          ));
     }
 
     return _httpClient
         .get(Uri.parse(url), headers: headers)
-        .then((r) => compute(_parseResponse, r.body));
+        .then((r) => compute(
+              _parseResponse,
+              _HttpResponse(r.body, parse.enableLogging),
+            ));
   }
 
   Future<dynamic> delete(
@@ -93,13 +97,19 @@ class ParseHTTPClient {
     if (params != null) {
       var uri = Uri.parse(url).replace(queryParameters: params);
       return _httpClient.delete(uri, headers: headers).then((r) {
-        return compute(_parseResponse, r.body);
+        return compute(
+          _parseResponse,
+          _HttpResponse(r.body, parse.enableLogging),
+        );
       });
     }
 
     return _httpClient
         .delete(Uri.parse(url), headers: headers)
-        .then((r) => compute(_parseResponse, r.body));
+        .then((r) => compute(
+              _parseResponse,
+              _HttpResponse(r.body, parse.enableLogging),
+            ));
   }
 
   Future<dynamic> post(
@@ -115,7 +125,12 @@ class ParseHTTPClient {
 
     return _httpClient
         .post(Uri.parse(url), headers: headers, body: body, encoding: encoding)
-        .then((r) => ignoreResult == true ? null : compute(_parseResponse, r.body));
+        .then((r) => ignoreResult == true
+            ? null
+            : compute(
+                _parseResponse,
+                _HttpResponse(r.body, parse.enableLogging),
+              ));
   }
 
   Future<dynamic> put(
@@ -130,24 +145,27 @@ class ParseHTTPClient {
 
     return _httpClient
         .put(Uri.parse(url), headers: headers, body: body, encoding: encoding)
-        .then((r) => compute(_parseResponse, r.body));
+        .then((r) => compute(
+              _parseResponse,
+              _HttpResponse(r.body, parse.enableLogging),
+            ));
   }
 }
 
-dynamic _parseResponse(String response) {
+dynamic _parseResponse(_HttpResponse response) {
   dynamic result;
   try {
-    result = json.decode(response);
+    result = json.decode(response.body);
 
-    if (parse.enableLogging) {
+    if (response.enableLogging) {
       print("╭-- JSON");
-      _parseLogWrapped(response);
+      _parseLogWrapped(response.body);
       print("╰-- result");
     }
   } catch (_) {
-    if (parse.enableLogging) {
+    if (response.enableLogging) {
       print("╭-- RESPONSE");
-      _parseLogWrapped(response);
+      _parseLogWrapped(response.body);
       print("╰-- result");
     }
   }
@@ -167,7 +185,7 @@ dynamic _parseResponse(String response) {
   throw ParseException(
     code: ParseException.invalidJson,
     message: 'invalid server response',
-    data: response,
+    data: response.body,
   );
 }
 
@@ -199,4 +217,14 @@ void logToCURL(http.BaseRequest request) {
 
 void _parseLogWrapped(String text) {
   log.parseLogWrapped(text);
+}
+
+class _HttpResponse {
+  final String body;
+  final bool enableLogging;
+
+  _HttpResponse(
+    this.body, [
+    this.enableLogging = false,
+  ]);
 }
