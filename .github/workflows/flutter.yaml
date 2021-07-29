@@ -24,7 +24,7 @@ jobs:
         with:
           flutter-version: '2.0.5'
           channel: 'stable'
-      - run: flutter packages get
-      - run: flutter format --set-exit-if-changed .
-      - run: flutter analyze .
-      - run: flutter test
+      - run: dart pub get
+      - run: dartfmt -n --set-exit-if-changed lib/ test/
+      - run: dart analyze .
+      - run: dart run test -r json ./test
