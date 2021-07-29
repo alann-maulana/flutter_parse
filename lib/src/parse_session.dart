@@ -6,6 +6,8 @@ import '../flutter_parse.dart';
 import 'parse_object.dart';
 import 'parse_user.dart';
 
+/// The [ParseSession] is a local representation of session data that can be saved
+/// and retrieved from the Parse cloud.
 class ParseSession extends ParseObject {
   @visibleForTesting
   ParseSession({
@@ -21,8 +23,10 @@ class ParseSession extends ParseObject {
     return ParseSession(json: json);
   }
 
+  /// Return the expires time of session
   DateTime? get expiresAt => getDateTime('expiresAt');
 
+  /// Return true if session is restricted, false otherwise
   bool? get restricted => getBoolean('restricted');
 
   /// `createdWith` (readonly): Information about how this session was created
@@ -38,10 +42,13 @@ class ParseSession extends ParseObject {
   String get authProvider =>
       createdWith == null ? null : createdWith!['authProvider'];
 
+  /// Return the [ParseUser] of this session
   ParseUser? get user => getParseUser('user');
 
+  /// Return the session token
   String? get sessionToken => getString('sessionToken');
 
+  /// Get the current logged [ParseUser] session
   static Future<ParseSession> me() async {
     final session = ParseSession(objectId: 'me');
     await session.fetch();
