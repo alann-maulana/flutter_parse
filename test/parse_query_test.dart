@@ -1,5 +1,5 @@
 import 'package:flutter_parse/flutter_parse.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('ParseQuery className check with generic class', () {
@@ -30,6 +30,8 @@ class Beacon extends ParseObject {
   Beacon(dynamic json) : super(className: 'Beacon', json: json);
 
   String? get uuid => getString('uuid');
+
   num? get major => getNumber('major');
+
   num? get minor => getNumber('minor');
 }

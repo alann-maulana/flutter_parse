@@ -1,5 +1,5 @@
 import 'package:flutter_parse/flutter_parse.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 final ParseConfiguration _configuration = ParseConfiguration(
   server: 'https://parse.dashboard/',
@@ -7,6 +7,7 @@ final ParseConfiguration _configuration = ParseConfiguration(
   clientKey: 'MY_CLIENT_KEY',
   masterKey: 'MY_MASTER_KEY',
   enableLogging: true,
+  localStorage: Storage(''),
 );
 final Parse initializeParse = Parse.initialize(_configuration);
 
@@ -27,6 +28,7 @@ void main() {
                 server: 'http://parse.dashboard',
                 applicationId: '',
                 enableLogging: false,
+                localStorage: Storage(''),
               ).uri.toString() ==
               'http://parse.dashboard',
           isTrue);
@@ -66,9 +68,10 @@ void main() {
           ParseConfiguration(
             server: 'unknown-server',
             applicationId: 'null',
+            localStorage: Storage(''),
           ),
         ),
-        throwsAssertionError,
+        throwsA(isA<AssertionError>()),
       );
     });
 
@@ -78,9 +81,10 @@ void main() {
           ParseConfiguration(
             server: 'unknown-live-query-server',
             applicationId: 'null',
+            localStorage: Storage(''),
           ),
         ),
-        throwsAssertionError,
+        throwsA(isA<AssertionError>()),
       );
     });
   });

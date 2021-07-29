@@ -1,7 +1,6 @@
 import 'package:flutter_parse/flutter_parse.dart';
 import 'package:flutter_parse/src/parse_local_storage.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Parse Local Storage', () {
@@ -11,10 +10,9 @@ void main() {
         applicationId: 'APPLICATION_ID',
         clientKey: 'CLIENT_KEY',
         enableLogging: true,
+        localStorage: Storage('/var/tmp/flutter_parse.db'),
       );
       Parse.initialize(_configuration);
-      SharedPreferences.setMockInitialValues({});
-      TestWidgetsFlutterBinding.ensureInitialized();
     });
 
     const String key1 = 'default local storage must be empty';
@@ -24,23 +22,23 @@ void main() {
       expect(localStorage!.isEmpty, isTrue);
     });
 
-    const String key2 = 'adding local storage with an item must not be empty';
+    const String key2 = 'adding local storage with a map must not be empty';
     test(key2, () async {
       final localStorage = await parseLocalStorage.get(key2);
-      await localStorage!.setItem('first', 1);
+      await localStorage!.setData({'key': 'value'});
 
       expect(localStorage.isEmpty, isFalse);
-      expect(localStorage.getItem('first'), 1);
+      expect(localStorage.getData(), {'key': 'value'});
     });
 
     const String key3 =
-        'remove after adding local storage with an item must be empty';
+        'remove after adding local storage with a value must be empty';
     test(key3, () async {
       final localStorage = await parseLocalStorage.get(key3);
-      await localStorage!.setItem('second', 2);
+      await localStorage!.setData({'key': 'value'});
 
       expect(localStorage.isEmpty, isFalse);
-      expect(localStorage.getItem('second'), 2);
+      expect(localStorage.getData(), {'key': 'value'});
 
       await localStorage.delete();
       expect(localStorage.isEmpty, isTrue);
