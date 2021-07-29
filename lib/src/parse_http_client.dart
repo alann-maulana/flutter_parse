@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_parse/src/config/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -59,68 +60,35 @@ class ParseHTTPClient {
     return headers;
   }
 
-  Future<dynamic>? _parseResponse(http.Response httpResponse,
-      {bool ignoreResult = false}) {
-    String response = httpResponse.body;
-    if (ignoreResult) {
-      return null;
-    }
-
-    dynamic result;
-    try {
-      result = json.decode(response);
-
-      if (parse.enableLogging) {
-        print("╭-- JSON");
-        _parseLogWrapped(response);
-        print("╰-- result");
-      }
-    } catch (_) {
-      if (parse.enableLogging) {
-        print("╭-- RESPONSE");
-        _parseLogWrapped(response);
-        print("╰-- result");
-      }
-    }
-
-    if (result is Map<String, dynamic>) {
-      String? error = result['error'];
-      if (error != null) {
-        int code = result['code'];
-        throw ParseException(code: code, message: error);
-      }
-
-      return Future.value(result);
-    } else if (result is List<dynamic>) {
-      return Future.value(result);
-    }
-
-    throw ParseException(
-      code: ParseException.invalidJson,
-      message: 'invalid server response',
-      data: response,
-    );
-  }
-
   Future<dynamic> get(
     String path, {
     bool useMasterKey = false,
     Map<String, dynamic>? params,
     Map<String, String>? headers,
   }) async {
-    headers = await _addHeader(headers, useMasterKey: useMasterKey);
+    headers = await _addHeader(
+      headers,
+      useMasterKey: useMasterKey,
+    );
     final url = _getFullUrl(path);
 
+    Uri uri = Uri.parse(url);
     if (params != null) {
-      final uri = Uri.parse(url).replace(queryParameters: params);
-      return _httpClient
-          .get(uri, headers: headers)
-          .then((r) => _parseResponse(r));
+      uri = uri.replace(queryParameters: params);
     }
 
-    return _httpClient
-        .get(Uri.parse(url), headers: headers)
-        .then((r) => _parseResponse(r));
+    final r = await _httpClient.get(
+      uri,
+      headers: headers,
+    );
+
+    final result = await compute(
+      _parseResponse,
+      _HttpResponse(r.body, parse.enableLogging),
+    );
+
+    if (result is ParseException) throw result;
+    return result;
   }
 
   Future<dynamic> delete(
@@ -129,19 +97,29 @@ class ParseHTTPClient {
     Map<String, String>? params,
     Map<String, String>? headers,
   }) async {
-    headers = await _addHeader(headers, useMasterKey: useMasterKey);
+    headers = await _addHeader(
+      headers,
+      useMasterKey: useMasterKey,
+    );
     final url = _getFullUrl(path);
 
+    Uri uri = Uri.parse(url);
     if (params != null) {
-      var uri = Uri.parse(url).replace(queryParameters: params);
-      return _httpClient.delete(uri, headers: headers).then((r) {
-        return _parseResponse(r);
-      });
+      uri = uri.replace(queryParameters: params);
     }
 
-    return _httpClient
-        .delete(Uri.parse(url), headers: headers)
-        .then((r) => _parseResponse(r));
+    final r = await _httpClient.delete(
+      uri,
+      headers: headers,
+    );
+
+    final result = await compute(
+      _parseResponse,
+      _HttpResponse(r.body, parse.enableLogging),
+    );
+
+    if (result is ParseException) throw result;
+    return result;
   }
 
   Future<dynamic> post(
@@ -152,12 +130,28 @@ class ParseHTTPClient {
     Encoding? encoding,
     bool ignoreResult = false,
   }) async {
-    headers = await _addHeader(headers, useMasterKey: useMasterKey);
+    headers = await _addHeader(
+      headers,
+      useMasterKey: useMasterKey,
+    );
     final url = _getFullUrl(path);
 
-    return _httpClient
-        .post(Uri.parse(url), headers: headers, body: body, encoding: encoding)
-        .then((r) => _parseResponse(r, ignoreResult: ignoreResult));
+    final r = await _httpClient.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+      encoding: encoding,
+    );
+
+    if (ignoreResult == true) return null;
+
+    final result = await compute(
+      _parseResponse,
+      _HttpResponse(r.body, parse.enableLogging),
+    );
+
+    if (result is ParseException) throw result;
+    return result;
   }
 
   Future<dynamic> put(
@@ -167,13 +161,64 @@ class ParseHTTPClient {
     dynamic body,
     Encoding? encoding,
   }) async {
-    headers = await _addHeader(headers, useMasterKey: useMasterKey);
+    headers = await _addHeader(
+      headers,
+      useMasterKey: useMasterKey,
+    );
     final url = _getFullUrl(path);
 
-    return _httpClient
-        .put(Uri.parse(url), headers: headers, body: body, encoding: encoding)
-        .then((r) => _parseResponse(r));
+    final r = await _httpClient.put(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+      encoding: encoding,
+    );
+
+    final result = await compute(
+      _parseResponse,
+      _HttpResponse(r.body, parse.enableLogging),
+    );
+
+    if (result is ParseException) throw result;
+    return result;
   }
+}
+
+dynamic _parseResponse(_HttpResponse response) {
+  dynamic result;
+  try {
+    result = json.decode(response.body);
+
+    if (response.enableLogging) {
+      print("╭-- JSON");
+      _parseLogWrapped(response.body);
+      print("╰-- result");
+    }
+  } catch (_) {
+    if (response.enableLogging) {
+      print("╭-- RESPONSE");
+      _parseLogWrapped(response.body);
+      print("╰-- result");
+    }
+  }
+
+  if (result is Map<String, dynamic>) {
+    String? error = result['error'];
+    if (error != null) {
+      int code = result['code'];
+      return ParseException(code: code, message: error);
+    }
+
+    return result;
+  } else if (result is List<dynamic>) {
+    return result;
+  }
+
+  return ParseException(
+    code: ParseException.invalidJson,
+    message: 'invalid server response',
+    data: response.body,
+  );
 }
 
 void logToCURL(http.BaseRequest request) {
@@ -204,4 +249,14 @@ void logToCURL(http.BaseRequest request) {
 
 void _parseLogWrapped(String text) {
   log.parseLogWrapped(text);
+}
+
+class _HttpResponse {
+  final String body;
+  final bool enableLogging;
+
+  _HttpResponse(
+    this.body, [
+    this.enableLogging = false,
+  ]);
 }

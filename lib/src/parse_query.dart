@@ -7,10 +7,9 @@ import 'parse_exception.dart';
 import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
 import 'parse_object.dart';
-import 'parse_user.dart';
 
 class ParseQuery<T extends ParseObject> {
-  final String className;
+  late final String className;
   final List<String> _includes = [];
   final List<String> _order = [];
   final Map<String, dynamic> _where = Map();
@@ -19,7 +18,20 @@ class ParseQuery<T extends ParseObject> {
   int _skip = 0;
   bool _countEnabled = false;
 
-  ParseQuery({required this.className});
+  ParseQuery({String? className}) {
+    if (className != null) {
+      this.className = className;
+    } else {
+      // ignore: invalid_use_of_visible_for_testing_member
+      final creator = ParseObject.kExistingCustomObjects[genericType];
+      if (creator != null) {
+        final parseObject = creator(<String, dynamic>{}) as T;
+        this.className = parseObject.className;
+      } else {
+        throw Exception('className required');
+      }
+    }
+  }
 
   ParseQuery get copy {
     final newQuery = ParseQuery(className: className);
@@ -33,6 +45,8 @@ class ParseQuery<T extends ParseObject> {
 
     return newQuery;
   }
+
+  Type get genericType => T;
 
   void _addCondition(String key, String condition, dynamic value) {
     Map<String, dynamic>? whereValue;
@@ -283,7 +297,7 @@ class ParseQuery<T extends ParseObject> {
     return params;
   }
 
-  static ParseQuery or(List<ParseQuery> queries) {
+  static ParseQuery<T> or<T extends ParseObject>(List<ParseQuery<T>> queries) {
     final className = queries[0].className;
     final clauseOr = queries.map((q) {
       if (q.className != className) {
@@ -293,39 +307,29 @@ class ParseQuery<T extends ParseObject> {
       }
       return q._where;
     }).toList();
-    return ParseQuery(className: className)..whereEqualTo("\$or", clauseOr);
+    return ParseQuery<T>()..whereEqualTo("\$or", clauseOr);
   }
 
-  Future<List<dynamic>> findAsync({bool useMasterKey = false}) async {
+  Future<List<T>> findAsync({bool useMasterKey = false}) async {
     dynamic result = await _find(useMasterKey: useMasterKey);
-    if (result.containsKey("results")) {
+    final List<T> objects = [];
+    if (result["results"] is List) {
       List<dynamic> results = result["results"];
-      List<dynamic> objects = [];
+
       results.forEach((json) {
-        String objectId = json["objectId"];
-        if (className == '_Session') {
-          ParseSession session = ParseSession.fromJson(json: json);
-          objects.add(session);
-        } else if (className == '_Role') {
-          ParseRole role = ParseRole.fromMap(json);
-          objects.add(role);
-        } else if (className == '_User') {
-          ParseUser user = ParseUser.fromJson(json: json);
-          objects.add(user);
+        // ignore: invalid_use_of_visible_for_testing_member
+        final creator = ParseObject.kExistingCustomObjects[genericType];
+        if (creator != null) {
+          objects.add(creator(json) as T);
         } else {
-          // ignore: invalid_use_of_visible_for_testing_member
-          ParseObject object = ParseObject.fromJson(
+          objects.add(ParseObject(
             className: className,
-            objectId: objectId,
             json: json,
-          );
-          objects.add(object);
+          ) as T);
         }
       });
-      return objects;
     }
-
-    return [];
+    return objects;
   }
 
   Future<dynamic> _find({bool useMasterKey = false}) {

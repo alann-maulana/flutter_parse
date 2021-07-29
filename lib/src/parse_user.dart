@@ -19,16 +19,22 @@ class ParseUser extends ParseObject {
 
   bool _isCurrentUser;
 
-  ParseUser({String? objectId})
+  ParseUser({String? objectId, dynamic json})
       : _isCurrentUser = false,
-        super(className: '_User', objectId: objectId);
+        super(
+          className: '_User',
+          objectId: objectId,
+          json: json,
+        );
 
   factory ParseUser.fromJson({dynamic json}) {
-    // ignore: invalid_use_of_visible_for_testing_member
-    return ParseUser()..mergeJson(json);
+    return ParseUser(json: json);
   }
 
   factory ParseUser.fromObject({required ParseObject object}) {
+    if (object.className != '_User') {
+      throw Exception('invalid parse user className');
+    }
     return ParseUser.fromJson(json: object.asMap);
   }
 

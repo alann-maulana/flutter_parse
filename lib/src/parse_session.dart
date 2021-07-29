@@ -8,12 +8,17 @@ import 'parse_user.dart';
 
 class ParseSession extends ParseObject {
   @visibleForTesting
-  ParseSession({String? objectId})
-      : super(className: '_Session', objectId: objectId);
+  ParseSession({
+    String? objectId,
+    dynamic? json,
+  }) : super(
+          className: '_Session',
+          objectId: objectId,
+          json: json,
+        );
 
   factory ParseSession.fromJson({dynamic json}) {
-    // ignore: invalid_use_of_visible_for_testing_member
-    return ParseSession()..mergeJson(json);
+    return ParseSession(json: json);
   }
 
   DateTime? get expiresAt => getDateTime('expiresAt');

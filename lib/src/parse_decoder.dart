@@ -75,7 +75,7 @@ class ParseDecoder {
         if (className == '_User') {
           return ParseUser(objectId: objectId);
         } else if (className == '_Role') {
-          return ParseRole.fromMap(map);
+          return ParseRole.fromJson(json: map);
         }
         return ParseObject(className: className, objectId: objectId);
       case "Object":
@@ -83,12 +83,10 @@ class ParseDecoder {
         String className = map["className"];
         if (className == '_Session') {
           return ParseSession.fromJson(json: map);
+        } else if (className == '_User') {
+          return ParseUser(objectId: objectId, json: map);
         }
-        if (className == '_User') {
-          return ParseUser.fromJson(json: map);
-        }
-        // ignore: invalid_use_of_visible_for_testing_member
-        return ParseObject.fromJson(
+        return ParseObject(
           className: className,
           objectId: objectId,
           json: map,
