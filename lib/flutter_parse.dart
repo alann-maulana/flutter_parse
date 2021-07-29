@@ -4,12 +4,12 @@
 /// Dart package for accessing Parse Server
 library flutter_parse;
 
+import 'dart:async';
+
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
-import 'package:platform/platform.dart';
 
 import 'src/parse_http_client.dart' as client;
-import 'src/platform/platform.dart';
+import 'src/storage/storage.dart';
 
 export 'src/parse_acl.dart';
 export 'src/parse_cloud.dart';
@@ -24,9 +24,10 @@ export 'src/parse_role.dart';
 export 'src/parse_schema.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
+export 'src/storage/storage.dart';
 
 /// Displaying current Parse SDK version
-const String kParseSdkVersion = "0.2.4";
+const String kParseSdkVersion = "1.0.0";
 
 final Parse parse = Parse._internal();
 
@@ -83,18 +84,14 @@ class Parse {
   /// Return [Parse] initialized status
   bool get initialized => configuration != null;
 
-  Platform? _platform;
-
   /// Convert [BaseRequest] object into friendly formatted CURL command into console log
   void logToCURL(BaseRequest request) => client.logToCURL(request);
-
-  @visibleForTesting
-  set platform(Platform platform) {
-    _platform = platform;
-  }
-
-  Platform get platform => _platform ?? kDefaultPlatform;
 }
+
+typedef Compute = Future<dynamic> Function(
+  FutureOr<dynamic> Function(String message),
+  String message,
+);
 
 /// The [ParseConfiguration] class contains variable that handle global
 /// configuration for the Parse library.
@@ -102,11 +99,13 @@ class ParseConfiguration {
   ParseConfiguration({
     required String server,
     required this.applicationId,
+    required this.localStorage,
     this.liveQueryServer,
     this.clientKey,
     this.masterKey,
     this.enableLogging = false,
     this.httpClient,
+    this.compute,
   })  : assert(
           server.startsWith('https://') || server.startsWith('http://'),
           'Invalid parse server',
@@ -141,4 +140,9 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient? httpClient;
+
+  /// Setup [Storage] for local storage use.
+  final Storage localStorage;
+
+  final Compute? compute;
 }

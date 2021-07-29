@@ -1,5 +1,5 @@
 import 'package:flutter_parse/flutter_parse.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('Check file name and url must be equal', () {
