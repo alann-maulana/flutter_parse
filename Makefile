@@ -6,7 +6,7 @@ build: lib/*dart test/*dart deps
 	flutter test --coverage --coverage-path ./coverage/lcov.info
 
 deps: pubspec.yaml
-	flutter packages get -v
+	pub get -v
 
 reformatting:
 	dartfmt -w lib/ test/
@@ -18,7 +18,7 @@ build-local: reformatting build
 	open coverage/index.html
 
 pana:
-	pana -s path .
+	pana -s path . --no-warning
 
 docs:
 	rm -rf doc
