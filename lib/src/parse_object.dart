@@ -47,7 +47,7 @@ class ParseObject implements ParseBaseObject {
       assert(objectId.isNotEmpty);
       _objectId = objectId;
     }
-    
+
     if (json != null) {
       mergeJson(json);
     }
@@ -76,6 +76,7 @@ class ParseObject implements ParseBaseObject {
     ParseRole: (data) => ParseRole.fromJson(json: data),
     ParseUser: (data) => ParseUser.fromJson(json: data),
   };
+
   static registerSubclass(
     ParseObjectCreator creator, [
     bool replace = false,
@@ -87,6 +88,7 @@ class ParseObject implements ParseBaseObject {
       kExistingCustomObjects.putIfAbsent(type, () => creator);
     }
   }
+
   // endregion
 
   // region GETTER

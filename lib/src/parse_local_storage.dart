@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:flutter_parse/flutter_parse.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
 
@@ -36,16 +35,20 @@ class LocalStorage {
 
   LocalStorage._internal(this._keyName);
 
+  Storage get storage {
+    if (parse.configuration == null) {
+      throw ParseException(message: 'parse not initialized');
+    }
+
+    return parse.configuration!.localStorage;
+  }
+
   _init() async {
-    final _db = await SharedPreferences.getInstance();
-    final source = _db.getString(_keyName);
-    try {
-      final map = json.decode(source!);
-      if (map is Map<String, dynamic>) {
-        _data.addAll(map);
-      }
-    } catch (_) {}
-    await _db.setString(_keyName, json.encode(_data));
+    final data = await storage.get(_keyName);
+
+    if (data != null && data is Map) {
+      _data.addAll(data);
+    }
   }
 
   Future<bool> setData(Map<String, dynamic> values) async {
@@ -53,39 +56,18 @@ class LocalStorage {
       ..clear()
       ..addAll(values);
 
-    return _flush();
-  }
-
-  Future<bool> setItem(String key, value) async {
-    _data[key] = value;
-
-    return _flush();
+    return await storage.put(_keyName, values);
   }
 
   Future<bool> delete() async {
     _data.clear();
 
-    return _flush();
-  }
-
-  Future<bool> deleteItem(String key) async {
-    _data.remove(key);
-
-    return _flush();
+    return await storage.clear(key: _keyName);
   }
 
   Map<String, dynamic> getData() {
     return _data;
   }
 
-  getItem(String key) {
-    return _data[key];
-  }
-
   bool get isEmpty => _data.isEmpty;
-
-  Future<bool> _flush() async {
-    final _db = await SharedPreferences.getInstance();
-    return await _db.setString(_keyName, json.encode(_data));
-  }
 }

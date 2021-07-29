@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_parse/src/config/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,10 +81,15 @@ class ParseHTTPClient {
       headers: headers,
     );
 
-    final result = await compute(
-      _parseResponse,
-      _HttpResponse(r.body, parse.enableLogging),
-    );
+    dynamic result;
+    if (parse.configuration != null && parse.configuration!.compute != null) {
+      result = await parse.configuration!.compute!(
+        _parseResponse,
+        r.body,
+      );
+    } else {
+      result = await _parseResponse(r.body);
+    }
 
     if (result is ParseException) throw result;
     return result;
@@ -113,10 +117,15 @@ class ParseHTTPClient {
       headers: headers,
     );
 
-    final result = await compute(
-      _parseResponse,
-      _HttpResponse(r.body, parse.enableLogging),
-    );
+    dynamic result;
+    if (parse.configuration != null && parse.configuration!.compute != null) {
+      result = await parse.configuration!.compute!(
+        _parseResponse,
+        r.body,
+      );
+    } else {
+      result = await _parseResponse(r.body);
+    }
 
     if (result is ParseException) throw result;
     return result;
@@ -145,10 +154,15 @@ class ParseHTTPClient {
 
     if (ignoreResult == true) return null;
 
-    final result = await compute(
-      _parseResponse,
-      _HttpResponse(r.body, parse.enableLogging),
-    );
+    dynamic result;
+    if (parse.configuration != null && parse.configuration!.compute != null) {
+      result = await parse.configuration!.compute!(
+        _parseResponse,
+        r.body,
+      );
+    } else {
+      result = await _parseResponse(r.body);
+    }
 
     if (result is ParseException) throw result;
     return result;
@@ -174,30 +188,35 @@ class ParseHTTPClient {
       encoding: encoding,
     );
 
-    final result = await compute(
-      _parseResponse,
-      _HttpResponse(r.body, parse.enableLogging),
-    );
+    dynamic result;
+    if (parse.configuration != null && parse.configuration!.compute != null) {
+      result = await parse.configuration!.compute!(
+        _parseResponse,
+        r.body,
+      );
+    } else {
+      result = await _parseResponse(r.body);
+    }
 
     if (result is ParseException) throw result;
     return result;
   }
 }
 
-dynamic _parseResponse(_HttpResponse response) {
+dynamic _parseResponse(String body) {
   dynamic result;
   try {
-    result = json.decode(response.body);
+    result = json.decode(body);
 
-    if (response.enableLogging) {
+    if (parse.enableLogging) {
       print("╭-- JSON");
-      _parseLogWrapped(response.body);
+      _parseLogWrapped(body);
       print("╰-- result");
     }
   } catch (_) {
-    if (response.enableLogging) {
+    if (parse.enableLogging) {
       print("╭-- RESPONSE");
-      _parseLogWrapped(response.body);
+      _parseLogWrapped(body);
       print("╰-- result");
     }
   }
@@ -217,7 +236,7 @@ dynamic _parseResponse(_HttpResponse response) {
   return ParseException(
     code: ParseException.invalidJson,
     message: 'invalid server response',
-    data: response.body,
+    data: body,
   );
 }
 
@@ -249,14 +268,4 @@ void logToCURL(http.BaseRequest request) {
 
 void _parseLogWrapped(String text) {
   log.parseLogWrapped(text);
-}
-
-class _HttpResponse {
-  final String body;
-  final bool enableLogging;
-
-  _HttpResponse(
-    this.body, [
-    this.enableLogging = false,
-  ]);
 }
