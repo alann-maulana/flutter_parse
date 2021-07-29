@@ -32,4 +32,6 @@ jobs:
           make deps
           pub global activate dartdoc
           make docs
+          pub global activate pana
+          make pana
           pub publish -n -v
