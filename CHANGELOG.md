@@ -1,4 +1,10 @@
-## 0.2.4    
+## 1.0.0
+* Add null safety
+* Subclassing support for `ParseObject` and `ParseUser`
+* Fix bugs and enhancement
+* Update documentation
+
+## 0.2.4
 * Moving from personal to organization account
 
 ## 0.2.3    
