@@ -1,19 +1,18 @@
 name: flutter_parse
 description: Plugin for managing and accessing Parse Server for Dart VM and Flutter.
-version: 0.2.3
-author: Alann Maulana <kangmas.alan@gmail.com>
-homepage: https://github.com/alann-maulana/flutter_parse
+version: 0.2.4
+homepage: https://github.com/eyro-labs/flutter_parse
 
 environment:
-  sdk: '>=2.5.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  http: ^0.12.0+2
-  meta: ^1.1.7
-  path: ^1.6.0
-  sembast: ^2.0.1+2
+  http: ^0.13.1
+  meta: ^1.7.0
+  web_socket_channel: ^2.0.0
+  sembast: ^3.1.0+2
+  sembast_web: ^2.0.0+2
 
 dev_dependencies:
-  pedantic: ^1.8.0
-  test: ^1.6.0
-  test_coverage: ^0.2.0
+  pedantic: ^1.11.1
+  test: ^1.17.10

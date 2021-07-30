@@ -6,6 +6,8 @@ main() async {
     server: 'YOUR_PARSE_SERVER_URL',
     applicationId: 'YOUR_PARSE_APPLICATION_ID',
     clientKey: 'YOUR_PARSE_CLIENT_KEY',
+    masterKey: 'YOUR_PARSE_MASTER_KEY',
+    localStorage: Storage(''),
   );
   // initialize parse using configuration
   Parse.initialize(config);
@@ -22,5 +24,6 @@ main() async {
   final query = ParseQuery(className: 'Beacon')
     ..whereEqualTo('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
     ..whereLessThanOrEqualTo('major', 10);
-  final beacons = await query.findAsync();
+  final beacons = await query.find();
+  print(beacons.length);
 }

@@ -1,6 +1,7 @@
-import 'package:sembast/sembast.dart';
+import 'dart:async';
 
-import '../flutter_parse.dart';
+import 'package:flutter_parse/flutter_parse.dart';
+import 'package:meta/meta.dart';
 
 final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
 
@@ -9,7 +10,7 @@ class ParseLocalStorage {
 
   ParseLocalStorage._internal() : _cache = {};
 
-  Future<LocalStorage> get(String key) async {
+  Future<LocalStorage?> get(String key) async {
     if (!_cache.containsKey(key)) {
       final instance = LocalStorage._internal(key);
       await instance._init();
@@ -18,61 +19,55 @@ class ParseLocalStorage {
 
     return _cache[key];
   }
+
+  @visibleForTesting
+  Future<void> clear() async {
+    _cache.forEach((key, cache) async {
+      await cache.delete();
+    });
+    _cache.clear();
+  }
 }
 
 class LocalStorage {
-  final StoreRef _store = StoreRef.main();
-  final String _filename;
+  final String _keyName;
   final Map<String, dynamic> _data = {};
-  Database _db;
 
-  LocalStorage._internal(this._filename);
+  LocalStorage._internal(this._keyName);
+
+  Storage get storage {
+    if (parse.configuration == null) {
+      throw ParseException(message: 'parse not initialized');
+    }
+
+    return parse.configuration!.localStorage;
+  }
 
   _init() async {
-    _db = await parse.configuration.databaseFactory
-        .openDatabase('flutter_parse.db');
+    final data = await storage.get(_keyName);
 
-    final map = await _store.record(_filename).get(_db) as Map;
-    if (map is Map) {
-      _data.addAll(map);
+    if (data != null && data is Map) {
+      _data.addAll(data);
     }
   }
 
-  Future<void> setData(Map<String, dynamic> values) async {
+  Future<bool> setData(Map<String, dynamic> values) async {
     _data
       ..clear()
       ..addAll(values);
 
-    return _flush();
+    return await storage.put(_keyName, values);
   }
 
-  Future<void> setItem(String key, value) async {
-    _data[key] = value;
+  Future<bool> delete() async {
+    _data.clear();
 
-    return _flush();
-  }
-
-  Future<void> delete() async {
-    await _store.record(_filename).delete(_db);
-  }
-
-  deleteItem(String key) async {
-    _data.remove(key);
-
-    return _flush();
+    return await storage.clear(key: _keyName);
   }
 
   Map<String, dynamic> getData() {
     return _data;
   }
 
-  getItem(String key) {
-    return _data[key];
-  }
-
   bool get isEmpty => _data.isEmpty;
-
-  Future<void> _flush() async {
-    await _store.record(_filename).put(_db, _data);
-  }
 }

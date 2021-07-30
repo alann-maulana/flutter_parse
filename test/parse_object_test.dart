@@ -3,7 +3,8 @@ import 'package:test/test.dart';
 
 void main() {
   group('ParseObject variable check after fetch', () {
-    final fetch = ParseObject.fromJson(className: 'Fetch', json: {
+    final fetch = ParseObject.fromJson(json: {
+      "className": "Fetch",
       "objectId": "jmRXtNVKL8",
       "integer": 1234567890,
       "double": 1.23456789,
@@ -79,14 +80,14 @@ void main() {
 
     test('object must be equal', () {
       expect(fetch.get('object') is Map, isTrue);
-      expect(fetch.getMap('object').containsKey('number'), isTrue);
-      expect(fetch.getMap('object')['number'] == 12345, isTrue);
+      expect(fetch.getMap('object')?.containsKey('number'), isTrue);
+      expect(fetch.getMap('object')?['number'] == 12345, isTrue);
     });
 
     test('array must be equal', () {
       expect(fetch.get('array') is List, isTrue);
-      expect(fetch.getList<int>('array').length == 3, isTrue);
-      expect(fetch.getList<int>('array')[1] == 123, isFalse);
+      expect(fetch.getList<int>('array')?.length == 3, isTrue);
+      expect(fetch.getList<int>('array')?[1] == 123, isFalse);
     });
 
     test('file must be equal', () {
@@ -101,11 +102,11 @@ void main() {
               }),
           isTrue);
       expect(
-          fetch.getParseFile('picture').name ==
+          fetch.getParseFile('picture')?.name ==
               '15cdeaaefdafa3f43099f4a2a72d25de_wilis.jpg',
           isTrue);
       expect(
-          fetch.getParseFile('picture').url ==
+          fetch.getParseFile('picture')?.url ==
               'https://parsefiles.back4app.com/YtoxICpUQVRdQT96DUAdkGuk85unFzfuOUomHALP/15cdeaaefdafa3f43099f4a2a72d25de_wilis.jpg',
           isTrue);
     });
@@ -162,7 +163,8 @@ void main() {
   });
 
   group('ParseObject variable change', () {
-    final dummy = ParseObject.fromJson(className: 'Dummy', json: {
+    final dummy = ParseObject.fromJson(json: {
+      "className": "Dummy",
       "objectId": "jmRXtNVKL8",
       "boolean": true,
       "createdAt": "2019-09-03T03:24:57.580Z",
@@ -180,7 +182,8 @@ void main() {
   });
 
   group('ParseObject variable remove', () {
-    final dummy = ParseObject.fromJson(className: 'Dummy', json: {
+    final dummy = ParseObject.fromJson(json: {
+      "className": "Dummy",
       "objectId": "jmRXtNVKL8",
       "integer": 1234567890,
       "createdAt": "2019-09-03T03:24:57.580Z",
