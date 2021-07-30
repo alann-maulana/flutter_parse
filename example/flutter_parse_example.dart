@@ -24,6 +24,6 @@ main() async {
   final query = ParseQuery(className: 'Beacon')
     ..whereEqualTo('proximityUUID', 'CB10023F-A318-3394-4199-A8730C7C1AEC')
     ..whereLessThanOrEqualTo('major', 10);
-  final beacons = await query.findAsync();
+  final beacons = await query.find();
   print(beacons.length);
 }
