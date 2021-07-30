@@ -1,52 +1,35 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
-
 import '../flutter_parse.dart';
 import 'parse_base_object.dart';
 import 'parse_http_client.dart';
 
+/// The [ParseSchema] is a representation of [ParseObject] schema that can be retrieved from
+/// the Parse cloud.
 class ParseSchema implements ParseBaseObject {
-  ParseSchema({required this.className});
+  /// Constructs a new schema using `className`
+  ParseSchema({required this.className})
+      : fields = {},
+        classLevelPermissions = {},
+        indexes = {};
 
-  final String className;
-  List<Schema>? _schemas;
-
-  List<Schema>? get schemas => _schemas;
-
-  @visibleForTesting
-  void setSchemas(List<dynamic>? values) {
-    _schemas = values?.map((map) => Schema.fromJson(map)).toList();
-  }
-
-  @override
-  get asMap => _schemas?.map((s) => s.asMap).toList();
-
-  @override
-  String get path {
-    assert(parse.configuration != null);
-    String path = '${parse.configuration!.uri.path}/schemas';
-    path = '$path/$className';
-    return path;
-  }
-
-  Future<List<Schema>?> fetch() async {
-    final result = await parseHTTPClient.get(path, useMasterKey: true);
-    setSchemas(result['results']);
-    return schemas;
-  }
-}
-
-class Schema {
-  Schema.fromJson(dynamic map)
+  /// Constructs a new schema using [Map] data from Parse Cloud
+  ParseSchema.fromJson(dynamic map)
       : className = map['className'],
         fields = _parseFields(map['fields']),
         classLevelPermissions = map['classLevelPermissions'],
         indexes = map['indexes'];
 
+  /// The className of schema
   final String className;
+
+  /// The map of fields
   final Map<String, SchemaType>? fields;
+
+  /// The map of classLevelPermissions
   final Map<String, dynamic> classLevelPermissions;
+
+  /// The map of indexes
   final Map<String, dynamic> indexes;
 
   static Map<String, SchemaType>? _parseFields(dynamic json) {
@@ -61,12 +44,21 @@ class Schema {
     return null;
   }
 
+  @override
   dynamic get asMap => <String, dynamic>{
         'className': className,
         'fields': fields,
         'classLevelPermissions': classLevelPermissions,
         'indexes': indexes,
       };
+
+  static String get _paths {
+    assert(parse.configuration != null);
+    return '${parse.configuration!.uri.path}/schemas';
+  }
+
+  @override
+  String get path => '$_paths/$className';
 
   @override
   bool operator ==(Object other) =>
@@ -77,14 +69,37 @@ class Schema {
 
   @override
   int get hashCode => className.hashCode;
+
+  /// Fetch all schemas data from Parse Cloud
+  static Future<List<ParseSchema>?> fetchAll() async {
+    final result = await parseHTTPClient.get(_paths, useMasterKey: true);
+    final results = result['results'];
+    if (results is List) {
+      return results.map((map) => ParseSchema.fromJson(map)).toList();
+    }
+    return null;
+  }
+
+  /// Fetch schema data from Parse Cloud
+  Future<ParseSchema?> fetch() async {
+    final result = await parseHTTPClient.get(path, useMasterKey: true);
+    if (result is Map) return ParseSchema.fromJson(result);
+    return null;
+  }
 }
 
+/// The schema type of a field
 class SchemaType {
+  /// Constructs field schema type
   SchemaType(this.type, [this.targetClass]);
 
+  /// Constructs schema type using map data
   SchemaType.fromJson(dynamic map) : this(map['type'], map['targetClass']);
 
+  /// The type of field
   final String type;
+
+  /// The target class of field
   final String? targetClass;
 
   dynamic get asMap => <String, dynamic>{
