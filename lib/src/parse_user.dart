@@ -7,6 +7,8 @@ import 'parse_local_storage.dart';
 import 'parse_object.dart';
 import 'parse_session.dart';
 
+/// The [ParseUser] is a local representation of user data that can be saved and retrieved from
+/// the Parse cloud.
 class ParseUser extends ParseObject {
   static const _keyCurrentUser = '_currentUser';
   static const _keyUsername = 'username';
@@ -19,6 +21,10 @@ class ParseUser extends ParseObject {
 
   bool _isCurrentUser;
 
+  /// Constructs a new [ParseUser]
+  ///
+  /// Set the [objectId] of saved [ParseUser] if any.
+  /// Set the [json] with `Map<String, dynamic>`
   ParseUser({String? objectId, dynamic json})
       : _isCurrentUser = false,
         super(
@@ -27,10 +33,12 @@ class ParseUser extends ParseObject {
           json: json,
         );
 
+  /// Constructs a new [ParseUser] from json data
   factory ParseUser.fromJson({dynamic json}) {
     return ParseUser(json: json);
   }
 
+  /// Constructs a new [ParseUser] from [ParseObject]
   factory ParseUser.fromObject({required ParseObject object}) {
     if (object.className != '_User') {
       throw Exception('invalid parse user className');
@@ -38,11 +46,14 @@ class ParseUser extends ParseObject {
     return ParseUser.fromJson(json: object.asMap);
   }
 
+  /// Return current logged in user session
   Future<ParseSession> get session => ParseSession.me();
 
   static Future<LocalStorage?> get _currentUserStorage =>
       parseLocalStorage.get(_keyCurrentUser);
 
+  /// This retrieves the currently logged in [ParseUser] with a valid session,
+  /// either from memory or disk if necessary.
   static Future<ParseUser?> get currentUser async {
     final storage = await _currentUserStorage;
     if (storage != null && storage.getData().isNotEmpty) {
@@ -52,6 +63,7 @@ class ParseUser extends ParseObject {
     return null;
   }
 
+  /// Set user instance as current logged in user
   Future<ParseUser> setCurrentUser() async {
     final storage = await _currentUserStorage;
     if (storage != null) {
@@ -60,6 +72,7 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  /// Constructs a query for [ParseUser].
   static ParseQuery get query => ParseQuery(className: '_User');
 
   @override
@@ -67,24 +80,31 @@ class ParseUser extends ParseObject {
     return !_readOnlyKeys.contains(key);
   }
 
+  /// True if this is current logged in user
   bool get isCurrentUser => _isCurrentUser;
 
+  /// Return session id of user
   String? get sessionId => getString(_keySessionToken);
 
+  /// Return username of user
   String? get username => getString(_keyUsername);
 
+  /// Retrieves the email address.
   String? get email => getString(_keyEmail);
 
+  /// Sets the username. Usernames cannot be null or blank.
   set username(String? value) {
     if (value != null) {
       set(_keyUsername, value);
     }
   }
 
+  /// Sets the password.
   set password(String value) {
     set(_keyPassword, value);
   }
 
+  /// Sets the email address.
   set email(String? value) {
     if (value != null) {
       set(_keyEmail, value);
@@ -92,6 +112,7 @@ class ParseUser extends ParseObject {
   }
 
   // region EXECUTORS
+  /// Saves this user to the server.
   Future<ParseUser> save({bool useMasterKey = false}) async {
     await super.save(useMasterKey: useMasterKey);
     final currentUser = await ParseUser.currentUser;
@@ -104,6 +125,7 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  /// Fetches this user with the data from the server.
   Future<ParseUser> fetch(
       {List<String>? includes, bool useMasterKey = false}) async {
     await super.fetch(includes: includes, useMasterKey: useMasterKey);
@@ -117,6 +139,9 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  /// Signing up a user without set it as [currentUser]
+  ///
+  /// Useful for using with `masterKey`
   Future<ParseUser> create({bool useMasterKey = false}) async {
     assert(parse.configuration != null);
     await uploadFiles();
@@ -134,6 +159,9 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  /// Signs up a new user. You should call this instead of {@link #save} for new s. This
+  /// will create a new [ParseUser] on the server, and also persist the session on disk so that you can
+  /// access the user using [currentUser].
   Future<ParseUser> signUp() async {
     await create();
     _isCurrentUser = true;
@@ -146,6 +174,8 @@ class ParseUser extends ParseObject {
     return this;
   }
 
+  /// Authorize a user with a session token. On success, this saves the session to disk, so you can
+  /// retrieve the currently logged in user using [currentUser].
   static Future<ParseUser> become(dynamic authData) async {
     assert(parse.configuration != null);
     dynamic jsonBody = json.encode(authData);
@@ -168,6 +198,8 @@ class ParseUser extends ParseObject {
     return user;
   }
 
+  /// Logs in a user with a username and password. On success, this saves the session to disk, so you
+  /// can retrieve the currently logged in user using [currentUser].
   static Future<ParseUser> signIn({
     required String username,
     required String password,
@@ -186,6 +218,9 @@ class ParseUser extends ParseObject {
     return user;
   }
 
+  /// Requests a password reset email to be sent to the specified email
+  /// address associated with the user account. This email allows the user to
+  /// securely reset their password on the Parse site.
   static Future<void> resetPassword({required String email}) async {
     assert(parse.configuration != null);
     final body = json.encode(<String, String>{'email': email});
@@ -199,6 +234,8 @@ class ParseUser extends ParseObject {
     );
   }
 
+  /// Logs out the currently logged in user session. This will remove the session from disk, log out
+  /// of linked services, and future calls to [currentUser] will return `null`.
   static Future<void> signOut() async {
     assert(parse.configuration != null);
     try {
