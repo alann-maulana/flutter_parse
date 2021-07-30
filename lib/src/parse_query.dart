@@ -8,8 +8,21 @@ import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
 import 'parse_object.dart';
 
+/// The [ParseQuery] class defines a query that is used to fetch [ParseObject]s. The most
+/// common use case is finding all objects that match a query through the [find]
+/// method.
+///
+/// For example, this sample code fetches all objects of class `MyClass`
+/// It calls a different function depending on whether the fetch succeeded or not.
+///
+/// ```dart
+/// final query = ParseQuery(className: 'MyClass');
+/// final classes = await query.find();
+/// ```
 class ParseQuery<T extends ParseObject> {
+  /// Accessor for the class name.
   late final String className;
+
   final List<String> _includes = [];
   final List<String> _order = [];
   final Map<String, dynamic> _where = Map();
@@ -18,6 +31,8 @@ class ParseQuery<T extends ParseObject> {
   int _skip = 0;
   bool _countEnabled = false;
 
+  /// Constructs a query. A default query with no further parameters will retrieve all
+  /// [ParseObject]s of the provided class.
   ParseQuery({String? className}) {
     if (className != null) {
       this.className = className;
@@ -33,6 +48,7 @@ class ParseQuery<T extends ParseObject> {
     }
   }
 
+  /// Constructs a copy of current [ParseQuery] instance;
   ParseQuery get copy {
     final newQuery = ParseQuery(className: className);
     newQuery._includes.addAll(_includes);
@@ -46,6 +62,7 @@ class ParseQuery<T extends ParseObject> {
     return newQuery;
   }
 
+  /// Retrieve [Type] of ParseObject subclass
   Type get genericType => T;
 
   void _addCondition(String key, String condition, dynamic value) {
@@ -66,53 +83,72 @@ class ParseQuery<T extends ParseObject> {
     _where.putIfAbsent(key, () => whereValue);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be equal to the
+  /// provided value.
   void whereEqualTo(String key, dynamic value) {
     _where.putIfAbsent(key, () => parseEncoder.encode(value));
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be less than the
+  /// provided value.
   void whereLessThan(String key, dynamic value) {
     _addCondition(key, "\$lt", value);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be not equal to the
+  /// provided value.
   void whereNotEqualTo(String key, dynamic value) {
     _addCondition(key, "\$ne", parseEncoder.encode(value));
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be greater than the
+  /// provided value.
   void whereGreaterThan(String key, dynamic value) {
     _addCondition(key, "\$gt", value);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be less than or equal
+  /// to the provided value.
   void whereLessThanOrEqualTo(String key, dynamic value) {
     _addCondition(key, "\$lte", value);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be greater than or
+  /// equal to the provided value.
   void whereGreaterThanOrEqualTo(String key, dynamic value) {
     _addCondition(key, "\$gte", value);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to be contained in the
+  /// provided list of values.
   void whereContainedIn(String key, List<dynamic> values) {
     _addCondition(key, "\$in", values);
   }
 
+  /// Add a constraint to the query that requires a particular key's value to contain every one of
+  /// the provided list of values.
   void whereContainsAll(String key, List<dynamic> values) {
     _addCondition(key, "\$all", values);
   }
 
+  /// Add a constraint to the query that requires a particular key's value not be contained in the
+  /// provided list of values.
   void whereNotContainedIn(String key, List<dynamic> values) {
     _addCondition(key, "\$nin", values);
   }
 
-  void whereMatches(String key, String regex) {
+  /// Add a regular expression constraint for finding string values that match the provided regular
+  /// expression.
+  ///
+  /// This may be slow for large datasets.
+  void whereMatches(String key, String regex, [String? modifiers]) {
     _addCondition(key, "\$regex", regex);
-  }
-
-  void whereMatches2(String key, String regex, String modifiers) {
-    _addCondition(key, "\$regex", regex);
-    if (modifiers.isNotEmpty) {
+    if (modifiers != null && modifiers.isNotEmpty) {
       _addCondition(key, "\$options", modifiers);
     }
   }
 
+  /// Add a constraint for finding string values that contain a provided string.
   void whereContains(String key, String substring,
       {bool caseInsensitive = false}) {
     String regex = RegExp.escape(substring);
@@ -122,6 +158,9 @@ class ParseQuery<T extends ParseObject> {
     whereMatches(key, regex);
   }
 
+  /// Add a constraint for finding string values that start with a provided string.
+  ///
+  /// This query will use the backend index, so it will be fast even for large datasets.
   void whereStartsWith(String key, String prefix,
       {bool caseInsensitive = false}) {
     String regex = RegExp.escape(prefix);
@@ -129,6 +168,9 @@ class ParseQuery<T extends ParseObject> {
     whereMatches(key, regex);
   }
 
+  /// Add a constraint for finding string values that end with a provided string.
+  ///
+  /// This will be slow for large datasets.
   void whereEndsWith(String key, String suffix,
       {bool caseInsensitive = false}) {
     String regex = RegExp.escape(suffix);
@@ -136,14 +178,18 @@ class ParseQuery<T extends ParseObject> {
     whereMatches(key, regex);
   }
 
+  /// Add a constraint for finding objects that contain the given key.
   void whereExists(String key) {
     _addCondition(key, "\$exists", true);
   }
 
+  /// Add a constraint for finding objects that do not contain a given key.
   void whereDoesNotExist(String key) {
     _addCondition(key, "\$exists", false);
   }
 
+  /// Add a constraint to the query that requires a particular key's value does not match any value
+  /// for a key in the results of another [ParseQuery].
   void whereDoesNotMatchKeyInQuery(
       String key, String keyInQuery, ParseQuery query) {
     Map<String, dynamic> condition = Map();
@@ -152,6 +198,8 @@ class ParseQuery<T extends ParseObject> {
     _addCondition(key, "\$dontSelect", condition);
   }
 
+  /// Add a constraint to the query that requires a particular key's value matches a value for a key
+  /// in the results of another [ParseQuery].
   void whereMatchesKeyInQuery(String key, String keyInQuery, ParseQuery query) {
     Map<String, dynamic> condition = Map();
     condition.putIfAbsent("key", () => keyInQuery);
@@ -159,18 +207,26 @@ class ParseQuery<T extends ParseObject> {
     _addCondition(key, "\$select", condition);
   }
 
+  /// Add a constraint to the query that requires a particular key's value does not match another
+  /// [ParseQuery].
   void whereDoesNotMatchQuery(String key, ParseQuery query) {
     _addCondition(key, "\$notInQuery", query);
   }
 
+  /// Add a constraint to the query that requires a particular key's value match another
+  /// [ParseQuery].
   void whereMatchesQuery(String key, ParseQuery query) {
     _addCondition(key, "\$inQuery", query);
   }
 
+  /// Add a proximity based constraint for finding objects with key point values near the point
+  /// given.
   void whereNear(String key, ParseGeoPoint point) {
     _addCondition(key, "\$nearSphere", point);
   }
 
+  /// Add a proximity based constraint for finding objects with key point values near the point given
+  /// and within the maximum distance given.
   void whereWithinKilometers(String key, ParseGeoPoint point, num maxDistance) {
     Map<String, dynamic> condition = Map();
     condition["\$nearSphere"] = point;
@@ -178,11 +234,15 @@ class ParseQuery<T extends ParseObject> {
     _where.putIfAbsent(key, () => parseEncoder.encode(condition));
   }
 
-  void maxDistance(String key, double maxDistance) {
+  /// Add a proximity based constraint for finding objects with key point values near the point given
+  /// and within the maximum distance given.
+  void whereWithinRadians(String key, double maxDistance) {
     _addCondition(key, "\$maxDistance", maxDistance);
   }
 
-  void whereWithin(
+  /// Add a constraint to the query that requires a particular key's coordinates be contained within
+  /// a given rectangular geographic bounding box.
+  void whereWithinGeoBox(
       String key, ParseGeoPoint southwest, ParseGeoPoint northeast) {
     List<dynamic> array = [];
     array.add(southwest);
@@ -192,13 +252,18 @@ class ParseQuery<T extends ParseObject> {
     _addCondition(key, "\$within", dictionary);
   }
 
-  void whereGeoWithin(String key, List<ParseGeoPoint> points) {
+  /// Adds a constraint to the query that requires a particular key's
+  /// coordinates be contained within and on the bounds of a given polygon.
+  /// Supports closed and open (last point is connected to first) paths
+  void whereWithinPolygon(String key, List<ParseGeoPoint> points) {
     Map<String, List<ParseGeoPoint>> dictionary = Map();
     dictionary.putIfAbsent("\$polygon", () => points);
     _addCondition(key, "\$geoWithin", dictionary);
   }
 
-  void whereGeoIntersects(String key, ParseGeoPoint point) {
+  /// Add a constraint to the query that requires a particular key's
+  /// coordinates that contains a [ParseGeoPoint]s
+  void wherePolygonContains(String key, ParseGeoPoint point) {
     Map<String, ParseGeoPoint> dictionary = Map();
     dictionary.putIfAbsent("\$point", () => point);
     _addCondition(key, "\$geoIntersects", dictionary);
@@ -215,28 +280,42 @@ class ParseQuery<T extends ParseObject> {
     _order.add(key);
   }
 
+  /// Sorts the results in ascending order by the given key.
   void orderByAscending(String key) {
     setOrder(key);
   }
 
+  /// Also sorts the results in ascending order by the given key.
+  ///
+  /// The previous sort keys have precedence over this key.
   void addAscendingOrder(String key) {
     addOrder(key);
   }
 
+  /// Sorts the results in descending order by the given key.
   void orderByDescending(String key) {
     setOrder("-$key");
   }
 
+  /// Also sorts the results in descending order by the given key.
+  ///
+  /// The previous sort keys have precedence over this key.
   void addDescendingOrder(String key) {
     addOrder("-$key");
   }
 
+  /// Include nested [ParseObject]s for the provided key.
   void include(String key) {
     _includes.add(key);
   }
 
+  /// Retrieve the nested provided key.
   List<String> get includes => _includes;
 
+  /// Restrict the fields of returned {@link ParseObject}s to only include the provided keys.
+  ///
+  /// If this is called multiple times, then all of the keys specified in each of the calls will be
+  /// included.
   void selectKeys(List<String> keys) {
     if (_selectedKeys == null) {
       _selectedKeys = [];
@@ -245,18 +324,28 @@ class ParseQuery<T extends ParseObject> {
     _selectedKeys!.addAll(keys);
   }
 
+  /// Retrieve the restricted fields
   List<String>? get selectedKeys => _selectedKeys;
 
+  /// Controls the maximum number of results that are returned.
+  ///
+  /// Setting a negative limit denotes retrieval without a limit. The default limit is [100],
+  /// with a maximum of [1000] results being returned at a time.
   void setLimit(int limit) {
     _limit = limit;
   }
 
+  /// Accessor for the limit   value.
   int get limit => _limit;
 
+  /// Controls the number of results to skip before returning any results.
+  ///
+  /// This is useful for pagination. Default is to skip zero results.
   void setSkip(int skip) {
     _skip = skip;
   }
 
+  /// Accessor for the skip value.
   int get skip => _skip;
 
   Map<String, dynamic> toJson() {
@@ -297,6 +386,7 @@ class ParseQuery<T extends ParseObject> {
     return params;
   }
 
+  /// Constructs a query that is the {@code or} of the given queries.
   static ParseQuery<T> or<T extends ParseObject>(List<ParseQuery<T>> queries) {
     final className = queries[0].className;
     final clauseOr = queries.map((q) {
@@ -310,7 +400,9 @@ class ParseQuery<T extends ParseObject> {
     return ParseQuery<T>()..whereEqualTo("\$or", clauseOr);
   }
 
-  Future<List<T>> findAsync({bool useMasterKey = false}) async {
+  /// Retrieves a list of [ParseObject]s that satisfy this query from the source in a
+  /// background thread.
+  Future<List<T>> find({bool useMasterKey = false}) async {
     dynamic result = await _find(useMasterKey: useMasterKey);
     final List<T> objects = [];
     if (result["results"] is List) {
@@ -337,7 +429,9 @@ class ParseQuery<T extends ParseObject> {
     return _query(useMasterKey: useMasterKey);
   }
 
-  Future<int> countAsync({bool useMasterKey = false}) async {
+  /// Counts the number of objects that match this query. This does not use
+  /// caching.
+  Future<int> count({bool useMasterKey = false}) async {
     final result = await _count(useMasterKey: useMasterKey);
     if (result.containsKey("count")) {
       return result["count"];
