@@ -48,6 +48,7 @@ class Parse {
   ///     server: 'YOUR_PARSE_SERVER_URL',
   ///     applicationId: 'YOUR_PARSE_APPLICATION_ID',
   ///     clientKey: 'YOUR_PARSE_CLIENT_KEY',
+  ///     localStorage: Storage("path/to/writable/data"),
   ///   );
   ///   Parse.initialize(config);
   ///   runApp(MyApp());
@@ -88,6 +89,8 @@ class Parse {
   void logToCURL(BaseRequest request) => client.logToCURL(request);
 }
 
+/// Signature for a function that spawn an isolate, run `function` on that isolate,
+/// passing it `message`, and (eventually) return the value returned by `callback`.
 typedef Compute = Future<dynamic> Function(
   FutureOr<dynamic> Function(String message),
   String message,
@@ -144,5 +147,7 @@ class ParseConfiguration {
   /// Setup [Storage] for local storage use.
   final Storage localStorage;
 
+  /// Spawn an isolate, run `function` on that isolate, passing it `message`, and
+  /// (eventually) return the value returned by `callback`.
   final Compute? compute;
 }
