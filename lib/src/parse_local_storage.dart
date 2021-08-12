@@ -35,8 +35,8 @@ class LocalStorage {
 
   LocalStorage._internal(this._keyName);
 
-  FlutterParseStorageInterface get storage {
-    return FlutterParseStorageInterface.instance;
+  ParseStorageInterface get storage {
+    return ParseStorageInterface.instance;
   }
 
   _init() async {

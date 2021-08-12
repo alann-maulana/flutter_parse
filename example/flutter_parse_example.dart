@@ -3,7 +3,7 @@ import 'package:flutter_parse_storage_interface/flutter_parse_storage_interface.
 
 main() async {
   // initialize storage interface using in memory parse storage (default)
-  FlutterParseStorageInterface.instance = InMemoryFlutterParseStorage.empty();
+  ParseStorageInterface.instance = InMemoryParseStorage.empty();
 
   // create configuration
   ParseConfiguration config = ParseConfiguration(
