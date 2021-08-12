@@ -10,7 +10,6 @@ void main() {
         applicationId: 'APPLICATION_ID',
         clientKey: 'CLIENT_KEY',
         enableLogging: true,
-        localStorage: Storage('/var/tmp/flutter_parse.db'),
       );
       Parse.initialize(_configuration);
     });

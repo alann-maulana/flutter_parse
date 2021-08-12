@@ -7,7 +7,6 @@ final ParseConfiguration _configuration = ParseConfiguration(
   clientKey: 'MY_CLIENT_KEY',
   masterKey: 'MY_MASTER_KEY',
   enableLogging: true,
-  localStorage: Storage(''),
 );
 final Parse initializeParse = Parse.initialize(_configuration);
 
@@ -28,7 +27,6 @@ void main() {
                 server: 'http://parse.dashboard',
                 applicationId: '',
                 enableLogging: false,
-                localStorage: Storage(''),
               ).uri.toString() ==
               'http://parse.dashboard',
           isTrue);
@@ -68,7 +66,6 @@ void main() {
           ParseConfiguration(
             server: 'unknown-server',
             applicationId: 'null',
-            localStorage: Storage(''),
           ),
         ),
         throwsA(isA<AssertionError>()),
@@ -81,7 +78,6 @@ void main() {
           ParseConfiguration(
             server: 'unknown-live-query-server',
             applicationId: 'null',
-            localStorage: Storage(''),
           ),
         ),
         throwsA(isA<AssertionError>()),

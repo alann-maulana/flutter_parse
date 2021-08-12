@@ -9,7 +9,6 @@ import 'dart:async';
 import 'package:http/http.dart';
 
 import 'src/parse_http_client.dart' as client;
-import 'src/storage/storage.dart';
 
 export 'src/parse_acl.dart';
 export 'src/parse_cloud.dart';
@@ -24,7 +23,6 @@ export 'src/parse_role.dart';
 export 'src/parse_schema.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
-export 'src/storage/storage.dart';
 
 /// Displaying current Parse SDK version
 const String kParseSdkVersion = "1.0.0";
@@ -102,7 +100,6 @@ class ParseConfiguration {
   ParseConfiguration({
     required String server,
     required this.applicationId,
-    required this.localStorage,
     this.liveQueryServer,
     this.clientKey,
     this.masterKey,
@@ -143,9 +140,6 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient? httpClient;
-
-  /// Setup [Storage] for local storage use.
-  final Storage localStorage;
 
   /// Spawn an isolate, run `function` on that isolate, passing it `message`, and
   /// (eventually) return the value returned by `callback`.
