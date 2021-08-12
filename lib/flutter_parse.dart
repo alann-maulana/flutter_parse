@@ -10,6 +10,8 @@ import 'package:http/http.dart';
 
 import 'src/parse_http_client.dart' as client;
 
+export 'package:flutter_parse_storage_interface/flutter_parse_storage_interface.dart'
+    show ParseStorageInterface, InMemoryParseStorage;
 export 'src/parse_acl.dart';
 export 'src/parse_cloud.dart';
 export 'src/parse_config.dart';
