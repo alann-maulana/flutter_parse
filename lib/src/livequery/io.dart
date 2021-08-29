@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_parse/flutter_parse.dart' show parse, ParseException;
+import 'package:flutter_parse/flutter_parse.dart'
+    show ParseConfiguration, ParseException, parse;
 import 'package:web_socket_channel/io.dart';
 
 import 'live_query.dart';
@@ -14,27 +15,33 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
   IOWebSocketChannel? _channel;
   bool _userDisconnected = false;
 
+  ParseConfiguration get config {
+    if (parse.configuration == null) {
+      throw 'Parse SDK not initialized.';
+    }
+    return parse.configuration!;
+  }
+
   Future<void> connect(ParseLiveQueryCallback callback) async {
-    assert(parse.configuration != null &&
-        parse.configuration!.liveQueryServer != null);
+    assert(config.liveQueryServer != null);
     _userDisconnected = false;
-    final server = parse.configuration!.liveQueryServer!;
+    final server = config.liveQueryServer!;
     try {
-      if (parse.enableLogging == true) {
+      if (config.enableLogging == true) {
         print('Connecting web socket');
       }
       _webSocket = await WebSocket.connect(server);
       if (_webSocket.readyState == WebSocket.open) {
-        if (parse.enableLogging == true) {
+        if (config.enableLogging == true) {
           print('Connecting io web socket');
         }
         _channel = IOWebSocketChannel(_webSocket);
-        if (parse.enableLogging == true) {
+        if (config.enableLogging == true) {
           print('Listening to stream');
         }
         _channel!.stream.listen(
           (dynamic message) {
-            if (parse.enableLogging == true) {
+            if (config.enableLogging == true) {
               print('RECEIVE: $message');
             }
 
@@ -46,24 +53,24 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
             }
           },
           onDone: () {
-            if (parse.enableLogging == true) {
+            if (config.enableLogging == true) {
               print('Listening done');
             }
 
             if (!_userDisconnected) {
-              if (parse.enableLogging == true) {
+              if (config.enableLogging == true) {
                 print('Reconnecting');
               }
               connect(callback);
             }
           },
           onError: (error) {
-            if (parse.enableLogging == true) {
+            if (config.enableLogging == true) {
               print('Listening error: $error');
             }
 
             if (!_userDisconnected) {
-              if (parse.enableLogging == true) {
+              if (config.enableLogging == true) {
                 print('Reconnecting');
               }
               connect(callback);
@@ -97,7 +104,7 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
 
   @override
   void sendMessage(dynamic message) {
-    if (parse.enableLogging == true) {
+    if (config.enableLogging == true) {
       print('SEND: $message');
     }
 

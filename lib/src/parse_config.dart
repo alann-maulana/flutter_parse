@@ -273,7 +273,13 @@ class ParseConfig implements ParseBaseObject {
   }
 
   Future<ParseConfig> save() async {
-    assert(parse.masterKey != null, 'masterKey not set');
+    if (parse.configuration == null) {
+      throw 'Parse SDK not initialized.';
+    }
+    final config = parse.configuration!;
+    if (config.masterKey == null) {
+      throw 'Master Key not set';
+    }
 
     final params = {'params': _operations};
     dynamic jsonBody = json.encode(params);

@@ -60,27 +60,10 @@ class Parse {
 
   /// Setter method for [ParseConfiguration] using [parse] global instance
   void initialize(ParseConfiguration configuration) {
-    _configuration = configuration;
+    this.configuration = configuration;
   }
 
-  ParseConfiguration? _configuration;
-
-  ParseConfiguration? get configuration => _configuration;
-
-  /// Return [Parse] client key
-  String? get clientKey => configuration?.clientKey;
-
-  /// Return [Parse] master key
-  String? get masterKey => configuration?.masterKey;
-
-  /// Return [Parse] application ID
-  String? get applicationId => configuration?.applicationId;
-
-  /// Return [Parse] server path
-  String? get server => configuration?.uri.toString();
-
-  /// Return [Parse] logging status
-  bool get enableLogging => configuration?.enableLogging ?? false;
+  ParseConfiguration? configuration;
 
   /// Return [Parse] initialized status
   bool get initialized => configuration != null;
@@ -120,7 +103,9 @@ class ParseConfiguration {
         ),
         uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
-            : server));
+            : server)) {
+    client.ParseHTTPClient.enableLogging = enableLogging;
+  }
 
   /// The [Uri] object parsed from `server`
   final Uri uri;
