@@ -9,7 +9,9 @@ import 'dart:async';
 import 'package:http/http.dart';
 
 import 'src/parse_http_client.dart' as client;
-import 'src/storage/storage.dart';
+
+export 'package:flutter_parse_storage_interface/flutter_parse_storage_interface.dart'
+    show ParseStorageInterface, InMemoryParseStorage;
 
 export 'src/parse_acl.dart';
 export 'src/parse_cloud.dart';
@@ -24,7 +26,6 @@ export 'src/parse_role.dart';
 export 'src/parse_schema.dart';
 export 'src/parse_session.dart';
 export 'src/parse_user.dart';
-export 'src/storage/storage.dart';
 
 /// Displaying current Parse SDK version
 const String kParseSdkVersion = "1.0.0";
@@ -60,27 +61,10 @@ class Parse {
 
   /// Setter method for [ParseConfiguration] using [parse] global instance
   void initialize(ParseConfiguration configuration) {
-    _configuration = configuration;
+    this.configuration = configuration;
   }
 
-  ParseConfiguration? _configuration;
-
-  ParseConfiguration? get configuration => _configuration;
-
-  /// Return [Parse] client key
-  String? get clientKey => configuration?.clientKey;
-
-  /// Return [Parse] master key
-  String? get masterKey => configuration?.masterKey;
-
-  /// Return [Parse] application ID
-  String? get applicationId => configuration?.applicationId;
-
-  /// Return [Parse] server path
-  String? get server => configuration?.uri.toString();
-
-  /// Return [Parse] logging status
-  bool get enableLogging => configuration?.enableLogging ?? false;
+  ParseConfiguration? configuration;
 
   /// Return [Parse] initialized status
   bool get initialized => configuration != null;
@@ -92,8 +76,8 @@ class Parse {
 /// Signature for a function that spawn an isolate, run `function` on that isolate,
 /// passing it `message`, and (eventually) return the value returned by `callback`.
 typedef Compute = Future<dynamic> Function(
-  FutureOr<dynamic> Function(String message),
-  String message,
+  FutureOr<dynamic> Function(dynamic message),
+  dynamic message,
 );
 
 /// The [ParseConfiguration] class contains variable that handle global
@@ -102,7 +86,6 @@ class ParseConfiguration {
   ParseConfiguration({
     required String server,
     required this.applicationId,
-    required this.localStorage,
     this.liveQueryServer,
     this.clientKey,
     this.masterKey,
@@ -143,9 +126,6 @@ class ParseConfiguration {
 
   /// Add your custom [BaseClient] class to intercept Parse request here.
   final BaseClient? httpClient;
-
-  /// Setup [Storage] for local storage use.
-  final Storage localStorage;
 
   /// Spawn an isolate, run `function` on that isolate, passing it `message`, and
   /// (eventually) return the value returned by `callback`.

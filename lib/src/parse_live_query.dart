@@ -86,9 +86,12 @@ class ParseLiveQuery {
       'op': 'connect',
     };
 
-    if (parse.applicationId != null) {
-      bodyMessage['applicationId'] = parse.applicationId!;
+    if (parse.configuration == null) {
+      throw 'Parse SDK not initialized.';
     }
+    final config = parse.configuration!;
+
+    bodyMessage['applicationId'] = config.applicationId;
 
     final user = await ParseUser.currentUser;
 
@@ -96,12 +99,12 @@ class ParseLiveQuery {
       bodyMessage['sessionToken'] = user.sessionId!;
     }
 
-    if (parse.clientKey != null) {
-      bodyMessage['clientKey'] = parse.clientKey!;
+    if (config.clientKey != null) {
+      bodyMessage['clientKey'] = config.clientKey!;
     }
 
-    if (parse.masterKey != null) {
-      bodyMessage['masterKey'] = parse.masterKey!;
+    if (config.masterKey != null) {
+      bodyMessage['masterKey'] = config.masterKey!;
     }
 
     parseLiveQueryClient.sendMessage(json.encode(bodyMessage));

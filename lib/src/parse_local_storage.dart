@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_parse/flutter_parse.dart';
+import 'package:flutter_parse_storage_interface/flutter_parse_storage_interface.dart';
 import 'package:meta/meta.dart';
 
 final ParseLocalStorage parseLocalStorage = ParseLocalStorage._internal();
@@ -35,12 +35,8 @@ class LocalStorage {
 
   LocalStorage._internal(this._keyName);
 
-  Storage get storage {
-    if (parse.configuration == null) {
-      throw ParseException(message: 'parse not initialized');
-    }
-
-    return parse.configuration!.localStorage;
+  ParseStorageInterface get storage {
+    return ParseStorageInterface.instance;
   }
 
   _init() async {

@@ -1,13 +1,16 @@
 import 'package:flutter_parse/flutter_parse.dart';
+import 'package:flutter_parse_storage_interface/flutter_parse_storage_interface.dart';
 
 main() async {
+  // initialize storage interface using in memory parse storage (default)
+  ParseStorageInterface.instance = InMemoryParseStorage.empty();
+
   // create configuration
   ParseConfiguration config = ParseConfiguration(
     server: 'YOUR_PARSE_SERVER_URL',
     applicationId: 'YOUR_PARSE_APPLICATION_ID',
     clientKey: 'YOUR_PARSE_CLIENT_KEY',
     masterKey: 'YOUR_PARSE_MASTER_KEY',
-    localStorage: Storage(''),
   );
   // initialize parse using configuration
   Parse.initialize(config);
