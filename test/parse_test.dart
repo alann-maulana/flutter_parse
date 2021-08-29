@@ -31,32 +31,6 @@ void main() {
               'http://parse.dashboard',
           isTrue);
     });
-
-    test('server must equal to https://parse.dashboard', () {
-      expect(parse.server == 'https://parse.dashboard', isTrue);
-    });
-
-    test(
-        'server not equal to https://parse.dashboard/ (removed last backslash)',
-        () {
-      expect(parse.server == 'https://parse.dashboard/', isFalse);
-    });
-
-    test('applicationId must equal to MY_APPLICATION_ID', () {
-      expect(parse.applicationId == 'MY_APPLICATION_ID', isTrue);
-    });
-
-    test('clientKey equal to MY_CLIENT_KEY', () {
-      expect(parse.clientKey == 'MY_CLIENT_KEY', isTrue);
-    });
-
-    test('masterKey equal to MY_MASTER_KEY', () {
-      expect(parse.masterKey == 'MY_MASTER_KEY', isTrue);
-    });
-
-    test('enableLogging must be true', () {
-      expect(parse.enableLogging, isTrue);
-    });
   });
 
   group('Parse assertion', () {
