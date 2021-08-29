@@ -75,8 +75,8 @@ class Parse {
 /// Signature for a function that spawn an isolate, run `function` on that isolate,
 /// passing it `message`, and (eventually) return the value returned by `callback`.
 typedef Compute = Future<dynamic> Function(
-  FutureOr<dynamic> Function(String message),
-  String message,
+  FutureOr<dynamic> Function(dynamic message),
+  dynamic message,
 );
 
 /// The [ParseConfiguration] class contains variable that handle global
@@ -103,9 +103,7 @@ class ParseConfiguration {
         ),
         uri = Uri.parse((server.endsWith("/")
             ? server.substring(0, server.length - 1)
-            : server)) {
-    client.ParseHTTPClient.enableLogging = enableLogging;
-  }
+            : server));
 
   /// The [Uri] object parsed from `server`
   final Uri uri;

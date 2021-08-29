@@ -19,7 +19,6 @@ class ParseHTTPClient {
             parse.configuration!.httpClient ?? ParseBaseHTTPClient();
 
   final http.BaseClient _httpClient;
-  static bool enableLogging = false;
 
   ParseConfiguration get config {
     if (parse.configuration == null) {
@@ -89,14 +88,11 @@ class ParseHTTPClient {
       headers: headers,
     );
 
-    dynamic result;
-    if (parse.configuration != null && config.compute != null) {
-      result = await config.compute!(
-        _parseResponse,
-        r.body,
-      );
+    dynamic result = {'body': r.body, 'enableLogging': config.enableLogging};
+    if (config.compute != null) {
+      result = await config.compute!(_parseResponse, result);
     } else {
-      result = await _parseResponse(r.body);
+      result = await _parseResponse(result);
     }
 
     if (result is ParseException) throw result;
@@ -125,14 +121,11 @@ class ParseHTTPClient {
       headers: headers,
     );
 
-    dynamic result;
-    if (parse.configuration != null && config.compute != null) {
-      result = await config.compute!(
-        _parseResponse,
-        r.body,
-      );
+    dynamic result = {'body': r.body, 'enableLogging': config.enableLogging};
+    if (config.compute != null) {
+      result = await config.compute!(_parseResponse, result);
     } else {
-      result = await _parseResponse(r.body);
+      result = await _parseResponse(result);
     }
 
     if (result is ParseException) throw result;
@@ -162,14 +155,11 @@ class ParseHTTPClient {
 
     if (ignoreResult == true) return null;
 
-    dynamic result;
-    if (parse.configuration != null && config.compute != null) {
-      result = await config.compute!(
-        _parseResponse,
-        r.body,
-      );
+    dynamic result = {'body': r.body, 'enableLogging': config.enableLogging};
+    if (config.compute != null) {
+      result = await config.compute!(_parseResponse, result);
     } else {
-      result = await _parseResponse(r.body);
+      result = await _parseResponse(result);
     }
 
     if (result is ParseException) throw result;
@@ -196,14 +186,11 @@ class ParseHTTPClient {
       encoding: encoding,
     );
 
-    dynamic result;
-    if (parse.configuration != null && config.compute != null) {
-      result = await config.compute!(
-        _parseResponse,
-        r.body,
-      );
+    dynamic result = {'body': r.body, 'enableLogging': config.enableLogging};
+    if (config.compute != null) {
+      result = await config.compute!(_parseResponse, result);
     } else {
-      result = await _parseResponse(r.body);
+      result = await _parseResponse(result);
     }
 
     if (result is ParseException) throw result;
@@ -211,18 +198,21 @@ class ParseHTTPClient {
   }
 }
 
-dynamic _parseResponse(String body) {
+dynamic _parseResponse(dynamic map) {
+  final body = map['body'] as String;
+  final enableLogging = map['enableLogging'] as bool;
+  
   dynamic result;
   try {
     result = json.decode(body);
 
-    if (ParseHTTPClient.enableLogging) {
+    if (enableLogging) {
       print("╭-- JSON");
       _parseLogWrapped(body);
       print("╰-- result");
     }
   } catch (_) {
-    if (ParseHTTPClient.enableLogging) {
+    if (enableLogging) {
       print("╭-- RESPONSE");
       _parseLogWrapped(body);
       print("╰-- result");
