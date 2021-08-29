@@ -201,7 +201,7 @@ class ParseHTTPClient {
 dynamic _parseResponse(dynamic map) {
   final body = map['body'] as String;
   final enableLogging = map['enableLogging'] as bool;
-  
+
   dynamic result;
   try {
     result = json.decode(body);

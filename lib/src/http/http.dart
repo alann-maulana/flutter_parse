@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter_parse/flutter_parse.dart';
 import 'package:flutter_parse/src/parse_http_client.dart';
 import 'package:http/http.dart' as http;
-import 'dart:math' as math;
 import 'package:http/retry.dart';
 
 class ParseBaseHTTPClient extends http.BaseClient {
