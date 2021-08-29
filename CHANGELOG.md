@@ -1,3 +1,6 @@
+## 1.0.1
+* Add interface abstraction for [Flutter Storage](https://pub.dev/packages/flutter_parse_storage_interface)
+
 ## 1.0.0
 * Add null safety
 * Subclassing support for `ParseObject` and `ParseUser`
