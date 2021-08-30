@@ -10,28 +10,10 @@ jobs:
     name: Publishing
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+      - name: 'Publishing package'
+        uses: k-paxian/dart-package-publisher@master
         with:
-          java-version: '12.x'
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.0.5'
-          channel: 'stable'
-      - name: Setup credentials
-        run: |
-          mkdir -p ~/.pub-cache
-          cat <<EOF > ~/.pub-cache/credentials.json
-          {
-            "accessToken":"${{ secrets.PUB_ACCESS_TOKEN }}",
-            "refreshToken":"${{ secrets.PUB_REFRESH_TOKEN }}",
-            "idToken":"${{ secrets.PUB_ID_TOKEN }}",
-            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
-            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
-            "expiration": 1627651143489
-          }
-          EOF
-      - name: Publishing package
-        run: |
-          echo "FLUTTER_ROOT=$FLUTTER_HOME" >> $GITHUB_ENV
-          pub publish -f
+          accessToken: ${{ secrets.PUB_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.PUB_REFRESH_TOKEN }}
