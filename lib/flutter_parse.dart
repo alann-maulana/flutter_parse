@@ -28,7 +28,7 @@ export 'src/parse_session.dart';
 export 'src/parse_user.dart';
 
 /// Displaying current Parse SDK version
-const String kParseSdkVersion = "1.0.0";
+const String kParseSdkVersion = "1.0.1";
 
 final Parse parse = Parse._internal();
 
