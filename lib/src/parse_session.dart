@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-import 'parse_object.dart';
-import 'parse_user.dart';
 
 /// The [ParseSession] is a local representation of session data that can be saved
 /// and retrieved from the Parse cloud.
@@ -12,7 +10,7 @@ class ParseSession extends ParseObject {
   @visibleForTesting
   ParseSession({
     String? objectId,
-    dynamic? json,
+    json,
   }) : super(
           className: '_Session',
           objectId: objectId,

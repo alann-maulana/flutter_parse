@@ -3,10 +3,7 @@ import 'dart:convert';
 
 import '../flutter_parse.dart';
 import 'parse_encoder.dart';
-import 'parse_exception.dart';
-import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
-import 'parse_object.dart';
 
 /// The [ParseQuery] class defines a query that is used to fetch [ParseObject]s. The most
 /// common use case is finding all objects that match a query through the [find]

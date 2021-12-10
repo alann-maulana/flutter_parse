@@ -42,7 +42,7 @@ class LocalStorage {
   _init() async {
     final data = await storage.get(_keyName);
 
-    if (data != null && data is Map) {
+    if (data != null) {
       _data.addAll(data);
     }
   }

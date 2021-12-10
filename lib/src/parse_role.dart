@@ -1,7 +1,5 @@
 import 'package:flutter_parse/flutter_parse.dart';
 
-import 'parse_acl.dart';
-
 /// Represents a Role on the Parse server. [ParseRole]s represent groupings of
 /// [ParseUser]s for the purposes of granting permissions (e.g. specifying a [ParseACL]
 /// for a [ParseObject]). Roles are specified by their sets of child users and child roles, all

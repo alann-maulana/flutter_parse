@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
 import 'livequery/live_query.dart';
-import 'parse_exception.dart';
 
 ParseLiveQuery parseLiveQuery = ParseLiveQuery();
 

@@ -4,15 +4,11 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
-import 'parse_acl.dart';
 import 'parse_base_object.dart';
 import 'parse_date_format.dart';
 import 'parse_decoder.dart';
 import 'parse_encoder.dart';
-import 'parse_file.dart';
-import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
-import 'parse_user.dart';
 
 typedef ParseObjectCreator<T extends ParseObject> = T Function(dynamic data);
 
@@ -54,7 +50,7 @@ class ParseObject implements ParseBaseObject {
   ParseObject({
     required this.className,
     String? objectId,
-    dynamic? json,
+    json,
   })  : assert(className.isNotEmpty),
         _isComplete = false,
         _data = {},

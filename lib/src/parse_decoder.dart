@@ -3,11 +3,6 @@ import 'dart:convert';
 import 'package:flutter_parse/flutter_parse.dart';
 
 import 'parse_date_format.dart';
-import 'parse_file.dart';
-import 'parse_geo_point.dart';
-import 'parse_object.dart';
-import 'parse_session.dart';
-import 'parse_user.dart';
 
 final ParseDecoder parseDecoder = ParseDecoder._internal();
 

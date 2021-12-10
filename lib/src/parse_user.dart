@@ -4,8 +4,6 @@ import 'dart:convert';
 import '../flutter_parse.dart';
 import 'parse_http_client.dart';
 import 'parse_local_storage.dart';
-import 'parse_object.dart';
-import 'parse_session.dart';
 
 /// The [ParseUser] is a local representation of user data that can be saved and retrieved from
 /// the Parse cloud.

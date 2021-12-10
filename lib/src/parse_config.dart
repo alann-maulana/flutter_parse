@@ -5,11 +5,7 @@ import '../flutter_parse.dart';
 import 'parse_base_object.dart';
 import 'parse_decoder.dart';
 import 'parse_encoder.dart';
-import 'parse_file.dart';
-import 'parse_geo_point.dart';
 import 'parse_http_client.dart';
-import 'parse_object.dart';
-import 'parse_user.dart';
 
 /// Global instance of [ParseConfig]
 final parseConfig = ParseConfig._internal();
