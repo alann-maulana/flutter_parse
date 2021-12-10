@@ -11,7 +11,6 @@ import 'live_query.dart';
 final ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient();
 
 class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
-  late WebSocket _webSocket;
   IOWebSocketChannel? _channel;
   bool _userDisconnected = false;
 
@@ -30,58 +29,53 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
       if (config.enableLogging == true) {
         print('Connecting web socket');
       }
-      _webSocket = await WebSocket.connect(server);
-      if (_webSocket.readyState == WebSocket.open) {
-        if (config.enableLogging == true) {
-          print('Connecting io web socket');
-        }
-        _channel = IOWebSocketChannel(_webSocket);
-        if (config.enableLogging == true) {
-          print('Listening to stream');
-        }
-        _channel!.stream.listen(
-          (dynamic message) {
-            if (config.enableLogging == true) {
-              print('RECEIVE: $message');
-            }
-
-            try {
-              final Map<String, dynamic> result = json.decode(message);
-              callback(result);
-            } catch (e) {
-              callback(ParseException.fromThrow(e));
-            }
-          },
-          onDone: () {
-            if (config.enableLogging == true) {
-              print('Listening done');
-            }
-
-            if (!_userDisconnected) {
-              if (config.enableLogging == true) {
-                print('Reconnecting');
-              }
-              connect(callback);
-            }
-          },
-          onError: (error) {
-            if (config.enableLogging == true) {
-              print('Listening error: $error');
-            }
-
-            if (!_userDisconnected) {
-              if (config.enableLogging == true) {
-                print('Reconnecting');
-              }
-              connect(callback);
-            } else {
-              callback(ParseException(message: error.toString()));
-            }
-          },
-        );
-      } else {
-        callback(ParseException(message: 'Failed to connect'));
+      if (config.enableLogging == true) {
+        print('Connecting io web socket');
       }
+      _channel = IOWebSocketChannel.connect(server);
+      if (config.enableLogging == true) {
+        print('Listening to stream');
+      }
+      _channel!.stream.listen(
+        (dynamic message) {
+          if (config.enableLogging == true) {
+            print('RECEIVE: $message');
+          }
+
+          try {
+            final Map<String, dynamic> result = json.decode(message);
+            callback(result);
+          } catch (e) {
+            callback(ParseException.fromThrow(e));
+          }
+        },
+        onDone: () {
+          if (config.enableLogging == true) {
+            print('Listening done');
+          }
+
+          if (!_userDisconnected) {
+            if (config.enableLogging == true) {
+              print('Reconnecting');
+            }
+            connect(callback);
+          }
+        },
+        onError: (error) {
+          if (config.enableLogging == true) {
+            print('Listening error: $error');
+          }
+
+          if (!_userDisconnected) {
+            if (config.enableLogging == true) {
+              print('Reconnecting');
+            }
+            connect(callback);
+          } else {
+            callback(ParseException(message: error.toString()));
+          }
+        },
+      );
     } catch (e) {
       callback(ParseException.fromThrow(e));
     }
@@ -93,10 +87,6 @@ class ParseLiveQueryClient extends ParseBaseLiveQueryClient {
     if (_channel != null) {
       await _channel!.sink.close();
       _channel = null;
-    }
-
-    if (_webSocket.readyState == WebSocket.open) {
-      await _webSocket.close();
     }
 
     _userDisconnected = true;
