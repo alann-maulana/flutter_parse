@@ -65,22 +65,38 @@ class ParseDecoder {
         String val = map["base64"];
         return base64.decode(val);
       case "Pointer":
-        String objectId = map["objectId"];
-        String className = map["className"];
-        if (className == '_User') {
-          return ParseUser(objectId: objectId);
-        } else if (className == '_Role') {
-          return ParseRole.fromJson(json: map);
-        }
-        return ParseObject(className: className, objectId: objectId);
       case "Object":
         String objectId = map["objectId"];
         String className = map["className"];
+        Type? genericType;
         if (className == '_Session') {
-          return ParseSession.fromJson(json: map);
+          genericType = ParseSession;
         } else if (className == '_User') {
-          return ParseUser(objectId: objectId, json: map);
+          genericType = ParseUser;
+        } else if (className == '_Role') {
+          genericType = ParseRole;
         }
+
+        if (genericType != null) {
+          // ignore: invalid_use_of_visible_for_testing_member
+          final creator = ParseObject.kExistingCustomObjects[genericType];
+          if (creator != null) {
+            return creator(map);
+          }
+        } else {
+          // ignore: invalid_use_of_visible_for_testing_member
+          for (var type in ParseObject.kExistingCustomObjects.keys) {
+            // ignore: invalid_use_of_visible_for_testing_member
+            final creator = ParseObject.kExistingCustomObjects[type];
+            try {
+              if (creator != null &&
+                  className == creator(<String, Object>{}).className) {
+                return creator(map);
+              }
+            } catch (_) {}
+          }
+        }
+
         return ParseObject(
           className: className,
           objectId: objectId,
