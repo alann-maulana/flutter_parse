@@ -225,11 +225,10 @@ class ParseConfig implements ParseBaseObject {
 
   // region HELPERS
   @override
-  String get path {
+  Uri get path {
     assert(parse.configuration != null);
-    String path = '${parse.configuration!.uri.path}/config';
-
-    return path;
+    final uri = parse.configuration!.uri;
+    return uri.replace(path: '${uri.path}/config');
   }
 
   @override

@@ -452,8 +452,9 @@ class ParseQuery<T extends ParseObject> {
       'Content-Type': 'application/json; charset=utf-8',
     };
 
+    final uri = parse.configuration!.uri;
     return parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/classes/$className',
+      uri.replace(path: '${uri.path}/classes/$className'),
       useMasterKey: useMasterKey,
       body: body,
       headers: headers,

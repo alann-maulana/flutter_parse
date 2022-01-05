@@ -8,6 +8,13 @@ import 'parse_local_storage.dart';
 /// The [ParseUser] is a local representation of user data that can be saved and retrieved from
 /// the Parse cloud.
 class ParseUser extends ParseObject {
+  static const kClassName = '_User';
+
+  static const _kPathUsers = 'users';
+  static const _kPathLogin = 'login';
+  static const _kPathResetPassword = 'requestPasswordReset';
+  static const _kPathLogout = 'logout';
+
   static const _keyCurrentUser = '_currentUser';
   static const _keyUsername = 'username';
   static const _keyPassword = 'password';
@@ -26,7 +33,7 @@ class ParseUser extends ParseObject {
   ParseUser({String? objectId, dynamic json})
       : _isCurrentUser = false,
         super(
-          className: '_User',
+          className: kClassName,
           objectId: objectId,
           json: json,
         );
@@ -38,7 +45,7 @@ class ParseUser extends ParseObject {
 
   /// Constructs a new [ParseUser] from [ParseObject]
   factory ParseUser.fromObject({required ParseObject object}) {
-    if (object.className != '_User') {
+    if (object.className != kClassName) {
       throw Exception('invalid parse user className');
     }
     return ParseUser.fromJson(json: object.asMap);
@@ -71,7 +78,7 @@ class ParseUser extends ParseObject {
   }
 
   /// Constructs a query for [ParseUser].
-  static ParseQuery get query => ParseQuery(className: '_User');
+  static ParseQuery<ParseUser> get query => ParseQuery<ParseUser>();
 
   @override
   bool isKeyMutable(String key) {
@@ -146,8 +153,9 @@ class ParseUser extends ParseObject {
 
     dynamic jsonBody = json.encode(operations);
     final headers = <String, String>{'X-Parse-Revocable-Session': '1'};
+    final uri = parse.configuration!.uri;
     final result = await parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/users',
+      uri.replace(path: '${uri.path}/$_kPathUsers'),
       body: jsonBody,
       headers: headers,
       useMasterKey: useMasterKey,
@@ -181,8 +189,9 @@ class ParseUser extends ParseObject {
       'X-Parse-Revocable-Session': '1',
       'Content-Type': 'application/json',
     };
+    final uri = parse.configuration!.uri;
     final result = await parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/users',
+      uri.replace(path: '${uri.path}/$_kPathUsers'),
       body: jsonBody,
       headers: headers,
     );
@@ -204,9 +213,13 @@ class ParseUser extends ParseObject {
   }) async {
     assert(parse.configuration != null);
     final headers = <String, String>{'X-Parse-Revocable-Session': '1'};
-    final params = <String, String>{'username': username, 'password': password};
+    final params = <String, String>{
+      _keyUsername: username,
+      _keyPassword: password
+    };
+    final uri = parse.configuration!.uri;
     final result = await parseHTTPClient.get(
-        '${parse.configuration!.uri.path}/login',
+        uri.replace(path: '${uri.path}/$_kPathLogin'),
         params: params,
         headers: headers);
     final user = ParseUser.fromJson(json: result);
@@ -221,12 +234,13 @@ class ParseUser extends ParseObject {
   /// securely reset their password on the Parse site.
   static Future<void> resetPassword({required String email}) async {
     assert(parse.configuration != null);
-    final body = json.encode(<String, String>{'email': email});
+    final body = json.encode(<String, String>{_keyEmail: email});
     final headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };
+    final uri = parse.configuration!.uri;
     return await parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/requestPasswordReset',
+      uri.replace(path: '${uri.path}/$_kPathResetPassword'),
       body: body,
       headers: headers,
     );
@@ -236,9 +250,10 @@ class ParseUser extends ParseObject {
   /// of linked services, and future calls to [currentUser] will return `null`.
   static Future<void> signOut() async {
     assert(parse.configuration != null);
+    final uri = parse.configuration!.uri;
     try {
       await parseHTTPClient.post(
-        '${parse.configuration!.uri.path}/logout',
+        uri.replace(path: '${uri.path}/$_kPathLogout'),
         ignoreResult: true,
       );
     } catch (_) {

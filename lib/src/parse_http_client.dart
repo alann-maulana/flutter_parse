@@ -25,10 +25,6 @@ class ParseHTTPClient {
     return parse.configuration!;
   }
 
-  String _getFullUrl(String path) {
-    return config.uri.origin + path;
-  }
-
   Future<Map<String, String>> _addHeader(
     Map<String, String>? additionalHeaders, {
     bool useMasterKey = false,
@@ -65,7 +61,7 @@ class ParseHTTPClient {
   }
 
   Future<dynamic> get(
-    String path, {
+    Uri uri, {
     bool useMasterKey = false,
     Map<String, dynamic>? params,
     Map<String, String>? headers,
@@ -74,9 +70,7 @@ class ParseHTTPClient {
       headers,
       useMasterKey: useMasterKey,
     );
-    final url = _getFullUrl(path);
 
-    Uri uri = Uri.parse(url);
     if (params != null) {
       uri = uri.replace(queryParameters: params);
     }
@@ -98,7 +92,7 @@ class ParseHTTPClient {
   }
 
   Future<dynamic> delete(
-    String path, {
+    Uri uri, {
     bool useMasterKey = false,
     Map<String, String>? params,
     Map<String, String>? headers,
@@ -107,9 +101,7 @@ class ParseHTTPClient {
       headers,
       useMasterKey: useMasterKey,
     );
-    final url = _getFullUrl(path);
 
-    Uri uri = Uri.parse(url);
     if (params != null) {
       uri = uri.replace(queryParameters: params);
     }
@@ -131,7 +123,7 @@ class ParseHTTPClient {
   }
 
   Future<dynamic> post(
-    String path, {
+    Uri uri, {
     bool useMasterKey = false,
     Map<String, String>? headers,
     dynamic body,
@@ -142,10 +134,9 @@ class ParseHTTPClient {
       headers,
       useMasterKey: useMasterKey,
     );
-    final url = _getFullUrl(path);
 
     final r = await _httpClient.post(
-      Uri.parse(url),
+      uri,
       headers: headers,
       body: body,
       encoding: encoding,
@@ -165,7 +156,7 @@ class ParseHTTPClient {
   }
 
   Future<dynamic> put(
-    String path, {
+    Uri uri, {
     bool useMasterKey = false,
     Map<String, String>? headers,
     dynamic body,
@@ -175,10 +166,9 @@ class ParseHTTPClient {
       headers,
       useMasterKey: useMasterKey,
     );
-    final url = _getFullUrl(path);
 
     final r = await _httpClient.put(
-      Uri.parse(url),
+      uri,
       headers: headers,
       body: body,
       encoding: encoding,

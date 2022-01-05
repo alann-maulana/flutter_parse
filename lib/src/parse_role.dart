@@ -8,11 +8,13 @@ import 'package:flutter_parse/flutter_parse.dart';
 /// Roles must have a name (which cannot be changed after creation of the role), and must specify an
 /// ACL.
 class ParseRole extends ParseObject {
+  static const kClassName = '_Role';
+
   /// Constructs a new [ParseRole] with JSON.
   ParseRole({required dynamic json})
       : name = json['name'],
         acl = ParseACL.fromMap(json['ACL']),
-        super(className: '_Role', json: json);
+        super(className: kClassName, json: json);
 
   /// Factory constructor of a new [ParseRole] with JSON.
   factory ParseRole.fromJson({required dynamic json}) {
@@ -20,7 +22,7 @@ class ParseRole extends ParseObject {
   }
 
   /// Constructs a new [ParseRole] with the given name.
-  ParseRole.create(this.name, this.acl) : super(className: '_Role');
+  ParseRole.create(this.name, this.acl) : super(className: kClassName);
 
   /// The name of this Role
   final String name;
@@ -32,9 +34,9 @@ class ParseRole extends ParseObject {
   @override
   dynamic get asMap => <String, dynamic>{
         '__type': 'Pointer',
-        'className': '_Role',
+        'className': kClassName,
         'objectId': objectId,
       };
 
-  static ParseQuery get query => ParseQuery(className: '_Role');
+  static ParseQuery<ParseRole> get query => ParseQuery<ParseRole>();
 }

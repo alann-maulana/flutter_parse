@@ -5,16 +5,19 @@ import '../flutter_parse.dart';
 import 'parse_base_object.dart';
 import 'parse_http_client.dart';
 
+const String kParseCloudTypeFunctions = 'functions';
+const String kParseCloudTypeJobs = 'jobs';
+
 class ParseCloud extends ParseBaseObject {
   ParseCloud.functions({
     required this.method,
     this.body = const {},
-  }) : this.type = 'functions';
+  }) : this.type = kParseCloudTypeFunctions;
 
   ParseCloud.jobs({
     required this.method,
     this.body = const {},
-  }) : this.type = 'jobs';
+  }) : this.type = kParseCloudTypeJobs;
 
   final dynamic body;
 
@@ -26,9 +29,10 @@ class ParseCloud extends ParseBaseObject {
   get asMap => body;
 
   @override
-  String get path {
+  Uri get path {
     assert(parse.configuration != null);
-    return '${parse.configuration!.uri.path}/$type/$method';
+    final uri = parse.configuration!.uri;
+    return uri.replace(path: '${uri.path}/$type/$method');
   }
 
   Future<dynamic> execute({bool useMasterKey = false}) async {

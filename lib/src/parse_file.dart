@@ -46,9 +46,10 @@ class ParseFile implements ParseBaseObject {
   bool get saved => url != null;
 
   @override
-  String get path {
+  Uri get path {
     assert(parse.configuration != null);
-    return '${parse.configuration!.uri.path}/files/$_name';
+    final uri = parse.configuration!.uri;
+    return uri.replace(path: '${uri.path}/files/$_name');
   }
 
   @override

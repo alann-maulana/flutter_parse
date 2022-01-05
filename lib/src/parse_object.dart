@@ -472,14 +472,16 @@ class ParseObject implements ParseBaseObject {
   }
 
   @override
-  String get path {
-    String path = '${parse.configuration!.uri.path}/classes/$className';
+  Uri get path {
+    assert(parse.configuration != null);
+    final uri = parse.configuration!.uri;
+    String path = '${uri.path}/classes/$className';
 
     if (objectId != null) {
       path = '$path/$objectId';
     }
 
-    return path;
+    return uri.replace(path: path);
   }
 
   dynamic get _batchSaveCommand => {
@@ -582,12 +584,12 @@ class ParseObject implements ParseBaseObject {
       {List<String>? includes, bool useMasterKey = false}) async {
     assert(objectId != null, 'cannot fetch ParseObject without objectId');
 
-    var queryString = '';
+    final params = <String, String>{};
     if (includes != null) {
-      queryString = '?include=${includes.join(',')}';
+      params['include'] = includes.join(',');
     }
-    final result = await parseHTTPClient.get(path + queryString,
-        useMasterKey: useMasterKey);
+    final result = await parseHTTPClient
+        .get(path.replace(queryParameters: params), useMasterKey: useMasterKey);
     mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
@@ -608,6 +610,7 @@ class ParseObject implements ParseBaseObject {
   /// Saves each object in the provided list to the server.
   static Future<void> saveAll(List<ParseObject> objects,
       {bool useMasterKey = false}) async {
+    assert(parse.configuration != null);
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects, currently ${objects.length}');
 
@@ -623,8 +626,9 @@ class ParseObject implements ParseBaseObject {
     final headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };
+    final uri = parse.configuration!.uri;
     final results = await parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/batch',
+      uri.replace(path: '${uri.path}/batch'),
       body: jsonBody,
       headers: headers,
       useMasterKey: useMasterKey,
@@ -640,6 +644,7 @@ class ParseObject implements ParseBaseObject {
   /// Deletes each object in the provided list from the server.
   static Future<void> deleteAll(List<ParseObject> objects,
       {bool useMasterKey = false}) async {
+    assert(parse.configuration != null);
     assert(objects.length <= limitBatchOperations,
         'batch operations limit are $limitBatchOperations objects');
 
@@ -652,8 +657,9 @@ class ParseObject implements ParseBaseObject {
     final headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };
+    final uri = parse.configuration!.uri;
     final results = await parseHTTPClient.post(
-      '${parse.configuration!.uri.path}/batch',
+      uri.replace(path: '${uri.path}/batch'),
       body: jsonBody,
       headers: headers,
       useMasterKey: useMasterKey,

@@ -14,6 +14,9 @@ import 'dart:convert';
 /// object.save();
 /// ```
 class ParseGeoPoint {
+  static const keyLatitude = 'latitude';
+  static const keyLongitude = 'longitude';
+
   /// Creates a new point with the optional latitude and longitude.
   ParseGeoPoint({double latitude = 0.0, double longitude = 0.0}) {
     this.latitude = latitude;
@@ -44,8 +47,8 @@ class ParseGeoPoint {
   /// Return pointer [Map] of [ParseGeoPoint]
   get asMap => <String, dynamic>{
         '__type': 'GeoPoint',
-        'latitude': _latitude,
-        'longitude': _longitude
+        keyLatitude: _latitude,
+        keyLongitude: _longitude
       };
 
   @override

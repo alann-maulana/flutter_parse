@@ -7,12 +7,14 @@ import '../flutter_parse.dart';
 /// The [ParseSession] is a local representation of session data that can be saved
 /// and retrieved from the Parse cloud.
 class ParseSession extends ParseObject {
+  static const kClassName = '_Session';
+
   @visibleForTesting
   ParseSession({
     String? objectId,
     json,
   }) : super(
-          className: '_Session',
+          className: kClassName,
           objectId: objectId,
           json: json,
         );
@@ -54,14 +56,15 @@ class ParseSession extends ParseObject {
   }
 
   @override
-  String get path {
+  Uri get path {
     assert(parse.configuration != null);
-    String path = '${parse.configuration!.uri.path}/sessions';
+    final uri = parse.configuration!.uri;
+    String path = '${uri.path}/sessions';
 
     if (objectId != null) {
       path = '$path/$objectId';
     }
 
-    return path;
+    return uri.replace(path: path);
   }
 }

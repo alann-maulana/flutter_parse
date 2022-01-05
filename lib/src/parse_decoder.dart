@@ -69,11 +69,11 @@ class ParseDecoder {
         String objectId = map["objectId"];
         String className = map["className"];
         Type? genericType;
-        if (className == '_Session') {
+        if (className == ParseSession.kClassName) {
           genericType = ParseSession;
-        } else if (className == '_User') {
+        } else if (className == ParseUser.kClassName) {
           genericType = ParseUser;
-        } else if (className == '_Role') {
+        } else if (className == ParseRole.kClassName) {
           genericType = ParseRole;
         }
 
@@ -106,8 +106,8 @@ class ParseDecoder {
         // ignore: invalid_use_of_visible_for_testing_member
         return ParseFile.fromJson(map);
       case "GeoPoint":
-        num latitude = map["latitude"] ?? 0.0;
-        num longitude = map["longitude"] ?? 0.0;
+        num latitude = map[ParseGeoPoint.keyLatitude] ?? 0.0;
+        num longitude = map[ParseGeoPoint.keyLongitude] ?? 0.0;
         return ParseGeoPoint(
           latitude: latitude.toDouble(),
           longitude: longitude.toDouble(),
