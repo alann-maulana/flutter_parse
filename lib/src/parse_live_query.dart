@@ -67,7 +67,7 @@ class ParseLiveQuery {
       if (callback == null) return;
       final Map<String, dynamic> map = result['object'];
       final String className = map['className'];
-      if (className == '_User') {
+      if (className == ParseUser.kClassName) {
         callback(ParseUser.fromJson(json: map));
       } else {
         // ignore: invalid_use_of_visible_for_testing_member
