@@ -1,5 +1,7 @@
 import 'package:flutter_parse/flutter_parse.dart';
 
+import 'parse_base_object.dart';
+
 /// Represents a Role on the Parse server. [ParseRole]s represent groupings of
 /// [ParseUser]s for the purposes of granting permissions (e.g. specifying a [ParseACL]
 /// for a [ParseObject]). Roles are specified by their sets of child users and child roles, all
@@ -34,8 +36,8 @@ class ParseRole extends ParseObject {
   @override
   dynamic get asMap => <String, dynamic>{
         '__type': 'Pointer',
-        'className': kClassName,
-        'objectId': objectId,
+        keyClassName: kClassName,
+        keyObjectId: objectId,
       };
 
   static ParseQuery<ParseRole> get query => ParseQuery<ParseRole>();

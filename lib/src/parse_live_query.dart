@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import '../flutter_parse.dart';
 import 'livequery/live_query.dart';
+import 'parse_base_object.dart';
 
 ParseLiveQuery parseLiveQuery = ParseLiveQuery();
 
@@ -66,7 +67,7 @@ class ParseLiveQuery {
     if (result.containsKey('object')) {
       if (callback == null) return;
       final Map<String, dynamic> map = result['object'];
-      final String className = map['className'];
+      final String className = map[keyClassName];
       if (className == ParseUser.kClassName) {
         callback(ParseUser.fromJson(json: map));
       } else {
@@ -129,7 +130,7 @@ class ParseLiveQuery {
       'op': 'subscribe',
       'requestId': subscription.requestId,
       'query': <String, dynamic>{
-        'className': query.className,
+        keyClassName: query.className,
         'where': where ?? {},
       }
     };

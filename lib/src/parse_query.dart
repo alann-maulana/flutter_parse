@@ -37,7 +37,7 @@ class ParseQuery<T extends ParseObject> {
       // ignore: invalid_use_of_visible_for_testing_member
       final creator = ParseObject.kExistingCustomObjects[genericType];
       if (creator != null) {
-        final parseObject = creator(<String, dynamic>{'name':''}) as T;
+        final parseObject = creator(<String, dynamic>{'name': ''}) as T;
         this.className = parseObject.className;
       } else {
         throw Exception('className required');

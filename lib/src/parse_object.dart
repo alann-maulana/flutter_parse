@@ -23,10 +23,8 @@ typedef ParseObjectCreator<T extends ParseObject> = T Function(dynamic data);
 /// existing data to retrieve.
 class ParseObject implements ParseBaseObject {
   static int limitBatchOperations = 50;
-  static const _keyObjectId = "objectId";
   static const _keyCreatedAt = "createdAt";
   static const _keyUpdatedAt = "updatedAt";
-  static const _keyClassName = "className";
   static const _keyACL = "ACL";
 
   /// Accessor to the class name.
@@ -70,10 +68,10 @@ class ParseObject implements ParseBaseObject {
   factory ParseObject.fromJson({
     required dynamic json,
   }) {
-    String? className = json[_keyClassName];
+    String? className = json[keyClassName];
     assert(className != null, 'No className defined');
 
-    String? objectId = json[_keyObjectId];
+    String? objectId = json[keyObjectId];
 
     return ParseObject(
       className: className!,
@@ -438,9 +436,9 @@ class ParseObject implements ParseBaseObject {
 
     _isComplete = true;
     json.forEach((key, value) {
-      if (key == _keyClassName || key == '__type') {
+      if (key == keyClassName || key == '__type') {
         // continue
-      } else if (key == _keyObjectId) {
+      } else if (key == keyObjectId) {
         _objectId = value;
       } else if (key == _keyCreatedAt) {
         _createdAt = parseDateFormat.parse(value);
@@ -494,17 +492,17 @@ class ParseObject implements ParseBaseObject {
 
   /// Return `Map<String, dynamic>` of pointer object
   get asPointer =>
-      {'__type': 'Pointer', _keyClassName: className, _keyObjectId: objectId};
+      {'__type': 'Pointer', keyClassName: className, keyObjectId: objectId};
 
   /// Return `Map<String, dynamic>` of complete data object
   @override
   get asMap {
     final map = <String, dynamic>{
-      _keyClassName: className,
+      keyClassName: className,
     };
 
     if (objectId != null) {
-      map[_keyObjectId] = objectId;
+      map[keyObjectId] = objectId;
     }
 
     if (createdAt != null) {

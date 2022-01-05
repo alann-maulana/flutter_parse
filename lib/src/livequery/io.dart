@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_parse/flutter_parse.dart'
     show ParseConfiguration, ParseException, parse;

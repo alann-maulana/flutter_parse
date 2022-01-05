@@ -7,6 +7,11 @@ import 'parse_http_client.dart';
 /// The [ParseSchema] is a representation of [ParseObject] schema that can be retrieved from
 /// the Parse cloud.
 class ParseSchema implements ParseBaseObject {
+  static const String kPathSchemas = 'schemas';
+  static const _keyFields = 'fields';
+  static const _keyClassLevelPermissions = 'classLevelPermissions';
+  static const _keyIndexes = 'indexes';
+
   /// Constructs a new schema using `className`
   ParseSchema({required this.className})
       : fields = {},
@@ -15,10 +20,10 @@ class ParseSchema implements ParseBaseObject {
 
   /// Constructs a new schema using [Map] data from Parse Cloud
   ParseSchema.fromJson(dynamic map)
-      : className = map['className'],
-        fields = _parseFields(map['fields']),
-        classLevelPermissions = map['classLevelPermissions'],
-        indexes = map['indexes'];
+      : className = map[keyClassName],
+        fields = _parseFields(map[_keyFields]),
+        classLevelPermissions = map[_keyClassLevelPermissions],
+        indexes = map[_keyIndexes];
 
   /// The className of schema
   final String className;
@@ -46,16 +51,16 @@ class ParseSchema implements ParseBaseObject {
 
   @override
   dynamic get asMap => <String, dynamic>{
-        'className': className,
-        'fields': fields,
-        'classLevelPermissions': classLevelPermissions,
-        'indexes': indexes,
+        keyClassName: className,
+        _keyFields: fields,
+        _keyClassLevelPermissions: classLevelPermissions,
+        _keyIndexes: indexes,
       };
 
   static Uri get _basePath {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
-    return uri.replace(path: '${uri.path}/schemas');
+    return uri.replace(path: '${uri.path}/$kPathSchemas');
   }
 
   @override
@@ -91,11 +96,14 @@ class ParseSchema implements ParseBaseObject {
 
 /// The schema type of a field
 class SchemaType {
+  static const _keyType = 'type';
+  static const _keyTargetClass = 'targetClass';
+
   /// Constructs field schema type
   SchemaType(this.type, [this.targetClass]);
 
   /// Constructs schema type using map data
-  SchemaType.fromJson(dynamic map) : this(map['type'], map['targetClass']);
+  SchemaType.fromJson(dynamic map) : this(map[_keyType], map[_keyTargetClass]);
 
   /// The type of field
   final String type;
@@ -104,7 +112,7 @@ class SchemaType {
   final String? targetClass;
 
   dynamic get asMap => <String, dynamic>{
-        'type': type,
-        'targetClass': targetClass,
+        _keyType: type,
+        _keyTargetClass: targetClass,
       };
 }
