@@ -65,4 +65,15 @@ class ParseInstallation extends ParseObject {
     set('appIdentifier', config.appIdentifier);
     set('parseVersion', kParseSdkVersion);
   }
+
+  @override
+  Future<ParseInstallation> save({bool useMasterKey = false}) async {
+    await super.save(useMasterKey: useMasterKey);
+    final currentStorage = await _currentInstallationStorage;
+    if (currentStorage != null) {
+      await currentStorage.setData(asMap);
+    }
+
+    return this;
+  }
 }
