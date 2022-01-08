@@ -19,6 +19,7 @@ export 'src/parse_config.dart';
 export 'src/parse_exception.dart';
 export 'src/parse_file.dart';
 export 'src/parse_geo_point.dart';
+export 'src/parse_installation.dart';
 export 'src/parse_live_query.dart';
 export 'src/parse_object.dart';
 export 'src/parse_query.dart';
