@@ -92,6 +92,11 @@ class ParseConfiguration {
     this.enableLogging = false,
     this.httpClient,
     this.compute,
+    this.localeIdentifier,
+    this.appName,
+    this.appVersion,
+    this.appIdentifier,
+    this.installationId,
   })  : assert(
           server.startsWith('https://') || server.startsWith('http://'),
           'Invalid parse server',
@@ -130,4 +135,10 @@ class ParseConfiguration {
   /// Spawn an isolate, run `function` on that isolate, passing it `message`, and
   /// (eventually) return the value returned by `callback`.
   final Compute? compute;
+
+  final String? localeIdentifier;
+  final String? appName;
+  final String? appVersion;
+  final String? appIdentifier;
+  final String? installationId;
 }

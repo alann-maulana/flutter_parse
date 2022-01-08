@@ -10,6 +10,7 @@ dependencies:
   flutter_parse_storage_interface: ^1.0.2
   http: ^0.13.3
   meta: ^1.7.0
+  uuid: ^3.0.5
   web_socket_channel: ^2.1.0
 
 dev_dependencies:
