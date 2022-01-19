@@ -4,5 +4,7 @@ const String keyObjectId = 'objectId';
 abstract class ParseBaseObject {
   dynamic get asMap;
 
-  Uri get path;
+  String get path;
+
+  Uri get uri;
 }

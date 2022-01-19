@@ -64,7 +64,12 @@ class ParseSchema implements ParseBaseObject {
   }
 
   @override
-  Uri get path => _basePath.replace(path: '${_basePath.path}/$className');
+  Uri get uri => _basePath.replace(path: '${_basePath.path}/$className');
+
+  @override
+  String get path {
+    return uri.path;
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -88,7 +93,7 @@ class ParseSchema implements ParseBaseObject {
 
   /// Fetch schema data from Parse Cloud
   Future<ParseSchema?> fetch() async {
-    final result = await parseHTTPClient.get(path, useMasterKey: true);
+    final result = await parseHTTPClient.get(uri, useMasterKey: true);
     if (result is Map) return ParseSchema.fromJson(result);
     return null;
   }

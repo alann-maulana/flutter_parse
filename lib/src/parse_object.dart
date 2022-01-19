@@ -470,7 +470,7 @@ class ParseObject implements ParseBaseObject {
   }
 
   @override
-  Uri get path {
+  Uri get uri {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
     String path = '${uri.path}/classes/$className';
@@ -480,6 +480,11 @@ class ParseObject implements ParseBaseObject {
     }
 
     return uri.replace(path: path);
+  }
+
+  @override
+  String get path {
+    return uri.path;
   }
 
   dynamic get _batchSaveCommand => {
@@ -558,9 +563,9 @@ class ParseObject implements ParseBaseObject {
     final headers = {'content-type': 'application/json; charset=utf-8'};
 
     final result = objectId == null
-        ? await parseHTTPClient.post(path,
+        ? await parseHTTPClient.post(uri,
             body: jsonBody, headers: headers, useMasterKey: useMasterKey)
-        : await parseHTTPClient.put(path,
+        : await parseHTTPClient.put(uri,
             body: jsonBody, headers: headers, useMasterKey: useMasterKey);
 
     mergeJson(result);
@@ -587,7 +592,7 @@ class ParseObject implements ParseBaseObject {
       params['include'] = includes.join(',');
     }
     final result = await parseHTTPClient
-        .get(path.replace(queryParameters: params), useMasterKey: useMasterKey);
+        .get(uri.replace(queryParameters: params), useMasterKey: useMasterKey);
     mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
@@ -595,7 +600,7 @@ class ParseObject implements ParseBaseObject {
   /// Deletes this object on the server.
   Future<void> delete({bool useMasterKey = false}) async {
     if (objectId != null) {
-      await parseHTTPClient.delete(path, useMasterKey: useMasterKey);
+      await parseHTTPClient.delete(uri, useMasterKey: useMasterKey);
       _isDeleted = true;
       _reset();
     }

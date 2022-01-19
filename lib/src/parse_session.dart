@@ -56,7 +56,7 @@ class ParseSession extends ParseObject {
   }
 
   @override
-  Uri get path {
+  Uri get uri {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
     String path = '${uri.path}/sessions';
@@ -66,5 +66,10 @@ class ParseSession extends ParseObject {
     }
 
     return uri.replace(path: path);
+  }
+
+  @override
+  String get path {
+    return uri.path;
   }
 }

@@ -225,10 +225,15 @@ class ParseConfig implements ParseBaseObject {
 
   // region HELPERS
   @override
-  Uri get path {
+  Uri get uri {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
     return uri.replace(path: '${uri.path}/config');
+  }
+
+  @override
+  String get path {
+    return uri.path;
   }
 
   @override
@@ -262,7 +267,7 @@ class ParseConfig implements ParseBaseObject {
 
   /// Fetch the latest current data from Parse Server
   Future<ParseConfig> fetch({bool useMasterKey = false}) async {
-    final result = await parseHTTPClient.get(path, useMasterKey: useMasterKey);
+    final result = await parseHTTPClient.get(uri, useMasterKey: useMasterKey);
     _mergeJson(result, fromFetch: true);
     return Future.value(this);
   }
@@ -281,7 +286,7 @@ class ParseConfig implements ParseBaseObject {
     final headers = {'content-type': 'application/json; charset=utf-8'};
 
     await parseHTTPClient.put(
-      path,
+      uri,
       body: jsonBody,
       headers: headers,
       useMasterKey: true,

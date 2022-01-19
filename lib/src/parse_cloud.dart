@@ -29,10 +29,15 @@ class ParseCloud extends ParseBaseObject {
   get asMap => body;
 
   @override
-  Uri get path {
+  Uri get uri {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
     return uri.replace(path: '${uri.path}/$type/$method');
+  }
+
+  @override
+  String get path {
+    return uri.path;
   }
 
   Future<dynamic> execute({bool useMasterKey = false}) async {
@@ -40,7 +45,7 @@ class ParseCloud extends ParseBaseObject {
       'Content-Type': 'application/json; charset=utf-8',
     };
     final response = await parseHTTPClient.post(
-      path,
+      uri,
       body: json.encode(body),
       headers: headers,
       useMasterKey: useMasterKey,

@@ -46,10 +46,15 @@ class ParseFile implements ParseBaseObject {
   bool get saved => url != null;
 
   @override
-  Uri get path {
+  Uri get uri {
     assert(parse.configuration != null);
     final uri = parse.configuration!.uri;
     return uri.replace(path: '${uri.path}/files/$_name');
+  }
+
+  @override
+  String get path {
+    return uri.path;
   }
 
   @override
@@ -88,7 +93,7 @@ class ParseFile implements ParseBaseObject {
     final headers = <String, String>{'Content-Type': _contentType!};
 
     final response = await parseHTTPClient.post(
-      path,
+      uri,
       headers: headers,
       body: _fileBytes,
     );
