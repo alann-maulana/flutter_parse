@@ -175,7 +175,7 @@ class ParseLiveQuerySubscription {
   });
 
   void on(ParseLiveQueryEvent op, {ParseLiveQueryCallback? callback}) {
-    mapOperationCallback[op.value] = callback;
+    mapOperationCallback[op.name] = callback;
   }
 
   @override
@@ -184,24 +184,4 @@ class ParseLiveQuerySubscription {
   }
 }
 
-class ParseLiveQueryEvent {
-  final String value;
-
-  const ParseLiveQueryEvent._(this.value);
-
-  static const create = ParseLiveQueryEvent._('create');
-  static const enter = ParseLiveQueryEvent._('enter');
-  static const update = ParseLiveQueryEvent._('update');
-  static const leave = ParseLiveQueryEvent._('leave');
-  static const delete = ParseLiveQueryEvent._('delete');
-  static const error = ParseLiveQueryEvent._('error');
-
-  static const values = <ParseLiveQueryEvent>[
-    create,
-    enter,
-    update,
-    leave,
-    delete,
-    error
-  ];
-}
+enum ParseLiveQueryEvent { create, enter, update, leave, delete, error }
