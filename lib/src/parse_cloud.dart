@@ -66,6 +66,6 @@ class ParseCloud extends ParseBaseObject {
       return result;
     }
 
-    return null;
+    return result;
   }
 }
