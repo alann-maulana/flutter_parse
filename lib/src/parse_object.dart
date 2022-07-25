@@ -390,14 +390,14 @@ class ParseObject implements ParseBaseObject {
   /// Atomically increments the given key by the given number.
   ///
   /// Default increment number = 1
-  void increment(key, {int by = 1}) {
+  void increment(key, {num by = 1}) {
     _operations[key] = {'__op': 'Increment', 'amount': by};
   }
 
   /// Atomically decrements the given key by the given number.
   ///
   /// Default decrement number = 1
-  void decrement(key, {int by = -1}) {
+  void decrement(key, {num by = -1}) {
     increment(key, by: by);
   }
 
