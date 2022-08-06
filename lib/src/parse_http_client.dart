@@ -214,6 +214,12 @@ dynamic _parseResponse(dynamic map) {
       return ParseException(code: code, message: error);
     }
 
+    // throw when code 1 or internal server error
+    String? message = result['message'];
+    if (message != null && result['code'] == 1) {
+      return ParseException(code: result['code'], message: message);
+    }
+
     return result;
   } else if (result is List<dynamic>) {
     return result;
